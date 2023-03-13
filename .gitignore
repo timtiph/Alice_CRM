@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+.env
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -18,3 +19,16 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+### >base.html pour mise en page HTML ###
+templates/base.html
+
+
+### npm/ Bootstrap / sass ###
+/node_modules
+### Bootstrap / sass ###
+
+### Assets ###
+assets
+
+settings.json
