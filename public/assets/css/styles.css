@@ -95,7 +95,7 @@ body {
 * Nav Bar md et -
 */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 991px) {
     .navbar-alice{
         background-color: #19374D !important;
     }    
@@ -204,4 +204,19 @@ body {
 
 main{
     overflow: scroll !important;
+}
+
+/*
+* Systeme grid de la section main
+*/
+
+.grid-alice{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#calendar, #documents, #graphic, #statistics{
+    height: 100px;
+    width: 100%;
+
 }
