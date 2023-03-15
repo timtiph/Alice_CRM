@@ -249,3 +249,11 @@ main{
     margin: 10px 0;
     width: 20%;
 }
+
+/*
+* Formumaire de connexion
+*/
+
+.form-login {
+    margin: 0 2% !important;
+}
