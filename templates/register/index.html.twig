@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Inscription{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+<div class="form">
+
+    <h3>Formulaire d'inscription</h3>
+    <p>Afin d'avoir accès à cette plateforme d'échange, merci de vous enregistrer.</p>
+
+    {{ form(form) }}
+
+{% endblock %}
