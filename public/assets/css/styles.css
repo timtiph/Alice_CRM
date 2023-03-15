@@ -8,7 +8,9 @@
 
 body {
     font-family: 'Ubuntu', sans-serif !important;
+    color: #19374D !important;
     overflow-y: auto !important;
+    background-color: #FAFAFF;
 }
 
 
@@ -219,4 +221,31 @@ main{
     height: 100px;
     width: 100%;
 
+}
+
+/*
+* Formulaire d'inscription
+*/
+
+@media screen and (min-width: 1450px) {
+    .form{
+        margin-right: 5%;
+    }    
+}
+
+.fullname input, .email input, .password input{
+    background-color: rgba(76, 158, 189, .3) !important;
+}
+
+.fullname input::placeholder, .email input::placeholder, .password input::placeholder {
+    color: #19374D;
+    opacity: 0.7;
+}
+
+#register_submit{
+    background-color: #19374D;
+    color: #FAFAFF ;
+    font-size: large;
+    margin: 10px 0;
+    width: 20%;
 }
