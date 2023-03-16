@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Mon Compte{% endblock %}
+
+{% block body %}
+
+    <h1>Mon compte</h1>
+
+    Bienvenue {{ app.user.firstname }} dans votre compte. Gérez vos informations depuis cet espace
+
+    <hr class="my-3">
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="d-flex justify-content-around w-50">
+                <p class="m-auto">Administrateur :</p>
+                <a href="{{path('admin')}}" class="btn btn-outline-info btn-block w-50 m-auto">Accès à l'administration</a>
+                </div>
+            {% endif %}
+    <hr class="my-3">
+        <div class="d-flex justify-content-around my-5">
+            <a href="{{path('app_account_password')}}" class="btn btn-outline-info btn-block w-25 m-0">Modifier mon mot de passe</a>
+            <a href="{{path('app_account_address')}}"  class="btn btn-outline-info btn-block w-25 m-0">Gérer mes adresses</a>
+            <a href="{{path('app_account_order')}}"    class="btn btn-outline-info btn-block w-25 m-0">Mes commandes</a>
+        </div>
+    <hr class="my-3">
+        <div class="d-flex justify-content-around my-5">
+            <a href="{{path('app_products')}}"    class="btn btn-info btn-block w-50"><b>Nos produits</b></a>
+        </div>
+
+{% endblock %}
