@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+{# message flash d'inscription réussie #}
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice alert">
+        {{ message }}
+    </div>
+{% endfor %}
+
     
 
 {# Page accueil #}

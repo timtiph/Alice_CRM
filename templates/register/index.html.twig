@@ -8,6 +8,16 @@
 
 
     <div class="form mt-3 mt-lg-0">
+        
+        {# Invitation à la connexion si inscription ok ou deja enregistré  #}
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice alert alert-info" role="alert">
+                {{ message }}
+                <br>
+                <a href=" {{ path('app_login') }} ">Veuillez vous connecter.</a>
+            </div>
+            {# Faire réinitialisation de MDP #}
+        {% endfor %}
 
         <h3>Formulaire d'inscription</h3>
         <p>Afin d'avoir accès à cette plateforme d'échange, merci de vous enregistrer.</p>
@@ -16,6 +26,8 @@
 
 
 		<p class="text-center mt-5">Vous avez déjà créé un compte ?<a href="{{ path('app_login') }}"> Connectez-vous </a>!</p>
+
+
 
     </div>
 
