@@ -5,18 +5,29 @@
         <ul class="nav flex-column">
 
             <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" aria-current="page" href="#">
+                <a class="nav-link nav-link-alice" aria-current="page" href=" {{ path('app_home') }} ">
                 <img src="{{ asset('assets/img/VectorHome.png') }}" alt="Pictogramme maison" class="d-inline align-text-center">
                 <span class="align-text-bottom">Accueil</span>
                 </a>
             </li>
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" href="#">
-                <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                <span class="align-text-bottom">Clients</span>
-                </a>
-            </li>
+{# {% if is_granted('ROLE_ADMIN') %}
+<div class="d-flex justify-content-around w-50">
+<p class="m-auto">Administrateur :</p>
+<a href="{{path('admin')}}" class="btn btn-outline-info btn-block w-50 m-auto">Accès à l'administration</a>
+</div>
+{% endif %} #}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href="#">
+                    <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
+                    <span class="align-text-bottom">Clients</span>
+                    </a>
+                </li>
+
+            {% endif %}
 
             <li class="nav-item nav-item-alice">
                 <a class="nav-link nav-link-alice" href="#">
@@ -32,12 +43,16 @@
                 </a>
             </li>
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" href="#">
-                <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
-                <span class="align-text-bottom">Agenda</span>
-                </a>
-            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href="#">
+                    <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
+                    <span class="align-text-bottom">Agenda</span>
+                    </a>
+                </li>
+
+            {% endif %}
 
             <li class="nav-item nav-item-alice">
                 <a class="nav-link nav-link-alice" href=" {{ path('app_logout') }} ">
