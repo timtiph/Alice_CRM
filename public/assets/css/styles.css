@@ -224,36 +224,20 @@ main{
 }
 
 /*
-* Formulaire d'inscription
+* Formulaire d'inscription et de connexion
 */
 
-@media screen and (min-width: 1450px) {
-    .form{
-        margin-right: 5%;
-    }    
-}
+.form{
+    margin: auto;
+    max-width: 500px;
+}   
 
-.fullname input, .email input, .password input{
-    background-color: rgba(76, 158, 189, .3) !important;
-}
-
-.fullname input::placeholder, .email input::placeholder, .password input::placeholder {
-    color: #19374D;
-    opacity: 0.7;
-}
-
-#register_submit{
+#register_submit, #login_submit{
+    width: 100%;
     background-color: #19374D;
     color: #FAFAFF ;
     font-size: large;
     margin: 10px 0;
-    width: 20%;
 }
 
-/*
-* Formumaire de connexion
-*/
 
-.form-login {
-    margin: 0 2% !important;
-}

@@ -9,6 +9,8 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry ;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +26,7 @@ class RegisterController extends AbstractController
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, NotifierInterface $notifier): Response
     {
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
         $user = new User();
@@ -52,7 +54,10 @@ class RegisterController extends AbstractController
                 $entityManager->flush(); // push les données
 
                 // notification de confirme inscription ok passée à la vue 
+                $notifier->send(new Notification('Thank you for the feedback; your comment will be posted after moderation.', ['browser']));
                 
+            } else {
+                $notifier->send(new Notification("L'email que vous avez renseigné existe déjà !!", ['browser']));
             }
             
             

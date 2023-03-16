@@ -5,11 +5,18 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-<div class="form">
 
-    <h3>Formulaire d'inscription</h3>
-    <p>Afin d'avoir accès à cette plateforme d'échange, merci de vous enregistrer.</p>
 
-    {{ form(form) }}
+    <div class="form mt-3 mt-lg-0">
+
+        <h3>Formulaire d'inscription</h3>
+        <p>Afin d'avoir accès à cette plateforme d'échange, merci de vous enregistrer.</p>
+
+        {{ form(form) }}
+
+
+		<p class="text-center mt-5">Vous avez déjà créé un compte ?<a href="{{ path('app_login') }}"> Connectez-vous </a>!</p>
+
+    </div>
 
 {% endblock %}

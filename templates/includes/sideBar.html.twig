@@ -47,11 +47,12 @@
             </li>
 
         </ul>
-
+            {% if app.user %}
         <div class="user-auth">
             <hr>
-            <p class="">Nom de la personne connectée</p>
+            <p class=""> {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}  </p>
         </div>
+            {% endif %}
 
     </div>
     
