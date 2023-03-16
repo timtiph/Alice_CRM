@@ -18,9 +18,15 @@ security:
             provider: app_user_provider
             logout:
                 path: app_logout
+                target: app_login
             custom_authenticator: App\Security\LoginFormAuthenticator
                 # where to redirect after logout
-                # target: app_any_route
+            login_throttling:
+                max_attempts: 5
+                interval: '10 minutes'
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
