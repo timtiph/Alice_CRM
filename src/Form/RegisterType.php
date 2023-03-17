@@ -75,7 +75,7 @@ class RegisterType extends AbstractType
                         'placeholder' => 'Merci de saisir votre mot de passe'
                     ],
                     'constraints' => [
-                        // longueure min 8 max 20
+                        // longueure min 2 max 30
                         new Length(['min' => 2, 'max' => 30]),
                         // invalide si null
                         new NotBlank([
