@@ -26,6 +26,9 @@ class RegisterController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
+
+        $notificationOk = null;
+
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
         $user = new User();
 
@@ -51,16 +54,15 @@ class RegisterController extends AbstractController
                 $entityManager->persist($user); //figer les données 
                 $entityManager->flush(); // push les données
 
-                
+                $notificationOk = 'Votre inscription est validée.';
 
-                $this->addFlash(
-                    'notice',
-                    'Votre inscription est validée.'
-                );
+                // $this->addFlash(
+                //     'notice',
+                //     'Votre inscription est validée.'
+                // );
                 // return $this->redirectToRoute('app_home');
                 
             } else {
-
                 $this->addFlash(
                     'notice',
                     'L\'email que vous avez renseigné existe déjà !!'
@@ -74,7 +76,8 @@ class RegisterController extends AbstractController
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
-            'flash' => $this
+            'flash' => $this,
+            'notificationOk' => $notificationOk,
             
         ]);
     }
