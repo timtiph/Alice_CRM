@@ -215,13 +215,47 @@ main{
 .grid-alice{
     padding: 0 !important;
     margin: 0 !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
-#calendar, #documents, #graphic, #statistics{
-    height: 100px;
+@media screen and (min-width: 768px){
+    
+    .grid-alice{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+#calendar, #documents, #graphic, #statistics, #notifications{
+    height: auto;
     width: 100%;
-
+    border: solid #4C9EBD 1px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: rgba(76, 158, 189, 0.2);
+    padding: 0;
 }
+
+/* Table Notifications */
+
+.table-alice{
+    background-color: #FAFAFF;
+    border: #4c9ebd;
+    margin-bottom: 0;
+}
+
+.table-alice tr th{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.table-alice tr td{
+    font-weight: 400;
+    font-size: 16px;
+}
+
 
 /*
 * Formulaire d'inscription et de connexion
@@ -232,7 +266,9 @@ main{
     max-width: 500px;
 }   
 
-#register_submit, #login_submit{
+/* Bouton validation des forms */
+
+#register_submit, #login_submit, #change_password_submit{
     width: 100%;
     background-color: #19374D;
     color: #FAFAFF ;
@@ -241,3 +277,17 @@ main{
 }
 
 
+/*
+* button personnalisé
+*/
+
+.btn-alice{
+    background-color: #19374D;
+    color: #FAFAFF ;
+    font-size: large;
+    margin: 10px 0;
+}
+.btn-alice:hover{
+    background-color: rgba(76, 158, 189, 0.5) !important;
+
+}

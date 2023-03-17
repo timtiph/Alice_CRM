@@ -2,25 +2,34 @@
 
 {% block title %}CRM Alice | Inscription{% endblock %}
 
-{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-
-
-    <div class="form mt-3 mt-lg-0">
-        
-        {# Invitation à la connexion si inscription ok ou deja enregistré  #}
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice alert alert-info" role="alert">
-                {{ message }}
-                <br>
-                <a href=" {{ path('app_login') }} ">Veuillez vous connecter.</a>
-            </div>
-            {# Faire réinitialisation de MDP #}
-        {% endfor %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
         <h3>Formulaire d'inscription</h3>
         <p>Afin d'avoir accès à cette plateforme d'échange, merci de vous enregistrer.</p>
+
+        <hr>
+
+    <div class="form mt-3 mt-lg-0">
+
+        {% if notificationOk %}
+            <div class="alert alert-info">{{ notificationOk }}
+                <a href=" {{ path('app_login') }} ">Vous pouvez vous connecter. </a>
+            </div>
+        {% endif %}
+
+        
+        {# Invitation à la connexion si inscription ok ou deja enregistré  #}
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice alert alert-danger" role="alert">
+                {{ message }}
+                <br>
+                <a href=" {{ path('app_login') }} ">Veuillez vous connecter </a>
+                ou
+                <a href="#"> Réinitialiser votre mot de passe <small>(A METTRE EN PLACE)</small></a>
+            </div>
+        {% endfor %}
 
         {{ form(form) }}
 
@@ -28,6 +37,7 @@
 		<p class="text-center mt-5">Vous avez déjà créé un compte ?<a href="{{ path('app_login') }}"> Connectez-vous </a>!</p>
 
 
+            <h2 class="text-warning">Faire réinitialisation de MDP</h2>
 
     </div>
 
