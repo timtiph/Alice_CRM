@@ -11,19 +11,13 @@
                 </a>
             </li>
 
-{# {% if is_granted('ROLE_ADMIN') %}
-<div class="d-flex justify-content-around w-50">
-<p class="m-auto">Administrateur :</p>
-<a href="{{path('admin')}}" class="btn btn-outline-info btn-block w-50 m-auto">Accès à l'administration</a>
-</div>
-{% endif %} #}
 
             {% if is_granted('ROLE_ADMIN') %}
                 
                 <li class="nav-item nav-item-alice">
                     <a class="nav-link nav-link-alice" href="#">
                     <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                    <span class="align-text-bottom">Clients</span>
+                    <span class="align-text-bottom">Clients/Contact</span>
                     </a>
                 </li>
 
@@ -32,14 +26,14 @@
             <li class="nav-item nav-item-alice">
                 <a class="nav-link nav-link-alice" href="#">
                 <img src="{{ asset('assets/img/VectorContract.png')}}" alt="Pictogramme contrat" class="d-inline align-text-center">
-                <span class="align-text-bottom">Contrats</span>
+                <span class="align-text-bottom">Contrat(s)</span>
                 </a>
             </li>
 
             <li class="nav-item nav-item-alice">
                 <a class="nav-link nav-link-alice" href="#">
                 <img src="{{ asset('assets/img/VectorDocuments.png') }}" alt="Pictogramme document" class="d-inline align-text-center">
-                <span class="align-text-bottom">Documents</span>
+                <span class="align-text-bottom">Document(s)</span>
                 </a>
             </li>
 
