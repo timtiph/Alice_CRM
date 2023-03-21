@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Contact {{ contact.firstname }} {{ contact.lastname }} {% endblock %}
+
+{% block body %}
+
+
+<h1>Détail Fiche Contact</h1>
+
+
+
+<h3 class="mt-3"> {{ contact.firstname }} {{ contact.lastname }} </h3>
+
+
+
+<dl class="row mt-5">
+
+
+
+</dl>
+
+
+    <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
+        <a href="{{ path('app_contact_edit', { 'id' : contact.id } ) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
+        <a href=" {{ path('app_contacts') }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+    </div>
+
+<div class="table-responsive me-lg-5">
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tel</th>
+                <th scope="col">Fonction</th>
+                <th scope="col">Contact Principal</th>
+            </tr>
+        </thead>
+
+            <tbody>
+        <tr>
+            <td>{{ contact.lastname }}</td>
+            <td>{{ contact.firstname }}</td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.tel }}</td>
+            <td>{{ contact.position }}</td>
+            <td>
+                {% if contact.isMain == 1 %}
+                    <dd class="col-6 col-sm-9"><img src=" {{ asset('/assets/img/Check.png') }} " alt="Check"></dd>
+                {% endif %}
+            </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+</div>
+
+
+{% endblock %}

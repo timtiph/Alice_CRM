@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Liste des contacts{% endblock %}
+
+{% block body %}
+<h1 class="text-warning">Mettre un champs nom de société dans table cntact ?</h1>
+
+<h1>Liste des contacts</h1>
+
+    <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
+        <a href="{{ path('app_contact_add') }}" class="btn btn-alice-lg btn-block">Nouveau contact</a>
+    </div>
+
+<div class="table-responsive">
+
+    <table class="table">
+
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Tel</th>
+            <th scope="col">Fonction</th>
+            {# <th scope="col">Contact Principal</th> #}
+        </tr>
+    </thead>
+
+    {% for contact in contacts %}
+
+        {% include "admin/contact_single.html.twig" %}
+
+    {% endfor %}
+</table>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
