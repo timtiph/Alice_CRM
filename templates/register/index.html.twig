@@ -13,31 +13,15 @@
 
     <div class="form mt-3 mt-lg-0">
 
-        {% if notificationOk %}
-            <div class="alert alert-info">{{ notificationOk }}
-                <a href=" {{ path('app_login') }} ">Vous pouvez vous connecter. </a>
-            </div>
-        {% endif %}
 
         
-        {# Invitation à la connexion si inscription ok ou deja enregistré  #}
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice alert alert-danger" role="alert">
-                {{ message }}
-                <br>
-                <a href=" {{ path('app_login') }} ">Veuillez vous connecter </a>
-                ou
-                <a href="#"> Réinitialiser votre mot de passe <small>(A METTRE EN PLACE)</small></a>
-            </div>
-        {% endfor %}
+
 
         {{ form(form) }}
 
 
 		<p class="text-center mt-5">Vous avez déjà créé un compte ?<a href="{{ path('app_login') }}"> Connectez-vous </a>!</p>
 
-
-            <h2 class="text-warning">Faire réinitialisation de MDP</h2>
 
     </div>
 

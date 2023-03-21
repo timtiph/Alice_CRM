@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,8 +27,6 @@ class RegisterController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
-
-        $notificationOk = null;
 
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
         $user = new User();
@@ -54,18 +53,22 @@ class RegisterController extends AbstractController
                 $entityManager->persist($user); //figer les données 
                 $entityManager->flush(); // push les données
 
-                $notificationOk = 'Votre inscription est validée.';
+                $mail = new Mail();
+                $title = 'Confirmez votre Email';
+                $subject = "Votre compte est en attende de la validation.";
+                $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
+                $mail->sendConfirmEmail($user->getEmail(),$user->getFirstname(), $subject, $title, $content);
 
-                // $this->addFlash(
-                //     'notice',
-                //     'Votre inscription est validée.'
-                // );
-                // return $this->redirectToRoute('app_home');
+                $this->addFlash(
+                    'success',
+                    'Votre demande d\'inscription est enregistrée.'
+                );
+                return $this->redirectToRoute('app_send_email_confirm');
                 
             } else {
                 $this->addFlash(
-                    'notice',
-                    'L\'email que vous avez renseigné existe déjà !!'
+                    'alert',
+                    'L\'email que vous avez renseigné existe déjà !! Veuillez recommencer ou vous connecter.'
                 );
                 return $this->redirectToRoute('app_register');
             }
@@ -76,9 +79,13 @@ class RegisterController extends AbstractController
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
-            'flash' => $this,
-            'notificationOk' => $notificationOk,
-            
+            'flash' => $this            
         ]);
+    }
+
+    #[Route('/confirmation-email-envoye', name: 'app_send_email_confirm')]
+    public function SendConfirmEmail (): Response
+    {
+        return $this->render('register/register_confirm.html.twig');
     }
 }

@@ -4,13 +4,6 @@
 
 {% block body %}
 
-{# message flash d'inscription réussie #}
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice alert">
-        {{ message }}
-    </div>
-{% endfor %}
-
     
 
 {# Page accueil #}
@@ -20,9 +13,9 @@
 <div class="container text-center">
 
     <div class="d-flex flex-column flex-md-row justify-content-evenly justify-content-lg-end my-4">
-        <a href=" {{ path('app_account_password')}} " class="btn btn-alice btn-block mx-lg-2">modifier mon mot de passe</a>
-        <a href="#" class="btn btn-alice btn-block mx-lg-2">déposer un document</a>
-        <a href="#" class="btn btn-alice btn-block mx-lg-2">Écrire à Antoine</a>
+        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">modifier mon mot de passe</a>
+        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">déposer un document</a>
+        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Écrire à Antoine</a>
     </div>
 
     <div class="row grid-alice">
