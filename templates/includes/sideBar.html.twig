@@ -1,7 +1,8 @@
 <nav id="sidebarMenu" class="col-lg-2 d-lg-block bg-light sidebar collapse">
 
     <div class="position-sticky sidebar-sticky sidebar-sticky-alice">
-
+{% if app.user %}
+    
         <ul class="nav flex-column">
 
             <li class="nav-item nav-item-alice">
@@ -17,7 +18,7 @@
                 <li class="nav-item nav-item-alice">
                     <a class="nav-link nav-link-alice" href="#">
                     <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                    <span class="align-text-bottom">Clients/Contact</span>
+                    <span class="align-text-bottom">Clients</span>
                     </a>
                 </li>
 
@@ -63,6 +64,7 @@
         </div>
             {% endif %}
 
+{% endif %}
     </div>
     
 </nav>
