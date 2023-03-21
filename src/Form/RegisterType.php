@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class RegisterType extends AbstractType
 {
@@ -23,7 +25,12 @@ class RegisterType extends AbstractType
             ->add('firstname', TextType::class, [
                 'label' => 'Votre Prénom',
                 'constraints' => [
-                    new Length(['min' => 2, 'max' => 30]),
+                    new Length([
+                        'min' => 2, 
+                        'max' => 30,
+                        'minMessage' => 'Votre Prénom contient moins de 2 lettres ?',
+                        'maxMessage' => 'Votre Prénom est trop long !' 
+                    ]),
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre Prénom !'
                     ]),
@@ -36,7 +43,12 @@ class RegisterType extends AbstractType
             ->add('lastname', TextType::class, [
                 'label' => 'Votre Nom',
                 'constraints' => [
-                    new Length(['min' => 2, 'max' => 30]),
+                    new Length([
+                        'min' => 2, 
+                        'max' => 30,
+                        'minMessage' => 'Votre Nom contient moins de 2 lettres ?',
+                        'maxMessage' => 'Votre Nom est trop long !' 
+                    ]),
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre Nom !'
                     ]),
@@ -52,7 +64,12 @@ class RegisterType extends AbstractType
                     'placeholder' => 'example@mail.com'
                 ],
                 'constraints' => [
-                    new Length(['min' => 2, 'max' => 30]),
+                    new Length([
+                        'min' => 5, 
+                        'max' => 255,
+                        'minMessage' => 'Votre email contient moins de 5 caractères ?',
+                        'maxMessage' => 'Votre email est trop long !' 
+                    ]),
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre adresse email !'
                     ]),
@@ -75,8 +92,13 @@ class RegisterType extends AbstractType
                         'placeholder' => 'Merci de saisir votre mot de passe'
                     ],
                     'constraints' => [
-                        // longueure min 2 max 30
-                        new Length(['min' => 2, 'max' => 30]),
+                        // longueure min 8 max 20
+                        new Length([
+                            'min' => 8, 
+                            'max' => 20,
+                            'minMessage' => 'Le mot depasse doit contenir au moins 8 caractères',
+                            'maxMessage' => 'Le mot depasse doit contenir moins de 20 caractères' 
+                        ]),
                         // invalide si null
                         new NotBlank([
                             'message' => 'Veuillez renseigner un mot de passe !'
@@ -95,7 +117,12 @@ class RegisterType extends AbstractType
                         'placeholder' => 'Merci de confirmer votre mot de passe'
                     ],
                     'constraints' => [
-                        new Length(['min' => 2, 'max' => 30]),
+                        new Length([
+                            'min' => 8, 
+                            'max' => 20,
+                            'minMessage' => 'Le mot depasse doit contenir au moins 8 caractères',
+                            'maxMessage' => 'Le mot depasse doit contenir moins de 20 caractères'  
+                        ]),
                         new NotBlank([
                             'message' => 'Merci de confirmer votre mot de passe !'
                         ]),
@@ -103,15 +130,27 @@ class RegisterType extends AbstractType
                     
                 ]
             ])
-
-
             ->add('submit', SubmitType::class, [
-                'label' => 'S\'inscrire'
+                'label' => 'S\'inscrire',
+                'attr' => [
+                    'class' => 'btn-alice g-recaptcha',
+                    'data-sitekey' => 'reCAPTCHA_site_key',
+                    'data-callback' => 'onSubmit',
+                    'data-action' => 'submit',
+                    'class' => 'btn-alice-form'
+                ]
             ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3([
+                    'message' => 'Il y a eu problème avec votre captcha. S\'il vous plait, essayez à nouveau.'
+                ]),
+                'action_name' => 'inscription',
+                'locale' => 'fr',
+            ]);
         ;
     }
 
-    // Ajout de contraintes à définir : https://symfony.com/doc/current/validation.html#constraints
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
