@@ -284,6 +284,7 @@ main{
 .btn-alice{
     background-color: #19374D;
     color: #FAFAFF ;
+    border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
     width: 100px !important;
@@ -296,6 +297,7 @@ main{
 .btn-alice-lg{
     background-color: #19374D;
     color: #FAFAFF ;
+    border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
     width: 250px !important;
