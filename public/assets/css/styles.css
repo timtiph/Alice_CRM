@@ -304,3 +304,12 @@ main{
     background-color: rgba(76, 158, 189, 0.5) !important;
 
 }
+
+/*
+*  Personnalisation formulaires RESET_PASSWORD
+*/
+
+
+#reset_password_request_form_email{
+    margin: 15px 0;
+}
