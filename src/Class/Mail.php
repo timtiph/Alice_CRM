@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Classe;
+namespace App\Class;
 
 use Mailjet\Client;
 use Mailjet\Resources;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class Mail
 {
-    private $api_key_public = 'f7526a1971e3fffac331c7a626f14c93';
-    private $api_key_secret ='bca076eba477fa727bd956e8fa1436b0';
 
-    public function sendConfirmEmail($to_email, $to_name, $subject, $content)
+    public function sendConfirmEmail($to_email, $to_name, $subject, $content, $api_key_public, $api_key_secret)
     {
              
-        $mj = new Client($this->api_key_public, $this->api_key_secret, true, ['version' => 'v3.1']); // instance de l'objet email
-        //$mj = new Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PUBLIC'), true,['version' => 'v3.1']);
+        $mj = new Client($api_key_public, $api_key_secret, true, ['version' => 'v3.1']); // instance de l'objet email
         
         $body = [ // création du corps du mail
             'Messages' => [
@@ -28,13 +26,13 @@ class Mail
                         [
                             'Email' => "ugoblackandwhite@gmail.com",
                             'Name' => "Tiphany"
-                        ]
-                    ],
+                            ]
+                        ],
                     'TemplateID' => 4672993,
                     'TemplateLanguage' => true,
                     'Subject' => $subject,
                     'variables' => [
-                        'content' => $content,
+                        'content' => $content
                     ]
 
                     // 'Variables' => json_decode('{

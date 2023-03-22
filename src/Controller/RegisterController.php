@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Classe\Mail;
+use App\Class\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,10 +54,12 @@ class RegisterController extends AbstractController
                 $entityManager->flush(); // push les données
 
                 $mail = new Mail();
+                $api_key_public = $this->getParameter('app.mailjet.public_key');
+                $api_key_secret = $this->getParameter('app.mailjet.private_key');
                 $title = 'Confirmez votre Email';
                 $subject = "Votre compte est en attende de la validation.";
                 $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
-                $mail->sendConfirmEmail($user->getEmail(),$user->getFirstname(), $subject, $title, $content);
+                $mail->sendConfirmEmail($user->getEmail(),$user->getFirstname(), $subject, $title, $content, $api_key_public, $api_key_secret);
 
                 $this->addFlash(
                     'success',
