@@ -6,6 +6,18 @@
     
     </a>
 
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="container-fluid d-block d-md-flex">
+            <form class="d-flex flex-column flex-sm-row align-items-center my-2" role="search">
+                <input class="form-control me-2" type="search" placeholder="Rechercher un client" aria-label="Rechercher un client">
+                <button class="btn btn-alice-lg" type="submit">Rechercher</button>
+            </form>
+        </div>
+
+    {% endif %}
+
+
     <button class="navbar-toggler navbar-toggler-alice position-absolute d-lg-none collapsed mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
        
         <img src="{{ asset('assets/img/VectorToggler.png') }}" alt="Pictogramme Menu">
