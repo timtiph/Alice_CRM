@@ -28,6 +28,19 @@
             <main class="col-lg-10 ms-sm-auto m-0">
 
                 {% include 'includes/_flashes.html.twig' %}
+
+
+            {% if app.user and app.user.isVerified == false %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="alert-message">
+                        <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+                    </div>
+                </div>
+            {% endif %}
+
+
+
                 {% block body %}{% endblock %}
                 
             </main>
