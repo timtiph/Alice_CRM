@@ -6,7 +6,6 @@ use App\Class\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
