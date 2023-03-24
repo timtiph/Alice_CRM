@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification utilisateur | Alice CRM{% endblock %}
+
+{% block body %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+
+
+<h1 class="mb-3">Modification de l'utilisateur {{ user.firstname }} {{ user.lastname }}</h1>
+        {% if user.customer is not empty %}
+            <p class="mb-5">Fiche client liée : {{ user.customer }} </p>
+        {% endif %}
+
+    <div class="form mt-3 mt-lg-0">
+        
+        {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+
+            {{ form_row(form.firstname) }}
+            {{ form_row(form.lastname) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.is_verified) }}
+            {{ form_row(form.role) }}
+            {{ form_row(form.submit) }}
+
+        {{ form_end(form) }}
+
+    </div>
+
+
+{% endblock %}

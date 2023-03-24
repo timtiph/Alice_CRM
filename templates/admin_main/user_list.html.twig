@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes utilisateurs | Alice CRM{% endblock %}
+
+{% block body %}
+
+
+
+<h1>Liste des utilisateurs</h1>
+
+
+
+    <div class="table-responsive">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+
+            {% for user in users %}
+
+                <tbody>
+                    <tr>
+                        <td>{{ user.firstname|capitalize }}</td>
+                        <td>{{ user.lastname|upper }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.role is null %}
+                                <img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention">
+                            {% endif %}
+                            {{ user.role }}
+                        </td>
+                        <td>
+                        <a href="{{ path('app_user_edit', { 'id' : user.id }) }}">Modifier</a><br>
+                        <a href="#">Supprimer</a><br>
+                            {% if user.customer is null %}
+                                <a href="#">Créer une fiche client</a> 
+                            {% else %}
+                                <a href="#">Consulter la fiche client</a> 
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            {% endfor %} 
+        </table>
+    </div>
+
+{% endblock %}

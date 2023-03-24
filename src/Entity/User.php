@@ -42,6 +42,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contact::class)]
     private Collection $contacts;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Customer $customer = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $role = null;
+
+
+    public function __toString()
+    {
+        return $this->getFirstname().' '.$this->getLastname();
+    }
+
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
@@ -188,5 +200,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(Customer $customer): self
+    {
+        // set the owning side of the relation if necessary
+        if ($customer->getUser() !== $this) {
+            $customer->setUser($this);
+        }
+
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
 }
 
