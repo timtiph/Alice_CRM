@@ -70,7 +70,7 @@ class RegisterController extends AbstractController
                 $subject = "Votre compte est en attende de la validation.";
                 $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
                 $sign_key = $signatureComponents->getSignedUrl();
-                
+                // complete le mail de la class Mail
                 $mail->sendConfirmEmail($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key);
                 
                 
