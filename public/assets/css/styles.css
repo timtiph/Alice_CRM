@@ -11,6 +11,7 @@ body {
     color: #19374D !important;
     overflow-y: auto !important;
     background-color: #FAFAFF;
+    max-height: 500px;
 }
 
 
@@ -149,6 +150,7 @@ body {
     max-width: 220px;
     min-width: 180px;
     padding: 50px 1%;
+    max-height: 100vh;
 }
 
 .sidebar-sticky-alice{
@@ -215,9 +217,13 @@ body {
 
 
 /**************************** Container Main partie droite */
-
+/* 
+.container-alice{
+    max-height: 80vh;
+} */
 main{
     overflow: scroll !important;
+    max-height: 90vh;
 }
 
 /*
@@ -238,6 +244,15 @@ main{
         grid-template-columns: 1fr 1fr;
     }
 }
+
+
+@media screen and (min-width: 1200px){
+    
+    main{
+        margin-right: 1% !important;
+    }
+}
+
 
 
 #calendar, #documents, #graphic, #statistics, #notifications{
@@ -288,6 +303,11 @@ main{
     width: 100%;
 }
 
+.btn-alice-form:hover, #register_submit:hover, #login_submit:hover, #change_password_submit:hover{
+    background-color: rgba(76, 158, 189, 0.5) !important;
+    color: #19374D !important;
+}
+
 
 /*
 * button personnalisé
@@ -301,9 +321,9 @@ main{
     margin: 10px 0;
     width: 100px !important;
 }
-.btn-alice:hover{
+.btn-alice:hover, .btn-alice-lg:hover{
     background-color: rgba(76, 158, 189, 0.5) !important;
-
+    color: #19374D !important;
 }
 
 .btn-alice-lg{
@@ -314,10 +334,7 @@ main{
     margin: 10px 0;
     width: 250px !important;
 }
-.btn-alice-lg:hover{
-    background-color: rgba(76, 158, 189, 0.5) !important;
 
-}
 
 /*
 *  Personnalisation formulaires RESET_PASSWORD
