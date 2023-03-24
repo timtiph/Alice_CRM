@@ -79,6 +79,18 @@ body {
     height: auto;
 }
 
+/*
+* Couleur du site
+*/
+
+.bg-alice-dark{
+    background-color: #19374D;
+}
+
+.bg-alice-light{
+    background-color: rgba(76, 158, 189, 0.2);
+}
+
 
 /*
 * personalisation de la NAVBAR 
@@ -314,4 +326,46 @@ main{
 
 #reset_password_request_form_email{
     margin: 15px 0;
+}
+
+
+
+
+/*
+* NEW CUSTOMER FORM  
+*/
+
+/* retirer les boutons de controle des nombres sur les inputs type number*/
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+ 
+/* Chrome */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button { 
+	-webkit-appearance: none;
+	margin:0;
+}
+ 
+/* Opéra*/
+input::-o-inner-spin-button,
+input::-o-outer-spin-button { 
+	-o-appearance: none;
+	margin:0
+}
+
+#fieldCustomerSiret{
+    display: none;
+}
+
+
+/*
+*  Personnalisation Affichage de la fiche client
+*/
+
+.picto-check-professional, .picto-check-partner{
+    width: 20px;
+    height: 20px;
 }
