@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un client | Alice CRM{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+
+    <h3 class="mb-5">Création d'un client</h3>
+
+    <div class="form mt-3 mt-lg-0">
+
+{{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.isPartner) }}
+    {{ form_row(form.isProfessional) }}
+
+    <div id="fieldCustomerSiret">
+        {{ form_row(form.siret) }}
+    </div>
+
+    {{ form_row(form.address) }}
+    {{ form_row(form.postalCode) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.country) }}
+    {{ form_row(form.submit) }}
+
+{{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

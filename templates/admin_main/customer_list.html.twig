@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes clients | Alice CRM{% endblock %}
+
+{% block body %}
+
+
+
+<h1>Liste des clients</h1>
+
+    {# <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
+        <a href=" {{ path('app_customer_add') }} " class="btn btn-alice-lg btn-block">Nouveau client</a>
+    </div> #}
+
+    <div class="table-responsive">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Pays</th>
+                    <th scope="col">Client Pro</th>
+                    <th scope="col">Partenaire</th>
+                    <th scope="col">Prénom du USER</th>
+                    {# <th scope="col">Contact Principal</th> #}
+                </tr>
+            </thead>
+
+            {% for customer in customers %}
+
+                <tbody>
+                    <tr>
+                        <td><a href=" {{ path('app_customer', { 'id' : customer.id }) }} ">{{ customer.name }}</a></td>
+                        <td>{{ customer.city }}</td>
+                        <td>{{ customer.country }}</td>
+                        <td>Is PRO</td>
+                        <td>Is PARTNER</td>
+                        <td>{{ customer.user.firstname }}</td>
+                    </tr>
+                </tbody>
+
+            {% endfor %} 
+        </table>
+    </div>
+
+{% endblock %}
