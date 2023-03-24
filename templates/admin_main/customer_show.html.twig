@@ -30,23 +30,31 @@
 
             <div class="d-flex flex-column mt-1 border">
                 <h4 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h4>
+                
+                    {% if contacts %}
 
-                <table class="table mb-0">
-                    <tbody>
-                        <tr>
-                            <td>Prénom Nom</td>
-                            <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <th>{{ contact.email }}</th>
-                        </tr>
-                        <tr>
-                            <td>Tel</td>
-                            <th>{{ contact.tel }}</th>
-                        </tr>
-                    </tbody>
-                </table>
+                        {% for contact in contacts %}
+
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Prénom Nom</td>
+                                        <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <th>{{ contact.email }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tel</td>
+                                        <th>{{ contact.tel }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        {% endfor %}
+
+                    {% endif %}
 
             </div>
 

@@ -1,77 +1,81 @@
 <nav id="sidebarMenu" class="col-lg-2 d-lg-block bg-light sidebar collapse">
 
     <div class="position-sticky sidebar-sticky sidebar-sticky-alice">
-{% if app.user %}
-    
-        <ul class="nav flex-column">
+        
+        {% if app.user and app.user.isVerified == true %}
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" aria-current="page" href=" {{ path('app_home') }} ">
-                <img src="{{ asset('assets/img/VectorHome.png') }}" alt="Pictogramme maison" class="d-inline align-text-center">
-                <span class="align-text-bottom">Accueil</span>
-                </a>
-            </li>
-
-
-            {% if is_granted('ROLE_ADMIN') %}
+            <ul class="nav flex-column">
 
                 <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" href=" {{ path('app_users_list') }} ">
-                    {# <img src="" alt="Pictogramme client" class="d-inline align-text-center"> #}
-                    <span class="align-text-bottom">Utilisateurs</span>
-                    </a>
-                </li>
-                
-                <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" href=" {{ path('app_customer_list') }} ">
-                    <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                    <span class="align-text-bottom">Clients</span>
+                    <a class="nav-link nav-link-alice" aria-current="page" href=" {{ path('app_home') }} ">
+                        <img src="{{ asset('assets/img/VectorHome.png') }}" alt="Pictogramme maison" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Accueil</span>
                     </a>
                 </li>
 
-            {% endif %}
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" href="#">
-                <img src="{{ asset('assets/img/VectorContract.png')}}" alt="Pictogramme contrat" class="d-inline align-text-center">
-                <span class="align-text-bottom">Contrat(s)</span>
-                </a>
-            </li>
+                {% if is_granted('ROLE_ADMIN') %}
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" href="#">
-                <img src="{{ asset('assets/img/VectorDocuments.png') }}" alt="Pictogramme document" class="d-inline align-text-center">
-                <span class="align-text-bottom">Document(s)</span>
-                </a>
-            </li>
+                    <li class="nav-item nav-item-alice">
+                            <a class="nav-link nav-link-alice" href=" {{ path('app_users_list') }} ">
+                            {# TODO <img src="" alt="Pictogramme client" class="d-inline align-text-center"> #}
+                            <span class="align-text-bottom">Utilisateurs</span>
+                        </a>
+                    </li>
 
-            {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item nav-item-alice">
+                        <a class="nav-link nav-link-alice" href=" {{ path('app_customer_list') }} ">
+                            <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
+                            <span class="align-text-bottom">Clients</span>
+                        </a>
+                    </li>
+
+                {% endif %}
 
                 <li class="nav-item nav-item-alice">
                     <a class="nav-link nav-link-alice" href="#">
-                    <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
-                    <span class="align-text-bottom">Agenda</span>
+                        <img src="{{ asset('assets/img/VectorContract.png')}}" alt="Pictogramme contrat" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Contrat(s)</span>
                     </a>
                 </li>
 
-            {% endif %}
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href="#">
+                        <img src="{{ asset('assets/img/VectorDocuments.png') }}" alt="Pictogramme document" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Document(s)</span>
+                    </a>
+                </li>
 
-            <li class="nav-item nav-item-alice">
-                <a class="nav-link nav-link-alice" href=" {{ path('app_logout') }} ">
-                <img src="{{ asset('assets/img/VectorLogOut.png') }}" alt="Pictogramme Deconnexion" class="d-inline align-text-center">
-                <span class="align-text-bottom">Déconnexion</span>
-                </a>
-            </li>
+                {% if is_granted('ROLE_ADMIN') %}
 
-        </ul>
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href="#">
+                        <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Agenda</span>
+                    </a>
+                </li>
+
+                {% endif %}
+
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href=" {{ path('app_logout') }} ">
+                        <img src="{{ asset('assets/img/VectorLogOut.png') }}" alt="Pictogramme Deconnexion" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Déconnexion</span>
+                    </a>
+                </li>
+
+            </ul>
+
+
             {% if app.user %}
-        <div class="user-auth">
-            <hr>
-            <p class=""> {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}  </p>
-        </div>
+                <div class="user-auth">
+                    <hr>
+                    <p class=""> {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}  </p>
+                </div>
             {% endif %}
 
-{% endif %}
+        {% endif %}
+
     </div>
-    
+
 </nav>
