@@ -60,25 +60,27 @@ class AdminMainController extends AbstractController
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+        if ($form->isSubmitted()) {
+            if($form->isValid()){
 
-            $entityManager = $doctrine->getManager();
-            
-            $entityManager->flush(); // push les données
-            
-            $this->addFlash(
-                'success',
-                'La modification du contact et bien enregistrée.'
-            );
-            return $this->redirectToRoute('app_users_list');
-        } 
-        else {
+                $user = $form->getData();
+                
+                $entityManager = $doctrine->getManager();
+                
+                $entityManager->flush(); // push les données
+                
+                $this->addFlash(
+                    'success',
+                    'La modification du contact et bien enregistrée.'
+                );
+                return $this->redirectToRoute('app_users_list');
+            } else {
             $this->addFlash(
                 'alert',
-                'Erreur sur le formulaire. ET CA VIENT DU CODE'
+                'Erreur sur le formulaire.'
             );
             return $this->redirectToRoute('app_users_list');
+            }
         }
         
         return $this->render('admin_main/user_edit.html.twig', [
@@ -135,6 +137,8 @@ class AdminMainController extends AbstractController
     #[Route('/client/fiche{id}', name: 'app_customer')]
     public function showCustomer($id) 
     {
+
+        // TODO : changer l'ordre de la logique des if
         // récup données client
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
 
@@ -142,8 +146,8 @@ class AdminMainController extends AbstractController
         $user = $customer->getUser($this);
         
         // récup contact associé au user
-        $contact = $this->entityManager->getRepository(Contact::class)->findOneBy(['user' => $customer->getUser($this)]);
-
+        $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);
+        dump($contacts);
 
         if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
             return $this->redirectToRoute('app_customer_list');
@@ -152,7 +156,7 @@ class AdminMainController extends AbstractController
         return $this->render('admin_main/customer_show.html.twig', [
             'customer' => $customer,
             'user' => $user,
-            'contact' => $contact
+            'contacts' => $contacts
         ]);
 
     }
