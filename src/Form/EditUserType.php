@@ -32,13 +32,12 @@ class EditUserType extends AbstractType
             ->add('lastname', TextType::class, [
                 'label' => 'Prénom'
             ])
-            ->add('is_verified', CheckboxType::class, [
-                'required' => false
-            ])
+            // ->add('is_verified', CheckboxType::class, [
+            //     'disabled' => true
+            // ])
             ->add('role', TextType::class, [
                 'label' => 'Statut',
-                
-            ])
+                ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

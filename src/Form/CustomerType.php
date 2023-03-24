@@ -22,19 +22,20 @@ class CustomerType extends AbstractType
     {
         $builder
         ->add('name', TextType::class, [
-            'label' => 'Nom complet',
+            'label' => 'Nom',
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez renseigner le nom complet du client !'
                 ]),
             ]
         ])
+        // TODO : Revoir les pattern
         ->add('siret', IntegerType::class, [
             'label' => 'SIREN ou SIRET',
             'required' => false, 
             'constraints' => [
                 new Length([
-                    'min' => 6,
+                    'min' => 9,
                     'minMessage' => 'Le numéro est trop court',
                     'max' => 14,
                     'maxMessage' => 'Le Le numéro est trop long'
@@ -53,6 +54,7 @@ class CustomerType extends AbstractType
                 ])
             ]
         ])
+        // TODO : Revoir les pattern
         ->add('postalCode', IntegerType::class, [
             'label' => 'Code Postal',
             'constraints' => [
