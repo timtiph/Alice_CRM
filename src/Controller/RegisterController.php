@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Class\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry ;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry ;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegisterController extends AbstractController
 {
@@ -25,7 +29,7 @@ class RegisterController extends AbstractController
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
 
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
@@ -53,14 +57,24 @@ class RegisterController extends AbstractController
                 $entityManager->persist($user); //figer les données 
                 $entityManager->flush(); // push les données
 
+                $signatureComponents = $verifyEmailHelper->generateSignature(
+                    'app_verify_email',
+                    $user->getId(),
+                    $user->getEmail(),
+                    ['id' => $user->getId()]
+                );
+
                 $mail = new Mail();
                 $api_key_public = $this->getParameter('app.mailjet.public_key');
                 $api_key_secret = $this->getParameter('app.mailjet.private_key');
                 $title = 'Confirmez votre Email';
                 $subject = "Votre compte est en attende de la validation.";
                 $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
-                $mail->sendConfirmEmail($user->getEmail(),$user->getFirstname(), $subject, $title, $content, $api_key_public, $api_key_secret);
-
+                $sign_key = $signatureComponents->getSignedUrl();
+                
+                $mail->sendConfirmEmail($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key);
+                
+                
                 $this->addFlash(
                     'success',
                     'Votre demande d\'inscription est enregistrée.'
@@ -89,5 +103,31 @@ class RegisterController extends AbstractController
     public function SendConfirmEmail (): Response
     {
         return $this->render('register/register_confirm.html.twig');
+    }
+
+    #[Route('/verification-email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($request->query->get('id'));
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+        try {
+            $verifyEmailHelper->validateEmailConfirmation(
+                $request->getUri(),
+                $user->getId(),
+                $user->getEmail(),
+            );
+        } catch (VerifyEmailExceptionInterface $e) {
+            $this->addFlash('error', $e->getReason());
+            return $this->redirectToRoute('app_register');
+        }
+        $user->setIsVerified(true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre compte est vérifié! Vous pouvez vous connecter.');
+
+
+        return $this->redirectToRoute('app_login');
     }
 }
