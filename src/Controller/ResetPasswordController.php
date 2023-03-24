@@ -40,6 +40,7 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
+        // TODO : Faire envoi d'un mail de réinit MDP
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
@@ -48,6 +49,8 @@ class ResetPasswordController extends AbstractController
             );
         }
 
+
+        // TODO : Revoir acces aux page quand mail non verifié
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);

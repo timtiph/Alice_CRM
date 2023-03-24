@@ -122,6 +122,8 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
         $user->setIsVerified(true);
+        $user->setRoles(["ROLE_USER"]);
+
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre compte est vérifié! Vous pouvez vous connecter.');

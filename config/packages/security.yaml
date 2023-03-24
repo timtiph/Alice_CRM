@@ -16,9 +16,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 target: app_login
+                invalidate_session:   true
             custom_authenticator: App\Security\LoginFormAuthenticator
                 # where to redirect after logout
             login_throttling:
@@ -37,8 +39,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/reinitialisation-mot-de-passe, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/mon-compte, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
