@@ -38,12 +38,12 @@
                             {{ user.role }}
                         </td>
                         <td>
-                        <a href="{{ path('app_user_edit', { 'id' : user.id }) }}">Modifier</a><br>
+                        <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Modifier</a><br>
                         <a href="#">Supprimer</a><br>
                             {% if user.customer is null %}
-                                <a href="#">Créer une fiche client</a> 
+                                <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}">Créer une fiche client</a> 
                             {% else %}
-                                <a href="#">Consulter la fiche client</a> 
+                                <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}">Consulter la fiche client</a> 
                             {% endif %}
                         </td>
 
@@ -51,6 +51,7 @@
                 </tbody>
 
             {% endfor %} 
+
         </table>
     </div>
 
