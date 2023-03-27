@@ -32,7 +32,7 @@
 
                 <tbody>
                     <tr>
-                        <td><a href=" {{ path('app_customer', { 'id' : customer.id }) }} ">{{ customer.name }}</a></td>
+                        <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td>
                         <td>{{ customer.city }}</td>
                         <td>{{ customer.country }}</td>
                         <td>Is PRO</td>
