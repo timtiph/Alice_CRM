@@ -39,13 +39,18 @@
                 {# TODO : A finaliser #}
                     </div>
                 </div>
+
+            {# {% else %} #}
+
             {% endif %}
 
+            {# TODO : Trouver un moyen de donner acces que si IsVerifed +  #}
             {% include 'includes/_flashes.html.twig' %}
 
-            {% if app.user and app.user.isVerified == true %}
-                {% block body %}{% endblock %}
-            {% endif %}
+            
+            {% block body %}{% endblock %}
+            
+            {# {% endif %} #}
                 
             </main>
 

@@ -1,31 +1,15 @@
 <header class="navbar navbar-alice sticky-top flex-md-nowrap p-0">
-    
-    <a class="navbar-brand navbar-brand-alice col-md-3 col-lg-2 me-0 px-3" href="#">
-        
-        <img src=" {{ asset('assets/img/logo.png') }}" alt="Logo ALICE" class="logo-alice image-fluid">
-    
-    </a>
 
-    {% if app.user and app.user.isVerified == true %}
+        <a class="navbar-brand navbar-brand-alice col-md-3 col-lg-2 me-0 px-3" href="#">
 
-        {% if is_granted('ROLE_ADMIN') %}
+            <img src=" {{ asset('assets/img/logo.png') }}" alt="Logo ALICE" class="logo-alice image-fluid">
 
-            <div class="container-fluid d-block d-md-flex">
-                <form class="d-flex flex-column flex-sm-row align-items-center my-2" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Rechercher un client METTRE UN RETOUR DANS LA NAVBAR" aria-label="Rechercher un client">
-                    <button class="btn btn-alice-lg" type="submit">Rechercher </button>
-                </form>
-            </div>
-
-        {% endif %}
-
+        </a>
 
         <button class="navbar-toggler navbar-toggler-alice position-absolute d-lg-none collapsed mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        
-            <img src="{{ asset('assets/img/VectorToggler.png') }}" alt="Pictogramme Menu">
-        
-        </button>
 
-    {% endif %}
+            <img src="{{ asset('assets/img/VectorToggler.png') }}" alt="Pictogramme Menu">
+
+        </button>
 
 </header>

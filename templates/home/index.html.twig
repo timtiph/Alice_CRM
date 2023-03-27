@@ -12,8 +12,19 @@
 
 <div class="container text-center">
 
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="d-block d-md-flex justify-content-end">
+            <form class="d-flex flex-column flex-sm-row align-items-center my-2" role="search">
+                <input class="form-control me-2" type="search" placeholder="Rechercher un client" aria-label="Rechercher un client">
+                <button class="btn btn-alice-lg" type="submit">Rechercher </button>
+            </form>
+        </div>
+
+    {% endif %}
+
     <div class="d-flex flex-column flex-md-row justify-content-evenly justify-content-lg-end my-4">
-        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">modifier mon mot de passe</a>
+        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-lg-2">modifier mon mot de passe</a>
         <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">déposer un document</a>
         <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Écrire à Antoine</a>
     </div>
