@@ -85,7 +85,7 @@ class ContactType extends AbstractType
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Valider',
+                'label' => 'Enregistrer',
                 'attr' => [
                     'class' => 'btn-alice-form'
                 ]
