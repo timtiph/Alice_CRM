@@ -21,7 +21,7 @@
 
 
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
-        <a href="{{ path('app_contact_edit', { 'id' : contact.id } ) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
+        <a href="{{ path('app_contact_edit', { 'slug' : contact.slug }, { 'id' : contact.id } ) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
         <a href=" {{ path('app_contacts') }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
     </div>
 
