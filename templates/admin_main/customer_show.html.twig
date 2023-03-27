@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
-        <a href="#" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
+        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un RDV</a>
     </div>
 

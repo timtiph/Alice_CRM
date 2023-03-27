@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Contact;
 use App\Entity\Customer;
 use App\Form\CustomerType;
+use App\Form\EditCustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -104,6 +105,33 @@ class AdminMainController extends AbstractController
         ]);
     }
 
+    #[Route('/client/{id}/{slug}', name: 'app_customer')]
+    public function showCustomer($id) 
+    {
+
+        // TODO : changer l'ordre de la logique des if
+        // récup données client
+        $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
+
+        // récup user associé
+        $user = $customer->getUser($this);
+        
+        // récup contact associé au user
+        $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);
+        dump($contacts);
+
+        if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
+            return $this->redirectToRoute('app_customer_list');
+        }
+
+        return $this->render('admin_main/customer_show.html.twig', [
+            'customer' => $customer,
+            'user' => $user,
+            'contacts' => $contacts
+        ]);
+
+    }
+
     #[Route('/clients/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
     public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
@@ -151,32 +179,46 @@ class AdminMainController extends AbstractController
         ]);
     }
 
-    #[Route('/client/{id}/{slug}', name: 'app_customer')]
-    public function showCustomer($id) 
+    #[Route('/clients/modifier-un-client/{id}/{slug}', name: 'app_customer_edit')]
+    public function editCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id, $slug): Response
     {
 
-        // TODO : changer l'ordre de la logique des if
-        // récup données client
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
 
-        // récup user associé
-        $user = $customer->getUser($this);
-        
-        // récup contact associé au user
-        $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);
-        dump($contacts);
-
-        if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
-            return $this->redirectToRoute('app_customer_list');
+        if (!$customer) {
+            $this->addFlash(
+                'alert',
+                'Vous ne pouvez pas modifier ce client.'
+            );
+            return $this->redirectToRoute('app_customer', array('id' => $id, 'slug' => $slug)); 
         }
+    
+        $form = $this->createForm(EditCustomerType::class, $customer);
+        
+        $form->handleRequest($request);        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $this->entityManager->flush();
 
-        return $this->render('admin_main/customer_show.html.twig', [
-            'customer' => $customer,
-            'user' => $user,
-            'contacts' => $contacts
+            $this->addFlash(
+                'success',
+                'La modification du client est bien enregistrée.'
+            );
+            return $this->redirectToRoute('app_customer', array('id' => $id, 'slug' => $slug));
+        } 
+        // else {
+        //     $this->addFlash(
+        //         'alert',
+        //         'Une Erreur est survenue, veuillez recommencer.'
+        //     );
+        //     return $this->redirectToRoute('app_customer', array('id' => $id, 'slug' => $slug));
+        // }
+        
+        return $this->render('admin_main/customer_new.html.twig', [
+            'form' => $form->createView(), 
+            'flash' => $this,
+            'customer' => $customer
         ]);
-
     }
-
 
 }

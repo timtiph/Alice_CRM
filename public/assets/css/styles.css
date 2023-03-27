@@ -349,7 +349,7 @@ main{
 
 
 /*
-* NEW CUSTOMER FORM  
+*  CUSTOMER FORM  
 */
 
 /* retirer les boutons de controle des nombres sur les inputs type number*/
@@ -377,7 +377,7 @@ input::-o-outer-spin-button {
     display: none;
 } */
 
-#customer_user {
+#customer_user, #edit_customer_user {
     --bs-form-select-bg-img: red;
 }
 
