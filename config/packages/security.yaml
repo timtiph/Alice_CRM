@@ -39,10 +39,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/reinitialisation-mot-de-passe, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/mon-compte, roles: ROLE_USER }
-        - { path: ^/, roles: PUBLIC_ACCESS }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/compte, roles: ROLE_USER }
 
 when@test:
     security:
