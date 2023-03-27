@@ -373,10 +373,13 @@ input::-o-outer-spin-button {
 	margin:0
 }
 
-#fieldCustomerSiret{
+/* #fieldCustomerSiret{
     display: none;
-}
+} */
 
+#customer_user {
+    --bs-form-select-bg-img: red;
+}
 
 /*
 *  Personnalisation Affichage de la fiche client
