@@ -48,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $role = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
 
     public function __toString()
     {
@@ -226,6 +229,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRole(?string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

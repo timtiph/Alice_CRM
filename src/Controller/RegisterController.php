@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Class\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
+use Cocur\Slugify\Slugify;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,8 +49,12 @@ class RegisterController extends AbstractController
                 $password = $passwordHasher->hashPassword($user, $user->getPassword()); // hash le password saisi
                 $user->setPassword($password); // envoi le password dans obj User
                 
-                // dd($password);
-                // dd($user);
+                // on slug le nom du User
+                $fullname = $user->getFirstname()." ".$user->getLastname();
+                $slugify = new Slugify();
+                $slugify = $slugify->slugify($fullname);
+                $user->setSlug($slugify);
+                
                 
                 //return entity manager
                 $entityManager = $doctrine->getManager();
