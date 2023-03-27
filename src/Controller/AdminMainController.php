@@ -7,7 +7,9 @@ use App\Entity\Contact;
 use App\Entity\Customer;
 use App\Form\CustomerType;
 use App\Form\EditUserType;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,14 +40,16 @@ class AdminMainController extends AbstractController
     public function showUsers(): Response
     {
         $users = $this->entityManager->getRepository(User::class)->findAll();
+        $customers = $this->entityManager->getRepository(Customer::class)->findAll();
         
         return $this->render('admin_main/user_list.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'customer' => $customers
         ]);
     }
 
-    #[Route('/utilisateur/modifier/{id}', name: 'app_user_edit')]
-    public function editUser(Request $request, $id, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[Route('/utilisateur/modifier/{id}/{slug}', name: 'app_user_edit')]
+    public function editUser(Request $request, $id, $slug, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
     {
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
 
@@ -100,27 +104,39 @@ class AdminMainController extends AbstractController
         ]);
     }
 
-    #[Route('/clients/creer-un-client', name: 'app_customer_add')]
-    public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[Route('/clients/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
+    public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
 
-        $customer = new Customer();
-        
-        $form = $this->createForm(CustomerType::class, $customer);
+        $user = $this->entityManager->getRepository(User::class)->findOneById($id);
 
+        $customer = new Customer();
+        $form = $this->createForm(CustomerType::class, $customer);
+        
         $form->handleRequest($request);        
         if ($form->isSubmitted() && $form->isValid()) {
             $customer = $form->getData();
 
+            // création Slug
+            $fullname = $customer->getName();
+            $slugify = new Slugify();
+            $slugify = $slugify->slugify($fullname);
+            $customer->setSlug($slugify);
+
+            // récup User Id
+            $customer->setUser($user);
+            
             $entityManager = $doctrine->getManager();
             $entityManager->persist($customer); //figer les données 
             $entityManager->flush(); // push les données
 
             $this->addFlash(
                 'success',
-                'La Création du client et bien enregistrée.'
+                'La Création du client est bien enregistrée.'
             );
-        } else {
+            return $this->redirectToRoute('app_users_list');
+        } 
+        else {
             $this->addFlash(
                 'alert',
                 'Une Erreur est survenue, veuillez recommencer.'
@@ -130,11 +146,12 @@ class AdminMainController extends AbstractController
         
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(), 
-            'flash' => $this 
+            'flash' => $this,
+            'customer' => $customer
         ]);
     }
 
-    #[Route('/client/fiche{id}', name: 'app_customer')]
+    #[Route('/client/{id}/{slug}', name: 'app_customer')]
     public function showCustomer($id) 
     {
 
@@ -160,4 +177,6 @@ class AdminMainController extends AbstractController
         ]);
 
     }
+
+
 }

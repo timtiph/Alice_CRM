@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class ContactController extends AbstractController
 // Retoune les contacts
 
     #[Route('/admin/contacts', name: 'app_contacts')]
-    public function index(): Response
+    public function showContacts(): Response
     {
 
         $contacts = $this->entityManager->getRepository(Contact::class)->findAll();
@@ -36,9 +37,9 @@ class ContactController extends AbstractController
     }
 
 
-    #[Route('/admin/contact/fiche{id}', name: 'app_contact')]
+    #[Route('/admin/contact/{slug}{id}', name: 'app_contact')]
 
-    public function show($id) 
+    public function showContact($id) 
     {
 
         $contact = $this->entityManager->getRepository(Contact::class)->findOneById($id);
@@ -68,6 +69,11 @@ class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
 
+            $fullname = $contact->getFirstname()." ".$contact->getLastname();
+            $slugify = new Slugify();
+            $slugify = $slugify->slugify($fullname);
+            $contact->setSlug($slugify);
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($contact); //figer les données 
             $entityManager->flush(); // push les données
@@ -93,7 +99,7 @@ class ContactController extends AbstractController
     
     // Modifier 
 
-    #[Route('/admin/contact{id}/modifier-un-contact', name: 'app_contact_edit')]
+    #[Route('/admin/contact/modifier-un-contact/{slug}{id}', name: 'app_contact_edit')]
     public function editContact(Request $request, $id): Response
     {
         $contact = $this->entityManager->getRepository(Contact::class)->findOneById($id);
