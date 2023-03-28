@@ -123,8 +123,7 @@ class AdminMainController extends AbstractController
         
         // récup contact associé au user
         $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);
-        dump($contacts);
-
+        
         if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
             return $this->redirectToRoute('app_customer_list');
         }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\EditContactType;
 use Cocur\Slugify\Slugify;
@@ -68,9 +69,7 @@ class ContactController extends AbstractController
     #[Route('/admin/contact/creer-un-contact', name: 'app_contact_add')]
     public function createContact(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
     {
-
         $contact = new Contact();
-
         
         $form = $this->createForm(ContactType::class, $contact);
 
@@ -93,6 +92,8 @@ class ContactController extends AbstractController
                 $entityManager->persist($contact); //figer les données 
                 $entityManager->flush(); // push les données
 
+
+
                 $this->addFlash(
                     'success',
                     'La Création du contact et bien enregistrée.'
@@ -108,15 +109,14 @@ class ContactController extends AbstractController
                 );
                 return $this->redirectToRoute('app_contact_add');
             }
+
         }
-
-        $user = $contact->getUser();
-
         
         return $this->render('admin/contact_new.html.twig', [
             'form' => $form->createView(), 
             'flash' => $this,
-            'user' => $user
+            'user' => $contact->getUser(),
+            'customer' => $contact->getUser(),
         ]);
     }
     

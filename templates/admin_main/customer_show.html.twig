@@ -7,35 +7,42 @@
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
         <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un RDV</a>
+        <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
     </div>
 
+{#### Container principal ####}
 
 <div class="container">
 
+    {#### Identification Client  ####}
+
     <div class="row">
-        <div class="col-12 d-flex flex-column p-2 border col-md-5 flex-md-row">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-column justify-content-between">
-                    <h3 class="m-0">{{ customer.user.firstname }}</h3>
+        <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between col-lg-6">
+            <div class="d-flex col-md-6 justify-content-between flex-md-column justify-content-lg-start">
+                <div class="d-flex flex-column justify-content-between justify-content-md-around mb-lg-3">
+                    <h3 class="m-0">{{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</h3>
                     <h6 class="m-0"> {{ customer.name }} </h6>
                 </div>
-                <div class="d-flex flex-column justify-content-between">
-                    {% if customer.isProfessional is not null %}
+                <div class="d-flex flex-column justify-content-between flex-md-row justify-content-md-around  ">
+                    {% if customer.isProfessional == true %}
                         <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-professional">Professionnel</p>
                     {% endif %}
-                    {% if customer.isPartner is not null %}
+                    {% if customer.isPartner == true %}
                         <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner">Partenaire</p>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="d-flex flex-column mt-1 border">
-                <h4 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h4>
+            <div class="d-flex flex-column mt-1 border col-md-6">
+
+                <h5 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h5>
                 
-                    {% if contacts %}
+                {% if contacts %}
 
-                        {% for contact in contacts %}
+                    {% for contact in contacts %}
 
+                        {% if contact.isMain == true %}
+                            
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
@@ -52,29 +59,144 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        {% endif %}
 
-                        {% endfor %}
+                    {% endfor %}
 
-                    {% endif %}
+                {% else %}
+                    <a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
+                {% endif %}
 
             </div>
 
         </div>
 
+            {#### CONTRATS ####}
 
 
+        <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between col-lg-6">
 
+            <div class="d-flex w-100 flex-column mt-1 border p-0">
 
+                <h5 class="w-100 text-center m-0 bg-alice-light py-1">Contrats</h5>
 
+                <div class="d-flex flex-column flex-md-row flex-lg-column">
 
+                    {% for contact in contacts %}
 
-        <div class="col-12">
-            Column
+                        <div class="d-flex flex-column mt-1 border p-0 col-12 col-md-6 col-lg-12">
+                        
+                            <table class="table mb-0">
+
+                            <h6 class="w-100 text-center m-0 bg-alice-light py-1">Contrat n° contrat.id</h6>
+                                
+                                <tbody>
+                                        <tr>
+                                            <td>Prénom Nom</td>
+                                            <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <th>{{ contact.email }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Tel</td>
+                                            <th>{{ contact.tel }}</th>
+                                        </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>   
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
         </div>
-        <div class="col-12">
-            Column
-        </div>
+
     </div>
+
+
+            {#### Détail client  ####}
+    <div class="row">
+
+        <div class="col-12 col-md-6">
+            <div class="d-flex flex-column mt-1 border p-0">
+
+                <h5 class="w-100 text-center m-0 bg-alice-light py-1">Détail Client</h5>
+
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <td>Nom</td>
+                            <th>{{ customer.name|upper }}</th>
+                        </tr>
+                        <tr>
+                            <td>Siret</td>
+                            <th>{{ customer.siret }}</th>
+                        </tr>
+                        <tr>
+                            <td>Adresse</td>
+                            <th>{{ customer.address }}</th>
+                        </tr>
+                        <tr>
+                            <td>CP Ville</td>
+                            <th>{{ customer.postalCode }} {{ customer.city }}</th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>   
+        </div>
+            
+            {#### Autres contacts  ####}
+            
+        <div class="col-12 col-md-6">
+
+            <div class="d-flex flex-column mt-1 border p-0">
+
+                <h6 class="w-100 text-center m-0 bg-alice-light py-1">Autres Contacts</h6>
+
+                <table class="table mb-0">
+
+                {% for contact in contacts %}
+                    
+                    <tbody>
+                        {% if contact.isMain == false %}
+                            <tr>
+                                <td>Prénom Nom</td>
+                                <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <th>{{ contact.email }}</th>
+                            </tr>
+                            <tr>
+                                <td>Tel</td>
+                                <th>{{ contact.tel }}</th>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+
+                {% endfor %}
+
+                </table>
+
+            </div>     
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
 
 </div>
 
