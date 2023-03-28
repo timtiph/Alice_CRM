@@ -377,7 +377,7 @@ input::-o-outer-spin-button {
     display: none;
 } */
 
-#customer_user, #edit_customer_user {
+#customer_user, #edit_customer_user, #contact_user {
     --bs-form-select-bg-img: red;
 }
 
