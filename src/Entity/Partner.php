@@ -24,6 +24,11 @@ class Partner
     #[ORM\OneToMany(mappedBy: 'partner', targetEntity: Customer::class)]
     private Collection $customers;
 
+    public function __toString()
+    {
+        return $this->getName().' : '.number_format(($this->getDiscountRate()) ,2,',',' ').' %';
+    }
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();

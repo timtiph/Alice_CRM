@@ -25,6 +25,11 @@ class TariffZone
     #[ORM\OneToMany(mappedBy: 'tariffZone', targetEntity: Customer::class)]
     private Collection $customers;
 
+    public function __toString()
+    {
+        return $this->getName().' : '.number_format(($this->getAmount()) ,2,',',' ').' €';
+    }
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();
