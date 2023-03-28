@@ -2,17 +2,18 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Contact;
 use App\Entity\Customer;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class EditUserType extends AbstractType
 {
@@ -35,9 +36,14 @@ class EditUserType extends AbstractType
             // ->add('is_verified', CheckboxType::class, [
             //     'disabled' => true
             // ])
-            ->add('role', TextType::class, [
+            ->add('role', ChoiceType::class, [
                 'label' => 'Statut',
-                ])
+                'choices'  => [
+                    'COMPTA' => "COMPTA",
+                    'COLLAB' => "COLLAB",
+                    'CLIENT' => "CLIENT",
+                ]
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

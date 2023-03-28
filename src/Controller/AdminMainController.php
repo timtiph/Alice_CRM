@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Contact;
+use App\Entity\Contract;
 use App\Entity\Customer;
+use App\Form\ContractType;
 use App\Form\CustomerType;
 use App\Form\EditCustomerType;
 use App\Form\EditUserType;
@@ -146,35 +148,37 @@ class AdminMainController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         
         $form->handleRequest($request);        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $customer = $form->getData();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $customer = $form->getData();
 
-            // création Slug
-            $fullname = $customer->getName();
-            $slugify = new Slugify();
-            $slugify = $slugify->slugify($fullname);
-            $customer->setSlug($slugify);
+                // création Slug
+                $fullname = $customer->getName();
+                $slugify = new Slugify();
+                $slugify = $slugify->slugify($fullname);
+                $customer->setSlug($slugify);
 
-            // récup User Id
-            $customer->setUser($user);
-            
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($customer); //figer les données 
-            $entityManager->flush(); // push les données
+                // récup User Id
+                $customer->setUser($user);
+                
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($customer); //figer les données 
+                $entityManager->flush(); // push les données
 
-            $this->addFlash(
-                'success',
-                'La Création du client est bien enregistrée.'
-            );
-            return $this->redirectToRoute('app_users_list');
+                $this->addFlash(
+                    'success',
+                    'La Création du client est bien enregistrée.'
+                );
+                return $this->redirectToRoute('app_users_list');
+            }
         } 
-        else {
-            $this->addFlash(
-                'alert',
-                'Une Erreur est survenue, veuillez recommencer.'
-            );
+        // else {
+        //     $this->addFlash(
+        //         'alert',
+        //         'Une Erreur est survenue, veuillez recommencer.'
+        //     );
             //return $this->redirectToRoute('app_customer_add');
-        }
+        // }
         
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(), 

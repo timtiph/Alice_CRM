@@ -7,7 +7,7 @@
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
         <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un RDV</a>
-        <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
+        <a href="{{ path('app_contract_add') }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
     </div>
 
 {#### Container principal ####}
@@ -142,8 +142,8 @@
                             <th>{{ customer.address }}</th>
                         </tr>
                         <tr>
-                            <td>CP Ville</td>
-                            <th>{{ customer.postalCode }} {{ customer.city }}</th>
+                            <td>CP Ville Pays</td>
+                            <th>{{ customer.postalCode }} {{ customer.city }} {{ customer.country }}</th>
                         </tr>
                     </tbody>
                 </table>

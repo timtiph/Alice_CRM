@@ -4,7 +4,10 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Customer;
+use App\Entity\Partner;
+use App\Entity\TariffZone;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -88,12 +91,19 @@ class CustomerType extends AbstractType
             ]
         ])
         ->add('isProfessional', CheckboxType::class, [
-            'label' => 'Client Pro ?',
+            'label' => 'Client Professionnel',
             'required' => false
         ])
         ->add('isPartner', CheckboxType::class, [
-            'label' => 'Client Partenaire ?',
+            'label' => 'Client Partenaire',
             'required' => false
+        ])
+        ->add('partner', EntityType::class, [
+            'label' => 'Patenariat : ',
+            'class' => Partner::class,
+            'required' => true,
+            'multiple' => false,
+            'expanded' => false
         ])
         ->add('user', EntityType::class, [
             'label' => 'Le client sera lié à l\'utilisateur : ',
@@ -106,12 +116,35 @@ class CustomerType extends AbstractType
                             ->setFirstResult(1);
             }
         ])
+        ->add('tariffZone', EntityType::class, [
+            'label' => 'Zone Tarifaire : ',
+            'class' => TariffZone::class,
+            'required' => true,
+            'multiple' => false,
+            'expanded' => false
+        ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
             'attr' => [
                 'class' => 'btn-alice-form'
             ]
         ]);
+
+        // ->add('name')
+        // ->add('siret')
+        // ->add('address')
+        // ->add('postalCode')
+        // ->add('city')
+        // ->add('country')
+        // ->add('isProfessional')
+        // ->add('isPartner')
+        // ->add('slug')
+        // ->add('user')
+        // ->add('tariffZone')
+        // ->add('partner')
+
+
+
         ;
     }
 
