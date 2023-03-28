@@ -86,11 +86,13 @@ class RegisterController extends AbstractController
                 return $this->redirectToRoute('app_send_email_confirm');
                 
             } else {
+
                 $this->addFlash(
                     'alert',
                     'L\'email que vous avez renseigné existe déjà !! Veuillez recommencer ou vous connecter.'
                 );
                 return $this->redirectToRoute('app_register');
+                
             }
             
             

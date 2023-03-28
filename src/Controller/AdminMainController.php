@@ -37,7 +37,7 @@ class AdminMainController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateurs', name: 'app_users_list')]
+    #[Route('/utilisateur', name: 'app_users_list')]
     public function showUsers(): Response
     {
         $users = $this->entityManager->getRepository(User::class)->findAll();
@@ -66,6 +66,7 @@ class AdminMainController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
+            
             if($form->isValid()){
 
                 $user = $form->getData();
@@ -79,12 +80,16 @@ class AdminMainController extends AbstractController
                     'La modification du contact et bien enregistrée.'
                 );
                 return $this->redirectToRoute('app_users_list');
+
             } else {
-            $this->addFlash(
-                'alert',
-                'Erreur sur le formulaire.'
-            );
-            return $this->redirectToRoute('app_users_list');
+
+                $this->addFlash(
+                    'alert',
+                    'Erreur sur le formulaire.'
+                );
+
+                return $this->redirectToRoute('app_users_list');
+
             }
         }
         
@@ -95,7 +100,7 @@ class AdminMainController extends AbstractController
     }
     
 
-    #[Route('/clients', name: 'app_customer_list')]
+    #[Route('/client', name: 'app_customer_list')]
     public function showCustomers(): Response
     {
         $customers = $this->entityManager->getRepository(Customer::class)->findAll();
@@ -132,7 +137,7 @@ class AdminMainController extends AbstractController
 
     }
 
-    #[Route('/clients/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
+    #[Route('/client/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
     public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
 
@@ -179,7 +184,7 @@ class AdminMainController extends AbstractController
         ]);
     }
 
-    #[Route('/clients/modifier-un-client/{id}/{slug}', name: 'app_customer_edit')]
+    #[Route('/client/modifier-un-client/{id}/{slug}', name: 'app_customer_edit')]
     public function editCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id, $slug): Response
     {
 
