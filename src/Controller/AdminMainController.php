@@ -124,7 +124,9 @@ class AdminMainController extends AbstractController
         $user = $customer->getUser($this);
         
         // récup contact associé au user
-        $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);
+        $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);   
+        // récup contrats associés au customer
+        $contracts = $this->entityManager->getRepository(Contract::class)->findBy(['customer' => $customer]);
         
         if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
             return $this->redirectToRoute('app_customer_list');
@@ -133,7 +135,8 @@ class AdminMainController extends AbstractController
         return $this->render('admin_main/customer_show.html.twig', [
             'customer' => $customer,
             'user' => $user,
-            'contacts' => $contacts
+            'contacts' => $contacts,
+            'contracts' => $contracts
         ]);
 
     }

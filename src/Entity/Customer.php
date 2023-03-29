@@ -18,14 +18,14 @@ class Customer
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $siret = null;
+    #[ORM\Column(nullable: true, length: 50)]
+    private ?string $siret = null;
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column]
-    private ?int $postalCode = null;
+    #[ORM\Column(length: 10)]
+    private ?string $postalCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -54,6 +54,7 @@ class Customer
     private ?TariffZone $tariffZone = null;
 
     #[ORM\ManyToOne(inversedBy: 'customers')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Partner $partner = null;
 
     public function __construct()

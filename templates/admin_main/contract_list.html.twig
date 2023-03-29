@@ -6,7 +6,50 @@
 
 
 <div class="example-wrapper">
-    <h1>Liste des contrats</h1>
+    <h1 class="mb-5">Liste des contrats</h1>
 
+    <div class="table-responsive">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date contrat</th>
+                    <th scope="col">Montant facturé</th>
+                    <th scope="col">Temps facturé</th>
+                    <th scope="col">Temps réel</th>
+                    <th scope="col">Montant réel</th>
+                    <th scope="col">Site Web</th>
+                    <th scope="col">Fractionnement</th>
+                    <th scope="col">Commentaires   </th>
+                    <th scope="col">Client</th>
+                    {# <th scope="col">Contact Principal</th> #}
+                </tr>
+            </thead>
+
+            {% for contract in contracts %}
+
+                <tbody>
+                    <tr>
+                        {# <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td> #}
+                        <td>{{ contract.name }}</td>
+                        <td>{{ contract.date|date("m/d/Y") }}</td>
+                        <td>{{ contract.amountCharged }} €</td>
+                        <td>{{ contract.timeCharged|format_datetime('none', 'short', locale='fr') }}</td>
+                        <td>{{ contract.timeReal|format_datetime('none', 'short', locale='fr') }}</td>
+                        <td>{{ contract.amountReal }} €</td>
+                        <td>{{ contract.websiteLink }}</td>
+                        <td>{{ contract.paymentFrequency }}</td>
+                        <td>{{ contract.openArea }}</td>
+                        <td>{{ contract.customer }}</td>
+
+
+                    </tr>
+                </tbody>
+
+            {% endfor %} 
+        </table>
+    </div>
 
 {% endblock %}

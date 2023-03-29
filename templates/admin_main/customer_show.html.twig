@@ -3,6 +3,8 @@
 {% block title %}CRM Alice | Client {{ customer.name }}{% endblock %}
 
 {% block body %}
+
+
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
         <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
         <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
@@ -82,32 +84,56 @@
 
                 <div class="d-flex flex-column flex-md-row flex-lg-column">
 
-                    {% for contact in contacts %}
-
-                        <div class="d-flex flex-column mt-1 border p-0 col-12 col-md-6 col-lg-12">
+                            {% for contract in contracts %}
+                    
+                        <div class="d-flex flex-column mt-1 border p-0 col-12 col-md-6 col-lg-12" id="divContrat">
                         
                             <table class="table mb-0">
 
-                            <h6 class="w-100 text-center m-0 bg-alice-light py-1">Contrat n° contrat.id</h6>
+                                <div class="d-flex bg-alice-light">
+                                    <h6 class="w-100 text-center m-0  py-1">Contrat {{ contract.name }}</h6>
+                                    <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" id="controlButtonDiv">
+                                </div>
                                 
                                 <tbody>
-                                        <tr>
-                                            <td>Prénom Nom</td>
-                                            <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <th>{{ contact.email }}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Tel</td>
-                                            <th>{{ contact.tel }}</th>
-                                        </tr>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>{{ contract.date|date("m/d/Y") }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Montant facturé</td>
+                                        <td>{{ contract.amountCharged }} €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temps facturé</td>
+                                        <td>{{ contract.timeCharged|format_datetime('none', 'short', locale='fr') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Montant réel</td>
+                                        <td>{{ contract.amountReal }} €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temps réel</td>
+                                        <td>{{ contract.timeReal|format_datetime('none', 'short', locale='fr') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Site géré par le contrat</td>
+                                        <td>{{ contract.websiteLink }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fractionnement</td>
+                                        <td>{{ contract.paymentFrequency }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Commentaires</td>
+                                        <td>{{ contract.openArea }}</td>
+                                    </tr>
                                 </tbody>
 
                             </table>
 
                         </div>   
+
                     {% endfor %}
 
                 </div>
@@ -202,9 +228,5 @@
 
 
 
-
-
-
-
-
 {% endblock %}
+
