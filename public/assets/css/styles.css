@@ -381,9 +381,6 @@ input::-o-outer-spin-button {
 	margin:0
 }
 
-/* #fieldCustomerSiret{
-    display: none;
-} */
 
 #customer_user, #edit_customer_user, #contact_user {
     --bs-form-select-bg-img: red;

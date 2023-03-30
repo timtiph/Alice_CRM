@@ -23,14 +23,8 @@ class Contract
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     private ?string $amountCharged = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $timeCharged = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     private ?string $amountReal = null;
-
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $timeReal = null;
 
     #[ORM\Column(length: 255)]
     private ?string $websiteLink = null;
@@ -44,6 +38,12 @@ class Contract
     #[ORM\ManyToOne(inversedBy: 'contracts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $timeCharged = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $timeReal = null;
 
     public function getId(): ?int
     {
@@ -86,18 +86,6 @@ class Contract
         return $this;
     }
 
-    public function getTimeCharged(): ?\DateTimeInterface
-    {
-        return $this->timeCharged;
-    }
-
-    public function setTimeCharged(\DateTimeInterface $timeCharged): self
-    {
-        $this->timeCharged = $timeCharged;
-
-        return $this;
-    }
-
     public function getAmountReal(): ?string
     {
         return $this->amountReal;
@@ -106,18 +94,6 @@ class Contract
     public function setAmountReal(string $amountReal): self
     {
         $this->amountReal = $amountReal;
-
-        return $this;
-    }
-
-    public function getTimeReal(): ?\DateTimeInterface
-    {
-        return $this->timeReal;
-    }
-
-    public function setTimeReal(\DateTimeInterface $timeReal): self
-    {
-        $this->timeReal = $timeReal;
 
         return $this;
     }
@@ -166,6 +142,30 @@ class Contract
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getTimeCharged(): ?int
+    {
+        return $this->timeCharged;
+    }
+
+    public function setTimeCharged(?int $timeCharged): self
+    {
+        $this->timeCharged = $timeCharged;
+
+        return $this;
+    }
+
+    public function getTimeReal(): ?int
+    {
+        return $this->timeReal;
+    }
+
+    public function setTimeReal(?int $timeReal): self
+    {
+        $this->timeReal = $timeReal;
 
         return $this;
     }

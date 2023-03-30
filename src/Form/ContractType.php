@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -33,6 +32,7 @@ class ContractType extends AbstractType
             ])
             ->add('timeCharged', TimeType::class, [
                 'label' => 'Durée facturée',
+                'input' => 'timestamp'
 
             ])
             ->add('amountReal', MoneyType::class, [

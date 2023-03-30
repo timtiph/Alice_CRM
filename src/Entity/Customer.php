@@ -18,14 +18,8 @@ class Customer
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(nullable: true, length: 50)]
-    private ?string $siret = null;
-
     #[ORM\Column(length: 255)]
     private ?string $address = null;
-
-    #[ORM\Column(length: 10)]
-    private ?string $postalCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -54,8 +48,14 @@ class Customer
     private ?TariffZone $tariffZone = null;
 
     #[ORM\ManyToOne(inversedBy: 'customers')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Partner $partner = null;
+
+    #[ORM\Column(length: 14, nullable: true)]
+    private ?string $siret = null;
+
+    #[ORM\Column(length: 5)]
+    private ?string $zipCode = null;
 
     public function __construct()
     {
@@ -84,18 +84,6 @@ class Customer
         return $this;
     }
 
-    public function getSiret(): ?int
-    {
-        return $this->siret;
-    }
-
-    public function setSiret(?int $siret): self
-    {
-        $this->siret = $siret;
-
-        return $this;
-    }
-
     public function getAddress(): ?string
     {
         return $this->address;
@@ -104,18 +92,6 @@ class Customer
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?int
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(int $postalCode): self
-    {
-        $this->postalCode = $postalCode;
 
         return $this;
     }
@@ -242,6 +218,30 @@ class Customer
     public function setPartner(?Partner $partner): self
     {
         $this->partner = $partner;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(string $zipCode): self
+    {
+        $this->zipCode = $zipCode;
 
         return $this;
     }

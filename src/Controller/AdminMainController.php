@@ -116,12 +116,11 @@ class AdminMainController extends AbstractController
     public function showCustomer($id) 
     {
 
-        // TODO : changer l'ordre de la logique des if
         // récup données client
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
 
         // récup user associé
-        $user = $customer->getUser($this);
+        $user = $customer->getUser();
         
         // récup contact associé au user
         $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);   

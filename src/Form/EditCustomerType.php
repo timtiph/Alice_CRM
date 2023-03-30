@@ -32,7 +32,7 @@ class EditCustomerType extends AbstractType
             ]
         ])
         // TODO : Revoir les pattern
-        ->add('siret', IntegerType::class, [
+        ->add('siret', TextType::class, [
             'label' => 'SIREN ou SIRET',
             'required' => false, 
             'constraints' => [
@@ -57,7 +57,7 @@ class EditCustomerType extends AbstractType
             ]
         ])
         // TODO : Revoir les pattern
-        ->add('postalCode', IntegerType::class, [
+        ->add('zipCode', IntegerType::class, [
             'label' => 'Code Postal',
             'constraints' => [
                 new Length([
