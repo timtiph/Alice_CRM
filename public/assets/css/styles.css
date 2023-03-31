@@ -14,6 +14,14 @@ body {
     max-height: 500px;
 }
 
+/*
+ Personal color
+*/
+
+.bgg-alice-light{
+    background-color: #FAFAFF;
+}
+
 
 /********************** < Injection Bootstrap pout le graphique et la nav */
 
@@ -362,8 +370,6 @@ main{
 }
 
 
-
-
 /*
 *  CUSTOMER FORM  
 */
@@ -410,6 +416,20 @@ table[data-name='tableContract'], table[data-name='tableContact']{
     display: none;
 }
 
-img[data-name='imgAddContract']:hover, img[data-name='imgSuppContract']:hover{
+img[data-name='imgAddContract']:hover, 
+img[data-name='imgSuppContract']:hover, 
+img[data-name='imgAddContact']:hover, 
+img[data-name='imgSuppContact']:hover{
+    cursor: pointer;
+}
+
+.buttonEditContract, 
+.buttonEditContact{
+    width: 25px;
+    margin-right: 5px;
+}
+
+.buttonEditContract:hover, 
+.buttonEditContact:hover{
     cursor: pointer;
 }
