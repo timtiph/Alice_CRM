@@ -217,13 +217,21 @@ body {
 
 
 /**************************** Container Main partie droite */
-/* 
-.container-alice{
-    max-height: 80vh;
-} */
+
 main{
     overflow: scroll !important;
     max-height: 90vh;
+}
+
+.form-search > form{
+    width: 100%;
+}
+
+.form-search > form > div{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
 }
 
 /*
@@ -393,4 +401,15 @@ input::-o-outer-spin-button {
 .picto-check-professional, .picto-check-partner{
     width: 20px;
     height: 20px;
+}
+
+
+/************ Affichage des tables détail client et contrats  ************/
+
+table[data-name='tableContract'], table[data-name='tableContact']{
+    display: none;
+}
+
+img[data-name='imgAddContract']:hover, img[data-name='imgSuppContract']:hover{
+    cursor: pointer;
 }

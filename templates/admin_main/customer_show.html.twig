@@ -6,221 +6,233 @@
 
 
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
-        <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
-        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
-        <a href="#" class="btn btn-alice-lg btn-block mx-3">Ajouter un RDV</a>
+        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le client</a>        
+        <a href="{{ path('app_contact_add') }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
         <a href="{{ path('app_contract_add') }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
+        {# TODO : Ajouter un bouton RDV #}
     </div>
 
 {#### Container principal ####}
 
 <div class="container">
 
-    {#### Identification Client  ####}
+    {#### d-flex global ####}
 
     <div class="row">
-        <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between col-lg-6">
-            <div class="d-flex col-md-6 justify-content-between flex-md-column justify-content-lg-start">
-                <div class="d-flex flex-column justify-content-between justify-content-md-around mb-lg-3">
-                    <h3 class="m-0">{{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</h3>
-                    <h6 class="m-0"> {{ customer.name }} </h6>
+
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
+
+                {#### Identification Client + contact principal ####}
+
+            <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between">
+                <div class="d-flex col-md-6 justify-content-between flex-md-column justify-content-lg-start">
+                    <div class="d-flex flex-column justify-content-between justify-content-md-around mb-lg-3">
+                        <h3 class="m-0">{{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</h3>
+                        <h6 class="m-0"> {{ customer.name }} </h6>
+                    </div>
+                    <div class="d-flex flex-column justify-content-between flex-md-row justify-content-md-around  ">
+                        {% if customer.isProfessional == true %}
+                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-professional">Professionnel</p>
+                        {% endif %}
+                        {% if customer.isPartner == true %}
+                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner">Partenaire</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="d-flex flex-column justify-content-between flex-md-row justify-content-md-around  ">
-                    {% if customer.isProfessional == true %}
-                        <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-professional">Professionnel</p>
+
+                <div class="d-flex flex-column mt-1 border col-md-6">
+
+                    <h5 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h5>
+                    
+                    {% if contacts %}
+
+                        {% for contact in contacts %}
+
+                            {% if contact.isMain == true %}
+                                
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td>Prénom Nom</td>
+                                            <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <th>{{ contact.email }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Tel</td>
+                                            <th>{{ contact.phone }}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+                        <a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
                     {% endif %}
-                    {% if customer.isPartner == true %}
-                        <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner">Partenaire</p>
-                    {% endif %}
+
                 </div>
+
             </div>
 
-            <div class="d-flex flex-column mt-1 border col-md-6">
+                {#### Détail client  ####}
 
-                <h5 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h5>
+
+            <div class="col-12">
+                <div class="d-flex flex-column mt-1 border p-0">
+
+                    <h5 class="w-100 text-center m-0 bg-alice-light py-1">Détail Client</h5>
+
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr>
+                                <td>Nom</td>
+                                <th>{{ customer.name|upper }}</th>
+                            </tr>
+                            <tr>
+                                <td>Siret</td>
+                                <th>{{ customer.siret }}</th>
+                            </tr>
+                            <tr>
+                                <td>Adresse</td>
+                                <th>{{ customer.address }}</th>
+                            </tr>
+                            <tr>
+                                <td>CP Ville Pays</td>
+                                <th>{{ customer.zipCode }} {{ customer.city }} {{ customer.country }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>   
+            </div>
+
+                {#### Autres contacts  ####}
                 
-                {% if contacts %}
+            <div class="col-12">
 
+                <div class="d-flex flex-column mt-1 border p-0">
+
+                    <h6 class="w-100 text-center m-0 bg-alice-light py-1">Autres Contacts</h6>
+                    
                     {% for contact in contacts %}
+                        {% if contact.isMain == false %}
 
-                        {% if contact.isMain == true %}
+                    <div class="mt-1">
+
+                        <table class="table mb-0 mt-1" data-name="tableContact">
+
+
+                            <div class="d-flex bg-alice-light">
+                                <h6 class="w-100 text-center m-0 py-1">Prénom : {{ contact.firstname|capitalize }} Nom : {{ contact.lastname|upper }}</h6>
+                                <div data-name="controlButtonDivContact">
+                                    <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact"><img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                                </div>
+                            </div>
+
                             
-                            <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td>Prénom Nom</td>
-                                        <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
-                                    </tr>
+                            <tbody>
                                     <tr>
                                         <td>Email</td>
                                         <th>{{ contact.email }}</th>
                                     </tr>
                                     <tr>
                                         <td>Tel</td>
-                                        <th>{{ contact.tel }}</th>
+                                        <th>{{ contact.phone }}</th>
                                     </tr>
-                                </tbody>
-                            </table>
+                            </tbody>
+
+                        </table>
+                    </div>
+
                         {% endif %}
-
                     {% endfor %}
-
-                {% else %}
-                    <a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
-                {% endif %}
+                </div>     
 
             </div>
 
+
+
         </div>
+        
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6 mt-2">
 
-            {#### CONTRATS ####}
+                {#### CONTRATS ####}
 
+            <div class="col-12 flex-column flex-md-row justify-content-md-between">
 
-        <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between col-lg-6">
+                <div class="d-flex w-100 flex-column mt-1 border p-0">
 
-            <div class="d-flex w-100 flex-column mt-1 border p-0">
+                    <h5 class="w-100 text-center m-0 bg-alice-light py-1">Contrats</h5>
 
-                <h5 class="w-100 text-center m-0 bg-alice-light py-1">Contrats</h5>
+                    <div class="d-flex flex-column flex-md-row flex-lg-column">
 
-                <div class="d-flex flex-column flex-md-row flex-lg-column">
-
-                            {% for contract in contracts %}
-                    
-                        <div class="d-flex flex-column mt-1 border p-0 col-12 col-md-6 col-lg-12" id="divContrat">
+                                {% for contract in contracts %}
                         
-                            <table class="table mb-0">
+                            <div class="d-flex flex-column mt-1 border p-0 col-12">
+                            
+                                <table class="table mb-0" data-name="tableContract">
 
-                                <div class="d-flex bg-alice-light">
-                                    <h6 class="w-100 text-center m-0  py-1">Contrat {{ contract.name }}</h6>
-                                    <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" id="controlButtonDiv">
-                                </div>
-                                
-                                <tbody>
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>{{ contract.date|date("m/d/Y") }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Montant facturé</td>
-                                        <td>{{ contract.amountCharged }} €</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Temps facturé</td>
-                                        <td>{{ contract.timeCharged|format_datetime('none', 'short', locale='fr') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Montant réel</td>
-                                        <td>{{ contract.amountReal }} €</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Temps réel</td>
-                                        <td>{{ contract.timeReal|format_datetime('none', 'short', locale='fr') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Site géré par le contrat</td>
-                                        <td>{{ contract.websiteLink }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fractionnement</td>
-                                        <td>{{ contract.paymentFrequency }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Commentaires</td>
-                                        <td>{{ contract.openArea }}</td>
-                                    </tr>
-                                </tbody>
+                                    <div class="d-flex bg-alice-light">
+                                        <h6 class="w-100 text-center m-0  py-1">Contrat {{ contract.name }}</h6>
+                                        <div data-name="controlButtonDivContract">
+                                            <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContract"><img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContract" style="display:none;">
+                                        </div>
+                                    </div>
+                                    
+                                    <tbody>
+                                        <tr>
+                                            <td>Date</td>
+                                            <td>{{ contract.date|date("m/d/Y") }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Montant facturé</td>
+                                            <td>{{ contract.amountCharged }} €</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Temps facturé</td>
+                                            <td>{{ contract.timeCharged|format_datetime('none', 'short', locale='fr') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Montant réel</td>
+                                            <td>{{ contract.amountReal }} €</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Temps réel</td>
+                                            <td>{{ contract.timeReal|format_datetime('none', 'short', locale='fr') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Site géré par le contrat</td>
+                                            <td>{{ contract.websiteLink }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fractionnement</td>
+                                            <td>{{ contract.paymentFrequency }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Commentaires</td>
+                                            <td>{{ contract.openArea }}</td>
+                                        </tr>
+                                    </tbody>
 
-                            </table>
+                                </table>
 
-                        </div>   
+                            </div>   
 
-                    {% endfor %}
+                        {% endfor %}
+
+                    </div>
 
                 </div>
 
             </div>
-
+        
         </div>
 
     </div>
-
-
-            {#### Détail client  ####}
-    <div class="row">
-
-        <div class="col-12 col-md-6">
-            <div class="d-flex flex-column mt-1 border p-0">
-
-                <h5 class="w-100 text-center m-0 bg-alice-light py-1">Détail Client</h5>
-
-                <table class="table mb-0">
-                    <tbody>
-                        <tr>
-                            <td>Nom</td>
-                            <th>{{ customer.name|upper }}</th>
-                        </tr>
-                        <tr>
-                            <td>Siret</td>
-                            <th>{{ customer.siret }}</th>
-                        </tr>
-                        <tr>
-                            <td>Adresse</td>
-                            <th>{{ customer.address }}</th>
-                        </tr>
-                        <tr>
-                            <td>CP Ville Pays</td>
-                            <th>{{ customer.zipCode }} {{ customer.city }} {{ customer.country }}</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>   
-        </div>
-            
-            {#### Autres contacts  ####}
-            
-        <div class="col-12 col-md-6">
-
-            <div class="d-flex flex-column mt-1 border p-0">
-
-                <h6 class="w-100 text-center m-0 bg-alice-light py-1">Autres Contacts</h6>
-
-                <table class="table mb-0">
-
-                {% for contact in contacts %}
-                    
-                    <tbody>
-                        {% if contact.isMain == false %}
-                            <tr>
-                                <td>Prénom Nom</td>
-                                <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <th>{{ contact.email }}</th>
-                            </tr>
-                            <tr>
-                                <td>Tel</td>
-                                <th>{{ contact.tel }}</th>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-
-                {% endfor %}
-
-                </table>
-
-            </div>     
-
-        </div>
-
-
-
-
-    </div>
-
-
-
 
 
 

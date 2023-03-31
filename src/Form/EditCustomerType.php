@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Customer;
+use App\Entity\Partner;
+use App\Entity\TariffZone;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -95,16 +97,30 @@ class EditCustomerType extends AbstractType
             'label' => 'Client Partenaire ?',
             'required' => false
         ])
-        ->add('user', EntityType::class, [
-            'label' => 'Le client sera lié à l\'utilisateur : ',
+        // ->add('user', EntityType::class, [
+        //     'label' => 'Le client sera lié à l\'utilisateur : ',
+        //     'required' => true,
+        //     'disabled' => true,
+        //     'class' => User::class,
+        //     'query_builder' => function (EntityRepository $er) {
+        //         return $er  ->createQueryBuilder('u')
+        //                     ->orderBy('u.id', 'ASC')
+        //                     ->setFirstResult(1);
+        //     }
+        // ])
+        ->add('partner', EntityType::class, [
+            'label' => 'Patenariat : ',
+            'class' => Partner::class,
             'required' => true,
-            'disabled' => true,
-            'class' => User::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er  ->createQueryBuilder('u')
-                            ->orderBy('u.id', 'ASC')
-                            ->setFirstResult(1);
-            }
+            'multiple' => false,
+            'expanded' => false
+        ])
+        ->add('tariffZone', EntityType::class, [
+            'label' => 'Zone Tarifaire : ',
+            'class' => TariffZone::class,
+            'required' => true,
+            'multiple' => false,
+            'expanded' => false
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

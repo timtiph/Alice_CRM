@@ -77,7 +77,7 @@ class ContactType extends AbstractType
                 'invalid_message' => 'Veuillez renseigner une adresse email valide',
             ])
             // 
-            ->add('tel', TelType::class, [
+            ->add('phone', TelType::class, [
                 'label' => 'Téléphone',
                 'attr' => [
                     'placeholder' => '00 00 00 00 00'

@@ -14,6 +14,7 @@
 
             <thead>
                 <tr>
+                    <th scope="col">Client</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Date contrat</th>
                     <th scope="col">Montant facturé</th>
@@ -23,7 +24,6 @@
                     <th scope="col">Site Web</th>
                     <th scope="col">Fractionnement</th>
                     <th scope="col">Commentaires   </th>
-                    <th scope="col">Client</th>
                     {# <th scope="col">Contact Principal</th> #}
                 </tr>
             </thead>
@@ -32,19 +32,17 @@
 
                 <tbody>
                     <tr>
-                        {# <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td> #}
+                        <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} ">{{ contract.customer.name }}</a></td>
                         <td>{{ contract.name }}</td>
-                        <td>{{ contract.date|date("m/d/Y") }}</td>
+                        <td>{{ contract.date|date("d/m/Y") }}</td>
                         <td>{{ contract.amountCharged }} €</td>
-                        <td>{{ contract.timeCharged|format_datetime('none', 'short', locale='fr') }}</td>
-                        <td>{{ contract.timeReal|format_datetime('none', 'short', locale='fr') }}</td>
+                        <td>{{ contract.timeCharged }} h</td>
+                        <td>{{ contract.timeReal }} h</td>
                         <td>{{ contract.amountReal }} €</td>
                         <td>{{ contract.websiteLink }}</td>
                         <td>{{ contract.paymentFrequency }}</td>
                         <td>{{ contract.openArea }}</td>
-                        <td>{{ contract.customer }}</td>
-
-
+                        
                     </tr>
                 </tbody>
 

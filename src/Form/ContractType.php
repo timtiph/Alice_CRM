@@ -30,17 +30,14 @@ class ContractType extends AbstractType
             ->add('amountCharged', MoneyType::class, [
                 'label' => 'Montant facturé'
             ])
-            ->add('timeCharged', TimeType::class, [
+            ->add('timeCharged', TextType::class, [
                 'label' => 'Durée facturée',
-                'input' => 'timestamp'
-
             ])
             ->add('amountReal', MoneyType::class, [
                 'label' => 'Montant réel'
             ])
-            ->add('timeReal', TimeType::class, [
+            ->add('timeReal', TextType::class, [
                 'label' => 'Durée Réelle',
-
             ])
             ->add('websiteLink', TextType::class, [
                 'label' => 'lien site client'

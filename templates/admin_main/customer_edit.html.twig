@@ -9,12 +9,28 @@
 
 <h1 class="mb-3">Modification du client {{ customer.name }}</h1>
 
-<p class="mb-5">Fiche client liée : </p>
-
+<p>Client lié à l'utilisateur : {{ customer.user.firstname }} {{ customer.user.lastname }}</p>
 
     <div class="form mt-3 mt-lg-0">
         
-        {{form(form)}}
+        {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.isPartner) }}
+            {{ form_row(form.partner) }}
+            {{ form_row(form.isProfessional) }}
+            {{ form_row(form.siret) }}
+            {{ form_row(form.address) }}
+            {{ form_row(form.zipCode) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.country) }}
+            {{ form_row(form.tariffZone) }}
+            {{ form_row(form.submit) }}
+
+        {{ form_end(form) }}
+
     </div>
 
 

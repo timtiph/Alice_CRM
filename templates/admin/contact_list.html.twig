@@ -3,7 +3,6 @@
 {% block title %}CRM Alice | Liste des contacts{% endblock %}
 
 {% block body %}
-<h1 class="text-warning">Mettre un champs nom de société dans table cntact ?</h1>
 
 <h1>Liste des contacts</h1>
 
@@ -17,10 +16,10 @@
 
         <thead>
             <tr>
-                <th scope="col">Client</th>
+                <th scope="col">Nom du client</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Email</th>
-                <th scope="col">Tel</th>
+                <th scope="col">Téléphone</th>
                 <th scope="col">Fonction</th>
                 <th scope="col">Contact Principal</th>
             </tr>
@@ -30,10 +29,10 @@
 
         <tbody>
             <tr>
-                <td>{{ contact.user.id }}</td>
+                <td>{% if contact.user.customer %}  {{ contact.user.customer.name }} {% endif %}</td>
                 <td><a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}">{{ contact.lastname }} {{ contact.firstname }}</a></td>
                 <td>{{ contact.email }}</td>
-                <td>{{ contact.tel }}</td>
+                <td>{{ contact.phone }}</td>
                 <td>{{ contact.position }}</td>
 
                 {% if contact.isMain == 1 %}
