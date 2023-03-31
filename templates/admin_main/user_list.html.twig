@@ -6,11 +6,43 @@
 
 
 
-<h1>Liste des utilisateurs</h1>
+<h1 class="mb-5">Liste des utilisateurs</h1>
 
 
 
-    <div class="table-responsive">
+   
+
+    {% for user in users %}
+
+        <div class="card m-2">
+            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                    <h5 class="card-title">{{ user.firstname|capitalize }} {{ user.lastname|upper }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
+                    <p class="card-text">Role : 
+                        {% if user.role is null %}
+                        <img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention">
+                        {% endif %}
+                        {{ user.role }}</p>
+                </div>
+                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Modifier</a><br>
+                    <a href="#" class="btn btn-block btn-alice-lg">Supprimer</a><br>
+                    {% if user.customer is null %}
+                    <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Créer une fiche client</a> 
+                    {% else %}
+                    <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-block btn-alice-lg">Consulter la fiche client</a> 
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+
+
+    {# <div class="table-responsive">
 
         <table class="table">
 
@@ -24,9 +56,9 @@
                 </tr>
             </thead>
 
-            {% for user in users %}
+            {% for user in users %}#}
             {# TODO : if user.isVerified ..... on affiche les users verifed #}
-                <tbody>
+                {# <tbody>
                     <tr>
                         <td>{{ user.firstname|capitalize }}</td>
                         <td>{{ user.lastname|upper }}</td>
@@ -37,6 +69,7 @@
                             {% endif %}
                             {{ user.role }}
                         </td>
+
                         <td>
                         <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Modifier</a><br>
                         <a href="#">Supprimer</a><br>
@@ -46,7 +79,6 @@
                                 <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}">Consulter la fiche client</a> 
                             {% endif %}
                         </td>
-
                     </tr>
                 </tbody>
 
@@ -54,5 +86,6 @@
 
         </table>
     </div>
+     #}
 
 {% endblock %}

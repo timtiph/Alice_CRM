@@ -121,15 +121,23 @@
                     {% for contact in contacts %}
                         {% if contact.isMain == false %}
 
-                    <div class="mt-1">
+                    <div class="d-flex flex-column mt-1 border p-0 col-12">
 
                         <table class="table mb-0 mt-1" data-name="tableContact">
 
 
-                            <div class="d-flex bg-alice-light">
-                                <h6 class="w-100 text-center m-0 py-1">Prénom : {{ contact.firstname|capitalize }} Nom : {{ contact.lastname|upper }}</h6>
-                                <div data-name="controlButtonDivContact">
-                                    <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact"><img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                            <div class="d-flex bg-alice-light justify-content-between">
+                                <div class="">
+                                    <h6 class="text-center m-0 py-1">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</h6>
+                                </div>
+                                <div class="d-flex">
+                                    <div>
+                                        <img src="{{ asset('assets/img/edit-solid.svg') }}" alt="Bouton Modifier" class="buttonEditContact">
+                                    </div>
+                                    <div data-name="controlButtonDivContact" class="d-flex">
+                                        <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
+                                        <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                                    </div>
                                 </div>
                             </div>
 
@@ -168,7 +176,7 @@
 
                     <h5 class="w-100 text-center m-0 bg-alice-light py-1">Contrats</h5>
 
-                    <div class="d-flex flex-column flex-md-row flex-lg-column">
+                    <div class="d-flex flex-column">
 
                                 {% for contract in contracts %}
                         
@@ -176,10 +184,19 @@
                             
                                 <table class="table mb-0" data-name="tableContract">
 
-                                    <div class="d-flex bg-alice-light">
-                                        <h6 class="w-100 text-center m-0  py-1">Contrat {{ contract.name }}</h6>
-                                        <div data-name="controlButtonDivContract">
-                                            <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContract"><img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContract" style="display:none;">
+                                    <div class="d-flex bg-alice-light justify-content-between">
+                                        <div class="">
+                                            <h6 class="text-center m-0 py-1">Contrat {{ contract.name }}</h6>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div>
+                                                {# href="{{ path('app_contract_edit', { 'id': contract.id }) }}"  #}
+                                                    <a href="{{ path('app_contract_show', { 'id': contract.id }) }}"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Voir" class="buttonEditContract"></a>
+                                            </div>
+                                            <div data-name="controlButtonDivContract">
+                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContract">
+                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContract" style="display:none;">
+                                            </div>
                                         </div>
                                     </div>
                                     
