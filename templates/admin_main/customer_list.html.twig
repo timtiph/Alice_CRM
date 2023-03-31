@@ -20,10 +20,10 @@
                 <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Ville</th>
-                    <th scope="col">Pays</th>
+                    {# <th scope="col">Pays</th> #}
                     <th scope="col">Client Pro</th>
                     <th scope="col">Partenaire</th>
-                    <th scope="col">Prénom du USER</th>
+                    <th scope="col">Nom du USER</th>
                     {# <th scope="col">Contact Principal</th> #}
                 </tr>
             </thead>
@@ -34,10 +34,14 @@
                     <tr>
                         <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td>
                         <td>{{ customer.city }}</td>
-                        <td>{{ customer.country }}</td>
-                        <td>Is PRO</td>
-                        <td>Is PARTNER</td>
-                        <td>{{ customer.user.firstname }}</td>
+                        {# <td>{{ customer.country }}</td> #}
+                        <td>{% if customer.isProfessional == true %}
+                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                        {% endif %}</td>
+                        <td>{% if customer.isPartner == true %}
+                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                        {% endif %}</td>
+                        <td>{{ customer.user.firstname }} {{ customer.user.lastname }}</td>
                     </tr>
                 </tbody>
 
