@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification contrat | Alice CRM{% endblock %}
+
+{% block body %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+
+
+<h1 class="mb-3">Modification du contrat {{ contract.name }} du client {{ contract.customer.name }}</h1>
+
+<p>Client lié à l'utilisateur : {{ contract.customer.user.firstname }} {{ contract.customer.user.lastname }}</p>
+
+    <div class="form mt-3 mt-lg-0">
+        
+        {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+
+            {{ form_row(form.customer) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.date) }}
+            {{ form_row(form.amountCharged) }}
+            {{ form_row(form.timeCharged) }}
+            {{ form_row(form.amountReal) }}
+            {{ form_row(form.timeReal) }}
+            {{ form_row(form.websiteLink) }}
+            {{ form_row(form.paymentFrequency) }}
+            {{ form_row(form.openArea) }}
+            {{ form_row(form.submit) }}
+
+        {{ form_end(form) }}
+
+    </div>
+
+
+{% endblock %}

@@ -3,6 +3,66 @@
 {% block title %}Contrat Détail | Alice CRM{% endblock %}
 
 {% block body %}
-    <h1>Vue Contrat </h1>
-    TODO : Résoudre de soucis avec la vue du contrat
+
+    <h1 class="mb-5">{{ contract.name }}</h1>
+    <div class="d-flex justify-content-end">
+
+        <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le contrat</a>
+        <a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Retour Client</a>
+    </div>
+
+<div class="table-responsive me-lg-5">
+
+        
+    <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Client</th>
+                    <td>{{ contract.customer }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">Date</th>
+                    <td>{{ contract.date|date("m/d/Y") }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Montant Facturé</th>
+                    <td>{{ contract.amountCharged }} €</td>
+                </tr>
+                <tr>
+                    <th scope="col">Montant Réel</th>
+                    <td>{{ contract.amountReal }} €</td>
+                </tr>
+                <tr>
+                    <th scope="col">Lien Site Client</th>
+                    <td>{{ contract.websiteLink }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Fractionnement</th>
+                    <td>{{ contract.paymentFrequency }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Commentaires</th>
+                    <td>{{ contract.openArea }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Temps Facturé</th>
+                    <td>{{ contract.timeCharged }} Heures</td>
+                </tr>
+                <tr>
+                    <th scope="col">Temps Réel</th>
+                    <td>{{ contract.timeReal }} Heures</td>
+                </tr>
+            </tbody>
+
+                    
+
+    </table>
+
+</div>
+
+
+
 {% endblock %}
