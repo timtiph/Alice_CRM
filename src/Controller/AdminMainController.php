@@ -224,7 +224,7 @@ class AdminMainController extends AbstractController
         //     return $this->redirectToRoute('app_customer', array('id' => $id, 'slug' => $slug));
         // }
         
-        return $this->render('admin_main/customer_new.html.twig', [
+        return $this->render('admin_main/customer_edit.html.twig', [
             'form' => $form->createView(), 
             'flash' => $this,
             'customer' => $customer
