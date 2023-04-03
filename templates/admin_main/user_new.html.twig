@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Créer un utilisateur{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="mb-5">Création d'un utlisateur</h3>
+
+
+<div class="form mt-3 mt-lg-0">
+
+    {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        {{ form_row(form.role) }}
+        {{ form_row(form.submit) }}
+
+    {{ form_end(form) }}
+
+</div>
+
+{% endblock %}

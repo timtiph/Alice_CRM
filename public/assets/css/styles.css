@@ -433,3 +433,13 @@ img[data-name='imgSuppContact']:hover{
 .buttonEditContact:hover{
     cursor: pointer;
 }
+
+  
+
+/* Encart Nouveau User */
+.new-user{
+    display: flex;
+    border: rgb(25, 55, 77, 0.2) solid 1px;
+    border-radius: 5px;
+    padding: 0 50px 0 50px;
+}

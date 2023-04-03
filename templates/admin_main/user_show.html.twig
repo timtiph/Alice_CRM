@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.lastname|upper }} {{ user.firstname|capitalize }} | Alice CRM{% endblock %}
+
+{% block body %}
+
+
+
+<h1 class="mb-5">Utilisateur : {{ user.lastname|upper }} {{ user.firstname|capitalize }}</h1>
+
+{# identification USER #}
+
+        <div class="card m-2">
+            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                    <h5 class="card-title">{{ user.firstname|capitalize }} {{ user.lastname|upper }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
+                    <p class="card-text">Role : 
+                        {% if user.role is null %}
+                        <img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention">
+                        {% endif %}
+                        {{ user.role }}</p>
+                </div>
+                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Modifier</a><br>
+                    {% if user.customer is null %}
+                    <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Créer une fiche client</a> 
+                    {% else %}
+                    <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-block btn-alice-lg">Consulter la fiche client</a> 
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+{# identification Contact Principal #}
+
+<a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto align-end">Créer un contact</a>
+        <div class="card m-2">
+            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
+                    <h5 class="text-center m-0 col-12 col-md-6">Contact Pricipal</h5>
+                    <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                    {% if contacts %}
+                        {% for contact in contacts %}
+                            {% if contact.isMain == true %}
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.firstname }} {{ contact.lastname }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</h6>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {# contacts secondaires #}
+
+        <div class="card m-2">
+            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
+                    <h5 class="text-center m-0 col-12 col-md-6">Autres Contacts</h5>
+                    <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                    {% if contacts %}
+                        {% for contact in contacts %}
+                            {% if contact.isMain == false %}
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.firstname }} {{ contact.lastname }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</h6>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

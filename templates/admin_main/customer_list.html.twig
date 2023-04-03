@@ -8,11 +8,13 @@
 
 <h1 class="mb-5">Liste des clients</h1>
 
-    <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
-        <a href=" {{ path('app_users_list') }} " class="btn btn-alice-lg">Nouveau client</a>
+    <div class="justify-content-center justify-content-md-end mx-md-5 new-user">
+        <p class="m-0 text-center">Pour ajouter un <strong>nouveau client</strong>, merci de lui créer un espace utilisateur :  
+            <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg ms-5">Nouvel Utilisateur</a>
+        </p>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive mt-5">
 
         <table class="table">
 

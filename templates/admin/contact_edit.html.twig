@@ -8,6 +8,7 @@
 <h3 class="mb-5">Modification d'un contact</h3>
 
     <h5 class="m-2">Utilisateur lié : {{ user.firstname|capitalize }} {{ user.lastname|upper }} </h5>
+    <p class="m-2">Role utilisateur : {{ user.role }}</p>
         
         {% if customer %}
             <h5 class="m-2 mb-5">Client lié : {{ customer.name|upper }} </h5>

@@ -6,18 +6,20 @@ use App\Entity\User;
 use App\Entity\Contact;
 use App\Entity\Contract;
 use App\Entity\Customer;
+use App\Form\NewUserType;
 use App\Form\ContractType;
 use App\Form\CustomerType;
-use App\Form\EditCustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
+use App\Form\EditCustomerType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 #[Route('/admin')]
@@ -48,6 +50,77 @@ class AdminMainController extends AbstractController
         return $this->render('admin_main/user_list.html.twig', [
             'users' => $users,
             'customer' => $customers
+        ]);
+    }
+
+    #[Route('/utilisateur/{id}/{slug}', name: 'app_user_show')]
+    public function showUser(User $id): Response
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneById($id);
+        $contacts = $user->getContacts();
+        $customer = $user->getCustomer();
+        
+    
+        
+        return $this->render('admin_main/user_show.html.twig', [
+            'user' => $user,
+            'contacts' => $contacts,
+            'customer' => $customer
+        ]);
+    }
+
+    #[Route('/nouvel-utilisateur', name: 'app_user_add')]
+    public function addUser(Request $request,PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = new User();
+
+        $form = $this->createForm(NewUserType::class, $user);
+
+        $form->handleRequest($request);   
+
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $user = $form->getData();  // injecte dans obj $user toutes les données récup dans $form
+            
+            // vérifier la présence du mail saisie pour éviter les doublons
+            $search_email = $this->entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
+            
+            if(!$search_email) {
+                $password = $passwordHasher->hashPassword($user, $user->getPassword()); // hash le password saisi
+                $user->setPassword($password); // envoi le password dans obj User
+                
+                // on slug le nom du User
+                $fullname = $user->getFirstname()." ".$user->getLastname();
+                $slugify = new Slugify();
+                $slugify = $slugify->slugify($fullname);
+                $user->setSlug($slugify);
+                
+                
+                //return entity manager
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($user); //figer les données 
+                $entityManager->flush(); // push les données
+                
+                $this->addFlash(
+                    'success',
+                    'Le nouvel utilisateur est enregistré.'
+                );
+                $id = $user->getId();
+                $slug = $slugify;
+                return $this->redirectToRoute('app_user_show', ['id' => $id, 'slug' => $slug]);
+                
+            } else {
+
+                $this->addFlash(
+                    'alert',
+                    'L\'email que vous avez renseigné existe déjà !!'
+                );
+                return $this->redirectToRoute('app_users_list');
+                
+            }
+        }
+        return $this->render('admin_main/user_new.html.twig', [
+            'form' => $form->createView(),
+            'flash' => $this            
         ]);
     }
 
@@ -101,7 +174,6 @@ class AdminMainController extends AbstractController
         ]);
     }
     
-
     #[Route('/client', name: 'app_customer_list')]
     public function showCustomers(): Response
     {

@@ -9,8 +9,11 @@
 
 
 
-<h3 class="mt-3"> {{ contact.firstname }} {{ contact.lastname }} </h3>
-
+<h3 class="mt-3"> Contact : {{ contact.firstname }} {{ contact.lastname }} </h3>
+<h5 class="mt-3"> Utilisateur : {{ contact.user.firstname }} {{ contact.user.lastname }} </h5>
+    {% if contact.user.customer is not null %}
+       {{ contact.user.customer.name }}
+    {% endif %}
 
 
 <dl class="row mt-5">
