@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -40,13 +41,13 @@ class ContractType extends AbstractType
             ->add('amountCharged', MoneyType::class, [
                 'label' => 'Montant facturé'
             ])
-            ->add('timeCharged', TextType::class, [
+            ->add('timeCharged', NumberType::class, [
                 'label' => 'Durée facturée',
             ])
             ->add('amountReal', MoneyType::class, [
                 'label' => 'Montant réel'
             ])
-            ->add('timeReal', TextType::class, [
+            ->add('timeReal', NumberType::class, [
                 'label' => 'Durée Réelle',
             ])
             ->add('websiteLink', TextType::class, [
@@ -67,10 +68,12 @@ class ContractType extends AbstractType
             // ->add('customer', EntityType::class, [
             //     'label' => 'Client : ',
             //     'class' => Customer::class,
-            //     'choice_value' => ChoiceList::value($customer, 'customer'),
             //     'required' => true,
             //     'multiple' => false,
             //     'expanded' => false,
+            //     'attr' => [
+            //         'placeholder' => $customer,
+            //         ]
             // ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
@@ -85,7 +88,7 @@ class ContractType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contract::class,
-            'customer' => Customer::class
+            'customer' => Customer::class,
         ]);
     }
 }
