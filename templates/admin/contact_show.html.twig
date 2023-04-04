@@ -19,17 +19,16 @@
                 <p class="fs-6">Non Utilisateur :  </p>
                 <p class="fs-5 fw-medium">{{ contact.user.firstname }} {{ contact.user.lastname }}</p>
             </div>
-
-            <div class="d-flex flex-column">
-                <p class="fs-6">Contact :  </p>
-                <p class="fs-5 fw-medium">{{ contact.firstname }} {{ contact.lastname }}</p>
-            </div>
-
     </div>
 
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
         <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
-        <a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+        <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
+        {% if customer is not null %}       
+            <a href=" {{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+        {% else %}
+            <a href=" {{ path('app_user_show', { 'id': user.id, 'slug': user.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+        {% endif %}
     </div>
 
     <div class="table-responsive me-lg-5">
@@ -46,7 +45,7 @@
                         <th scope="col">Téléphone</th>
                         <th scope="col">Fonction</th>
                         {% if contact.isMain == 1 %}
-                        <th scope="col">Contact Principal</th>
+                            <th scope="col">Contact Principal</th>
                         {% endif %}
                     </tr>
                 </thead>
@@ -57,9 +56,9 @@
                         <td>{{ contact.firstname|capitalize }}</td>
                         <td>{{ contact.email }}</td>
                         <td>{{ contact.phone }}</td>
-                        <td>{{ contact.position|capitalize }}</td>
+                        <td>{{ contact.position|upper }}</td>
                         {% if contact.isMain == 1 %}
-                            <td class="col-6 col-sm-9"><img src=" {{ asset('/assets/img/Check.png') }} " alt="Check"></td>
+                            <td><img src=" {{ asset('/assets/img/Check.png') }} " alt="Check"></td>
                         {% endif %}
                     </tr>
 

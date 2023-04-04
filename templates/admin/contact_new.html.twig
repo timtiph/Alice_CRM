@@ -16,7 +16,13 @@
 
     <div class="mb-3">
         <label class="form-label required" for="contact_user">Utilisateur</label>
-        <input id="contact_user" class="form-control" type="text" name="contact[user]" placeholder="{{ user.firstname }} {{ user.lastname }}" disabled="true"></input>
+        <input 
+            id="contact_user"   
+            class="form-control" 
+            type="text" 
+            name="contact[user]" 
+            placeholder="{{ user.firstname }} {{ user.lastname }}" 
+            disabled="true"></input>
     </div>
 
     {# {{ form_row(form.user) }} #}

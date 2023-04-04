@@ -56,3 +56,15 @@ buttonsContracts.forEach((button, index) => {
       }
     });
 });
+
+
+var btnsSupprimer = document.querySelectorAll(".buttonRemove");
+
+for (var i = 0; i < btnsSupprimer.length; i++) {
+  btnsSupprimer[i].addEventListener("click", function(e) {
+    var name = this.getAttribute("data-name"); // Récupérer la valeur de l'attribut "data-name"
+    if (!confirm("Êtes-vous sûr de vouloir supprimer l'élément " + name + "?")) {
+      e.preventDefault(); // Annuler l'action par défaut si l'utilisateur clique sur "Annuler"
+    }
+  });
+}

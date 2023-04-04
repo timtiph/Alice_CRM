@@ -31,7 +31,6 @@
                         {{ user.role }}</p>
                 </div>
                 <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
-                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Modifier</a><br>
                     <a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Consulter</a><br>
                     {% if user.customer is null %}
                     <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Créer une fiche client</a> 

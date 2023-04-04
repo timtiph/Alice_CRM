@@ -8,7 +8,7 @@
     <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
         <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le client</a>        
         <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
-        <a href="{{ path('app_contract_add', { 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
+        <a href="{{ path('app_contract_add', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
         {# TODO : Ajouter un bouton RDV #}
     </div>
 
@@ -220,7 +220,7 @@
                                         </tr>
                                         <tr>
                                             <td>Temps facturé</td>
-                                            <td>{{ contract.timeCharged }} H</td>
+                                            <td>{{ contract.timeCharged }} heures</td>
                                         </tr>
                                         <tr>
                                             <td>Montant réel</td>
@@ -228,7 +228,7 @@
                                         </tr>
                                         <tr>
                                             <td>Temps réel</td>
-                                            <td>{{ contract.timeReal }} H</td>
+                                            <td>{{ contract.timeReal }} heures</td>
                                         </tr>
                                         <tr>
                                             <td>Site géré par le contrat</td>

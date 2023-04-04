@@ -36,6 +36,7 @@ class AdminMainController extends AbstractController
     #[Route('', name: 'app_admin_main')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('admin_main/index.html.twig', [
             'controller_name' => 'AdminMainController',
         ]);
@@ -154,7 +155,7 @@ class AdminMainController extends AbstractController
                     'success',
                     'La modification du contact et bien enregistrée.'
                 );
-                return $this->redirectToRoute('app_users_list');
+                return $this->redirectToRoute('app_user_show', ['id' => $id, 'slug' => $slug]);
 
             } else {
 
@@ -190,7 +191,7 @@ class AdminMainController extends AbstractController
 
         // récup données client
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
-
+        
         // récup user associé
         $user = $customer->getUser();
         
@@ -219,7 +220,10 @@ class AdminMainController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
 
         $customer = new Customer();
-        $form = $this->createForm(CustomerType::class, $customer);
+        $form = $this->createForm(CustomerType::class, $customer, [
+            'user' => $user
+        ]);
+        $customer->setUser($user);
         
         $form->handleRequest($request);        
         if ($form->isSubmitted()) {
@@ -231,19 +235,20 @@ class AdminMainController extends AbstractController
                 $slugify = new Slugify();
                 $slugify = $slugify->slugify($fullname);
                 $customer->setSlug($slugify);
-
+                
                 // récup User Id
                 $customer->setUser($user);
                 
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($customer); //figer les données 
                 $entityManager->flush(); // push les données
-
+                
                 $this->addFlash(
                     'success',
                     'La Création du client est bien enregistrée.'
                 );
-                return $this->redirectToRoute('app_users_list');
+                $customerId = $customer->getId();
+                return $this->redirectToRoute('app_customer', [ 'id' => $customerId, 'slug' => $slugify ]);
             }
         } 
         // else {
@@ -257,7 +262,8 @@ class AdminMainController extends AbstractController
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(), 
             'flash' => $this,
-            'customer' => $customer
+            'customer' => $customer,
+            'user' => $user
         ]);
     }
 

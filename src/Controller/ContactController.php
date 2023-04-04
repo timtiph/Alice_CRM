@@ -72,6 +72,15 @@ class ContactController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
         $slug = $user->getSlug();
         
+        // récup infos customer pour redirect si exist
+        if($user->getCustomer()){
+
+            $customer = $user->getCustomer();
+            $customerId = $customer->getId();
+            $customerSlug = $customer->getSlug();
+            
+        }
+
         $contact = new Contact();
         
         $form = $this->createForm(ContactType::class, $contact, [
@@ -91,17 +100,23 @@ class ContactController extends AbstractController
                 $slugify = new Slugify();
                 $slugify = $slugify->slugify($fullname);
                 $contact->setSlug($slugify);
-
+                
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($contact); //figer les données 
                 $entityManager->flush(); // push les données
-
+                
                 $this->addFlash(
                     'success',
                     'La Création du contact et bien enregistrée.'
                 );
-
-                return $this->redirectToRoute('app_user_show', ['id' => $id, 'slug' => $slug]);
+                
+                if ($user->getCustomer()) {
+                    // Return on Customer View if $customer is NOT Null
+                    return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
+                } else {
+                    // Return on User View if $customer is Null
+                    return $this->redirectToRoute('app_user_show', ['id' => $id, 'slug' => $slug]);
+                }
            } 
         }
         //dd($contact->getUser());
@@ -123,6 +138,10 @@ class ContactController extends AbstractController
         $customer = $user->getCustomer();
 
         if (!$contact) {
+            $this->addFlash(
+                'error',
+                'Le contact n\'existe pas.'
+            );
             return $this->redirectToRoute('app_user_show', array('id' => $id, 'slug' => $slug)); 
         }
 
@@ -133,13 +152,56 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlash(
+                'success',
+                'La modification du contact est bien enregistrée.'
+            );
             return $this->redirectToRoute('app_contact', array('id' => $id, 'slug' => $slug));
         }
 
         return $this->render('admin/contact_edit.html.twig', [
             'form' => $form->createView(),
+            'flash' => $this,
             'user' => $user,
             'customer' => $customer
         ]);
+    }
+
+    #[Route('/admin/contact/{id}/{slug}/supprimer', name: 'app_contact_delete')]
+    public function deleteContact($id): Response
+    {
+        $contact = $this->entityManager->getRepository(Contact::class)->findOneById($id);
+        $user = $contact->getUser();
+        $userId = $user->getId();
+        $slug = $user->getSlug();
+
+        // si le contact est lié à un client + redirect sur la page client 
+        if($user->getCustomer()){
+            $customer = $user->getCustomer();
+            $customerId = $customer->getId();
+            $customerSlug = $customer->getSlug();
+            $this->entityManager->remove($contact);
+            $this->entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Le contact à été supprimé.'
+            );
+            return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
+
+
+        } else {
+
+            // si le contact est lié à un utilisateur autre que client 
+            $this->entityManager->remove($contact);
+            $this->entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Le contact à été supprimé.'
+            );
+            
+            return $this->redirectToRoute('app_user_show', ['id' => $userId, 'slug' => $slug]);
+        }
+            
+
     }
 }

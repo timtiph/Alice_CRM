@@ -13,9 +13,18 @@
 {{ form_start(form) }}
 
     {{ form_errors(form) }}
+        <div class="mb-3">
+        <label class="form-label required" for="customer_user">Utilisateur</label>
+        <input 
+            id="customer_user" 
+            class="form-control" 
+            type="text" 
+            name="customer[user]" 
+            placeholder="{{ user.firstname }} {{ user.lastname }}" 
+            disabled="true"></input>
+    </div>
 
     {{ form_row(form.name) }}
-    {{ form_row(form.user) }}
     {{ form_row(form.isPartner) }}
     {{ form_row(form.partner) }}
     {{ form_row(form.isProfessional) }}
