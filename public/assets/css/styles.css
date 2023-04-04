@@ -416,6 +416,15 @@ table[data-name='tableContract'], table[data-name='tableContact']{
     display: none;
 }
 
+img[data-name='imgAddContract'], 
+img[data-name='imgSuppContract'], 
+img[data-name='imgAddContact'], 
+img[data-name='imgSuppContact']{
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}
+
 img[data-name='imgAddContract']:hover, 
 img[data-name='imgSuppContract']:hover, 
 img[data-name='imgAddContact']:hover, 
@@ -426,7 +435,8 @@ img[data-name='imgSuppContact']:hover{
 .buttonEditContract, 
 .buttonEditContact{
     width: 25px;
-    margin-right: 5px;
+    height: 25px;
+    margin: auto;
 }
 
 .buttonEditContract:hover, 

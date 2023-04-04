@@ -6,7 +6,7 @@
 
 
 
-<h1 class="mb-5">Utilisateur : {{ user.lastname|upper }} {{ user.firstname|capitalize }}</h1>
+<h1 class="mb-5">Utilisateur : {{ user.firstname|capitalize }} {{ user.lastname|upper }}</h1>
 
 {# identification USER #}
 
@@ -17,7 +17,7 @@
                     <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
                     <p class="card-text">Role : 
                         {% if user.role is null %}
-                        <img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention">
+                        <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}"><img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention"></a>
                         {% endif %}
                         {{ user.role }}</p>
                 </div>
@@ -32,20 +32,50 @@
             </div>
         </div>
 
-{# identification Contact Principal #}
-
-<a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto align-end">Créer un contact</a>
-        <div class="card m-2">
-            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+        {# identification client  #}
+        {% if user.customer %}
+        <div class="card m-2 bgg-alice-light">
+        <h5 class="text-center my-2 col-12">Fiche client</h5>
+            <div class="card-body d-flex justify-content-between flex-column flex-sm-row align-items-center">
                 <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
-                    <h5 class="text-center m-0 col-12 col-md-6">Contact Pricipal</h5>
+                    <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                        
+                        <div class="card bgg-alice-light m-1" style="max-width: 20rem; min-width: 15rem">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ user.customer.name }}</h5>
+                                <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}">Consulter la fiche client</a>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {# identification Contact Principal #}
+        <div class="d-flex justify-content-center justify-content-sm-end">
+            <a href="{{ path('app_contact_add', { 'id': user.id, 'slug': user.slug }) }}" class="btn btn-alice-nw me-sm-2">Ajouter un contact</a>
+        </div>
+
+        <div class="card m-2 bgg-alice-light">
+        <h5 class="text-center my-2 col-12">Contact Pricipal</h5>
+            <div class="card-body d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
                     <div class="col-12 col-md-6 d-flex flex-column align-items-center">
                     {% if contacts %}
                         {% for contact in contacts %}
                             {% if contact.isMain == true %}
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.firstname }} {{ contact.lastname }}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</h6>
+                                <div class="card bgg-alice-light m-1" style="max-width: 20rem; min-width: 15rem">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ contact.firstname }} {{ contact.lastname }}</h5>
+                                        <p class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</p>
+                                        <p class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</p>
+                                        <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug} ) }}" class="card-link">Modifier</a>
+                                        
+                                    </div>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -56,17 +86,23 @@
 
     {# contacts secondaires #}
 
-        <div class="card m-2">
-            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+        <div class="card m-2 bgg-alice-light">
+        <h5 class="text-center my-2 col-12">Autres Contacts</h5>
+            <div class="card-body d-flex justify-content-between flex-column flex-sm-row align-items-center">
                 <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
-                    <h5 class="text-center m-0 col-12 col-md-6">Autres Contacts</h5>
-                    <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                    <div class="col-12 d-flex flex-column align-items-center flex-sm-row flex-sm-wrap justify-content-sm-around">
                     {% if contacts %}
                         {% for contact in contacts %}
                             {% if contact.isMain == false %}
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.firstname }} {{ contact.lastname }}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</h6>
+                                    <div class="card m-1 bgg-alice-light" style="max-width: 20rem; min-width: 15rem">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ contact.firstname }} {{ contact.lastname }}</h5>
+                                            <p class="card-subtitle mb-2 text-body-secondary">{{ contact.email }}</p>
+                                            <p class="card-subtitle mb-2 text-body-secondary">{{ contact.phone }}</p>
+                                            <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug} ) }}" class="card-link">Modifier</a>
+                                            
+                                        </div>
+                                    </div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -74,5 +110,8 @@
                 </div>
             </div>
         </div>
+
+
+
 
 {% endblock %}

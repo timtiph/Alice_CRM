@@ -10,7 +10,25 @@
 
 <div class="form mt-3 mt-lg-0">
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="mb-3">
+        <label class="form-label required" for="contact_user">Utilisateur</label>
+        <input id="contact_user" class="form-control" type="text" name="contact[user]" placeholder="{{ user.firstname }} {{ user.lastname }}" disabled="true"></input>
+    </div>
+
+    {# {{ form_row(form.user) }} #}
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.phone) }}
+    {{ form_row(form.position) }}
+    {{ form_row(form.isMain) }}
+    {{ form_row(form.submit) }}
+
+{{ form_end(form) }}
 
 </div>
 

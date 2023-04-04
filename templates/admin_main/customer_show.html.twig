@@ -5,10 +5,10 @@
 {% block body %}
 
 
-    <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
+    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
         <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le client</a>        
-        <a href="{{ path('app_contact_add') }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
-        <a href="{{ path('app_contract_add') }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
+        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
+        <a href="{{ path('app_contract_add', { 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
         {# TODO : Ajouter un bouton RDV #}
     </div>
 
@@ -22,15 +22,17 @@
 
         <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
 
-                {#### Identification Client + contact principal ####}
 
-            <div class="col-12 d-flex flex-column p-2 border flex-md-row justify-content-md-between">
-                <div class="d-flex col-md-6 justify-content-between flex-md-column justify-content-lg-start">
-                    <div class="d-flex flex-column justify-content-between justify-content-md-around mb-lg-3">
+            <div class="col-12 d-flex flex-column p-2 border">
+                
+                {#### Identification Client  ####}
+
+                <div class="d-flex flex-column flex-sm-row justify-content-sm-between">
+                    <div class="d-flex flex-column">
                         <h3 class="m-0">{{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</h3>
                         <h6 class="m-0"> {{ customer.name }} </h6>
                     </div>
-                    <div class="d-flex flex-column justify-content-between flex-md-row justify-content-md-around  ">
+                    <div class="d-flex flex-column justify-content-between">
                         {% if customer.isProfessional == true %}
                             <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-professional">Professionnel</p>
                         {% endif %}
@@ -40,39 +42,45 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-column mt-1 border col-md-6">
+                {### Contact Principal ###}
 
-                    <h5 class="w-100 text-center m-0 bg-alice-light ">Contact Pricipal</h5>
+                <div class="d-flex flex-column mt-2 border">
+
+                    <h5 class="w-100 text-center m-0 py-1 bg-alice-light ">Contact Pricipal</h5>
                     
                     {% if contacts %}
 
                         {% for contact in contacts %}
 
                             {% if contact.isMain == true %}
+                                <div class="">
+                                    <div class="card-body d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                                        <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
+                                            <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                                                <div class="bgg-alice-light" style="max-width: 20rem; min-width: 15rem">
+                                                    <div class="card-body mb-1">
+                                                        <p class="card-title fs-5 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
+                                                        <p class="card-text mb-1">Email : <strong>{{ contact.email }}</strong></p>
+                                                        <p class="card-text mb-1">Tel : <strong>{{ contact.phone }}</strong></p>
+                                                        <div class="d-flex justify-content-around px-5">
+                                                            <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
-                                <table class="table mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <td>Prénom Nom</td>
-                                            <th>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <th>{{ contact.email }}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Tel</td>
-                                            <th>{{ contact.phone }}</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             {% endif %}
 
                         {% endfor %}
 
                     {% else %}
-                        <a href="{{ path('app_contact_add') }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
+                        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
                     {% endif %}
+
+        
 
                 </div>
 
@@ -128,11 +136,12 @@
 
                             <div class="d-flex bg-alice-light justify-content-between">
                                 <div class="">
-                                    <h6 class="text-center m-0 py-1">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</h6>
+                                    <p class="text-center m-0 py-1 fs-6 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
+                                    <p class="p-0 m-0 fs-6 fst-italic">{{ contact.position }}</p>
                                 </div>
                                 <div class="d-flex">
-                                    <div>
-                                        <img src="{{ asset('assets/img/edit-solid.svg') }}" alt="Bouton Modifier" class="buttonEditContact">
+                                    <div class="d-flex">
+                                        <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
                                     </div>
                                     <div data-name="controlButtonDivContact" class="d-flex">
                                         <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
@@ -145,7 +154,7 @@
                             <tbody>
                                     <tr>
                                         <td>Email</td>
-                                        <th>{{ contact.email }}</th>
+                                        <th class="overflow-x-hidden">{{ contact.email }}</th>
                                     </tr>
                                     <tr>
                                         <td>Tel</td>
@@ -191,7 +200,7 @@
                                         <div class="d-flex">
                                             <div>
                                                 {# href="{{ path('app_contract_edit', { 'id': contract.id }) }}"  #}
-                                                    <a href="{{ path('app_contract_show', { 'id': contract.id }) }}"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Voir" class="buttonEditContract"></a>
+                                                    <a href="{{ path('app_contract_show', { 'id': contract.id }) }}" class="mx-1 my-auto"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Voir" class="buttonEditContract"></a>
                                             </div>
                                             <div data-name="controlButtonDivContract">
                                                 <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContract">

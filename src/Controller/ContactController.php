@@ -64,60 +64,52 @@ class ContactController extends AbstractController
 
     }
    
-    // Creer un contact
+    // Creer un contact à partir du USER avec user.id + user.slug
 
-    #[Route('/admin/contact/creer-un-contact', name: 'app_contact_add')]
-    public function createContact(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[Route('/admin/contact/creer-un-contact/{id}/{slug}', name: 'app_contact_add')]
+    public function createContact(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
+        $user = $this->entityManager->getRepository(User::class)->findOneById($id);
+        $slug = $user->getSlug();
+        
         $contact = new Contact();
         
-        $form = $this->createForm(ContactType::class, $contact);
-
+        $form = $this->createForm(ContactType::class, $contact, [
+            'user' => $user,
+        ]);
+        $contact->setUser($user);
+        //dd($contact);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted()){
-
+            
             if ($form->isValid()) {
-
+                
                 $contact = $form->getData();
-
+                
                 $fullname = $contact->getFirstname()." ".$contact->getLastname();
                 $slugify = new Slugify();
                 $slugify = $slugify->slugify($fullname);
                 $contact->setSlug($slugify);
 
-                
-
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($contact); //figer les données 
                 $entityManager->flush(); // push les données
-
-
 
                 $this->addFlash(
                     'success',
                     'La Création du contact et bien enregistrée.'
                 );
 
-                return $this->redirectToRoute('app_contacts');
+                return $this->redirectToRoute('app_user_show', ['id' => $id, 'slug' => $slug]);
            } 
-            else {
-
-                $this->addFlash(
-                    'alert',
-                    'Une Erreur est survenue, veuillez recommencer.'
-                );
-                return $this->redirectToRoute('app_contact_add');
-            }
-
         }
-        
-        return $this->render('admin/contact_new.html.twig', [
-            'form' => $form->createView(), 
+        //dd($contact->getUser());
+        return $this->render('admin/contact_new.html.twig', array(
+            'user' => $user,
             'flash' => $this,
-            'user' => $contact->getUser(),
-            'customer' => $contact->getUser(),
-        ]);
+            'form' => $form->createView(), 
+        ));
     }
     
     
@@ -130,9 +122,8 @@ class ContactController extends AbstractController
         $user = $contact->getUser();
         $customer = $user->getCustomer();
 
-        // vérification 2 points : 1. est ce que l'adresse existe OU est ce que cette adresse appartient au User connecté ? sinon, redirect
         if (!$contact) {
-            return $this->redirectToRoute('app_contact'); 
+            return $this->redirectToRoute('app_user_show', array('id' => $id, 'slug' => $slug)); 
         }
 
         $form = $this->createForm(EditContactType::class, $contact);

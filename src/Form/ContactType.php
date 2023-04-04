@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Contact;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,19 +21,28 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ContactType extends AbstractType
 {
+    private $userRepository;
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        //dd($userRepository);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['user'];
+
         $builder
-        ->add('user', EntityType::class, [
-            'label' => 'Le contact lié à l\'utilisateur : ',
-            'required' => true,
-            'class' => User::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er  ->createQueryBuilder('u')
-                            ->orderBy('u.id', 'ASC')
-                            ->setFirstResult(1);
-            }
-        ])
+            // ->add('user', EntityType::class, [
+            //     'label' => 'Le contact lié à l\'utilisateur : ',
+            //     'required' => true,
+            //     'disabled' => false,
+            //     'class' => User::class, 
+            //     'multiple' => false,
+            //     'attr' => [
+            //         'placeholder' => $user->getfirstname().' '.$user->getLastname(),
+            //     ]
+            // ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'constraints' => [
@@ -110,6 +121,7 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contact::class,
+            'user' => User::class,
         ]);
     }
 }

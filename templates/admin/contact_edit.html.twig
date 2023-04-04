@@ -6,15 +6,24 @@
 {% block body %}
 
 <h3 class="mb-5">Modification d'un contact</h3>
-
-    <h5 class="m-2">Utilisateur lié : {{ user.firstname|capitalize }} {{ user.lastname|upper }} </h5>
-    <p class="m-2">Role utilisateur : {{ user.role }}</p>
-        
+<div class="d-flex justify-content-around mb-5">
+    
+    <div class="d-flex flex-column">
         {% if customer %}
-            <h5 class="m-2 mb-5">Client lié : {{ customer.name|upper }} </h5>
+            <h6 class="m-2">Client : </h6>
+            <h5 class="m-2">{{ customer.name|upper }} </h5>
         {% else %}
-            <h5 class="m-2 mb-5">Ce contact n'est pas lié à un client </h5>
+            <h6 class="m-2">Ce contact n'est pas lié à un client </h6>
         {% endif %}
+    </div>
+
+    <div class="d-flex flex-column">
+        <h6 class="m-2">Contact lié à l'utilisateur : </h6>
+        <h5 class="m-2">{{ user.firstname|capitalize }} {{ user.lastname|upper }} </h5>
+
+    </div>
+        
+</div>
 
 
 

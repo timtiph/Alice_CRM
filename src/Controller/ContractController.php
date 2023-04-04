@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contract;
+use App\Entity\Customer;
 use App\Form\ContractType;
 use App\Form\EditContractType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,39 +43,42 @@ class ContractController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/contrat/creer-un-contrat', name: 'app_contract_add')]
-    public function createContract(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[Route('/admin/contrat/creer-un-contrat/{slug}', name: 'app_contract_add')]
+    public function createContract(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $slug): Response
     {
+        $customer = $this->entityManager->getRepository(Customer::class)->findOneBySlug($slug);
+        //dd($customer->getUser());
         $contract = new Contract;
-
+        
         $form = $this->createForm(ContractType::class, $contract);
-
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $contract = $form->getData();
-
+                
+                $customerId = $contract->setCustomer();
                 
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($contract); //figer les données 
                 $entityManager->flush(); // push les données
-
+                
                 $this->addFlash(
                     'success',
                     'La Création du contrat et bien enregistrée.'
                 );
-
+                
                 return $this->redirectToRoute('app_contract_list');
-
+                
             }
         }
-       
+        //dd($customer);
         return $this->render('admin_main/contract_new.html.twig', [
-            'form' => $form->createView(), 
+            'customer' => $customer,
+            'user' => $customer->getUser(),
             'flash' => $this,
-            'customer' => $contract->getCustomer(),
-            'user' => $contract->getCustomer()->getUser()
+            'form' => $form->createView(), 
         ]);
     }
 
