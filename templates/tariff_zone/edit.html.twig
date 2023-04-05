@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification Zone Tarifaire | Alice CRM{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h1>Modification de la zone tarifaire : {{ tariff_zone.name }}</h1>
+
+    <div class="d-flex justify-content-center justify-content-lg-end align-items-center">
+        <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
+    </div>
+
+    <div class="form mt-3">
+        {{ include('tariff_zone/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+
+
+{% endblock %}
