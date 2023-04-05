@@ -8,7 +8,9 @@
     <div class="d-flex justify-content-end">
 
         <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le contrat</a>
-        <a href="{{ path('app_contract_remove', { 'id': contract.id }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
+
+        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
+
         <a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Retour Client</a>
     </div>
 

@@ -29,7 +29,8 @@ security:
             custom_authenticator: App\Security\LoginFormAuthenticator
                 # where to redirect after logout
             login_throttling:
-                max_attempts: 5
+            # TODO : remettre 5
+                max_attempts: 500 
                 interval: '10 minutes'
             remember_me:
                 secret:   '%kernel.secret%' # required

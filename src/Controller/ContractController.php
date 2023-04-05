@@ -6,6 +6,8 @@ use App\Entity\Contract;
 use App\Entity\Customer;
 use App\Form\ContractType;
 use App\Form\EditContractType;
+use App\Repository\ContractRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -119,24 +121,34 @@ class ContractController extends AbstractController
     }
 
     #[Route('/admin/contrat/{id}/supprimer', name: 'app_contract_remove')]
-    public function removeContract(Request $request, $id): Response
+    public function removeContract(Contract $contract, Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
     {
-        $contract = $this->entityManager->getRepository(Contract::class)->findOneById($id);
-
-        if ($contract) {
+    
+        $customer = $contract->getCustomer();
+        $customerId = $customer->getId();
+        $customerSlug = $customer->getSlug();
+        $csrf_token = $request->query->get('csrf_token', '');
+        
+        if (!$this->isCsrfTokenValid('delete_contract' . $contract->getId(), $csrf_token)) {
             
-            $customer = $contract->getCustomer();
-            $user = $customer->getUser();
-            $id = $customer->getId();
-            $slug = $customer->getSlug();
-            
-            $this->entityManager->remove($contract);
-            $this->entityManager->flush();
-            
-            return $this->redirectToRoute('app_customer', ['id' => $id, 'slug' => $slug]);
+            $this->addFlash(
+                'error',
+                'Vous ne pouvez pas supprimer cet élément.'
+            );
+    
+        } else {
+           dump('OK');
+       
+                $entityManager = $doctrine->getManager();
+                $entityManager->remove($contract);
+                $entityManager->flush(); // push les données
+                $this->addFlash(
+                    'success',
+                    'Le contrat à bien été supprimé.'
+                );
         }
 
-        return $this->redirectToRoute('app_contract_show', ['id' => $id]);
+        return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
 
     }
 }

@@ -23,7 +23,9 @@
 
     <div class="d-flex mb-3 justify-content-center justify-content-md-end me-md-5">
         <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
-        <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
+
+        <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug, 'csrf_token': csrf_token('delete_contact' ~ contact.id) }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
+
         {% if customer is not null %}       
             <a href=" {{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
         {% else %}

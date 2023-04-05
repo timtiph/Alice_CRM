@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\EditContactType;
+use App\Repository\ContactRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,40 +169,49 @@ class ContactController extends AbstractController
     }
 
     #[Route('/admin/contact/{id}/{slug}/supprimer', name: 'app_contact_delete')]
-    public function deleteContact($id): Response
+    public function deleteContact(Contact $contact, Request $request,EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
         $contact = $this->entityManager->getRepository(Contact::class)->findOneById($id);
         $user = $contact->getUser();
         $userId = $user->getId();
         $slug = $user->getSlug();
-
-        // si le contact est lié à un client + redirect sur la page client 
-        if($user->getCustomer()){
-            $customer = $user->getCustomer();
-            $customerId = $customer->getId();
-            $customerSlug = $customer->getSlug();
-            $this->entityManager->remove($contact);
-            $this->entityManager->flush();
+        $csrf_token = $request->query->get('csrf_token', '');
+        
+        if (!$this->isCsrfTokenValid('delete_contact' . $contact->getId(), $csrf_token)) {
             $this->addFlash(
-                'success',
-                'Le contact à été supprimé.'
+                'error',
+                'Vous ne pouvez pas supprimer cet élément.'
             );
-            return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
-
-
         } else {
+            // si le contact est lié à un client + redirect sur la page client 
+            if($user->getCustomer()){
+                $customer = $user->getCustomer();
+                $customerId = $customer->getId();
+                $customerSlug = $customer->getSlug();
+                
+                $entityManager = $doctrine->getManager();
+                $entityManager->remove($contact);
+                $entityManager->flush(); // push les données
 
-            // si le contact est lié à un utilisateur autre que client 
-            $this->entityManager->remove($contact);
-            $this->entityManager->flush();
-            $this->addFlash(
-                'success',
-                'Le contact à été supprimé.'
-            );
-            
-            return $this->redirectToRoute('app_user_show', ['id' => $userId, 'slug' => $slug]);
+                $this->addFlash(
+                    'success',
+                    'Le contact à été supprimé.'
+                );
+                return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
+                
+                
+            } else {
+                
+                // si le contact est lié à un utilisateur autre que client 
+                
+                $this->addFlash(
+                    'success',
+                    'Le contact à été supprimé.'
+                );
+                
+                return $this->redirectToRoute('app_user_show', ['id' => $userId, 'slug' => $slug]);
+            }
         }
-            
-
     }
+            
 }
