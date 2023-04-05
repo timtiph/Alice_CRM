@@ -43,17 +43,17 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
-        // TODO : Faire envoi d'un mail de réinit MDP
+        
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
                 $mailer,
-                $translator
+                $translator,
             );
         }
 
 
-        // TODO : Revoir acces aux page quand mail non verifié
+        
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
@@ -70,7 +70,7 @@ class ResetPasswordController extends AbstractController
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
-
+        
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
@@ -141,7 +141,7 @@ class ResetPasswordController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
-
+        //dd($emailFormData);
         
         // Do not reveal whether a user account was found or not.
         if (!$user) {
@@ -155,41 +155,44 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
-// TODO : remettre "return $this->redirectToRoute('app_login');" quand les tests seront terminés
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('reset_password_error', sprintf(
+                '%s - %s',
+                $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+            ));
+            
+            // TODO : remettre "return $this->redirectToRoute('app_login');" quand les tests seront terminés
+            
+            return $this->redirectToRoute('app_login');
         }
 
-        // $email = (new TemplatedEmail())
-        //     ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
-        //     ->to($user->getEmail())
-        //     ->subject('Your password reset request')
-        //     ->htmlTemplate('reset_password/email.html.twig')
-        //     ->context([
-        //         'resetToken' => $resetToken,
-        //     ])
-        // ;
-        // $mailer->send($email);
+        $email = (new TemplatedEmail())
+            ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
+            ->to($user->getEmail())
+            ->subject('Your password reset request')
+            ->htmlTemplate('reset_password/email.html.twig')
+            ->context([
+                'resetToken' => $resetToken,
+            ])
+        ;
+        $mailer->send($email);
         
-        // https://127.0.0.1/reset-password?token=<Token here>
+
+        //https://127.0.0.1/reset-password?token=<Token here>
         
         
-        $mail = new Mail();
-        $api_key_public = $this->getParameter('app.mailjet.public_key');
-        $api_key_secret = $this->getParameter('app.mailjet.private_key');
-        $title = 'Votre demande de réinitialisation de mot de passe';
-        $subject = "Réinitialisation de votre mot de passe.";
-        $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."Pour réinitialiser votre mot de passe, merci de cliquer sur le lien suivant :";
-        $token = $resetToken;
-        $sign_key = "reinitialisation-mot-de-passe/reinitialisation/";
-        $sign_key .= $token;
+        // $mail = new Mail();
+        // $api_key_public = $this->getParameter('app.mailjet.public_key');
+        // $api_key_secret = $this->getParameter('app.mailjet.private_key');
+        // $title = 'Votre demande de réinitialisation de mot de passe';
+        // $subject = "Réinitialisation de votre mot de passe.";
+        // $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."Pour réinitialiser votre mot de passe, merci de cliquer sur le lien suivant :";
+        // $token = $resetToken;
+        // $sign_key = "reinitialisation-mot-de-passe/reinitialisation/";
+        // $sign_key .= $token;
         
         // complete le mail de la class Mail
-        $mail->sendResetPassword($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key, $token);
+        //$mail->sendResetPassword($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key, $token);
         
 
         // Store the token object in session for retrieval in check-email route.
