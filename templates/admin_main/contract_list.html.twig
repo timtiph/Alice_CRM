@@ -8,24 +8,25 @@
 <div class="example-wrapper">
     <h1 class="mb-5">Liste des contrats</h1>
 
-    <p class="mb-5">Vous pouvez accéder aux contrats depuis cet espace.</p>
+        {% if contracts is not empty %}
+        <p class="mb-5">Vous pouvez accéder aux contrats depuis cet espace.</p>
     
 
-    <div class="table-responsive">
+        <div class="table-responsive">
 
-        <table class="table">
+            <table class="table">
 
-            <thead>
-                <tr>
-                    <th scope="col">Client</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Date contrat</th>
-                    <th scope="col">Site Web</th>
-                    <th scope="col">Commentaires   </th>
-                    {# <th scope="col">Contact Principal</th> #}
-                </tr>
-            </thead>
-
+                <thead>
+                    <tr>
+                        <th scope="col">Client</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Date contrat</th>
+                        <th scope="col">Site Web</th>
+                        <th scope="col">Commentaires   </th>
+                        {# <th scope="col">Contact Principal</th> #}
+                    </tr>
+                </thead>
+            
             {% for contract in contracts %}
 
                 <tbody>
@@ -40,7 +41,25 @@
                 </tbody>
 
             {% endfor %} 
-        </table>
+
+            </table>
+        {% else %}
+            <h4 class="mb-5">Aucun Contrat</h4>
+            <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Souhaitez-vous ajouter un contrat à un utilisateur existant ?</h6>
+                        <a href="{{ path('app_users_list') }}" class="btn btn-alice-lg"> Liste des Utilisateurs</a>
+                    </div>
+                </div>
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Ou souhaitez-vous créer un contrat pour un nouvel utilisateur ?</h6>
+                        <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg">Nouvel Utilisateur</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}

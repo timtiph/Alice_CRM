@@ -8,6 +8,7 @@
 
 <h1 class="mb-5">Liste des clients</h1>
 
+{% if customers is not empty %}
     <div class="d-flex flex-column align-items-center flex-lg-row justify-content-lg-end">
         <p class="m-0 text-center">Pour ajouter un <strong>nouveau client</strong> vous devez lui créer un espace utilisateur :  </p>
             <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg ms-lg-5">Nouvel Utilisateur</a>
@@ -49,5 +50,22 @@
             {% endfor %} 
         </table>
     </div>
+{% else %}
+            <h4 class="mb-5">Aucun Client</h4>
+            <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Souhaitez-vous attribuer le statut CLIENT à un utilisateur existant ?</h6>
+                        <a href="{{ path('app_users_list') }}" class="btn btn-alice-lg"> Liste des utilisateurs</a>
+                    </div>
+                </div>
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Ou souhaitez-vous créer un nouvel utilisateur ?</h6>
+                        <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg">Nouvel Utilisateur</a>
+                    </div>
+                </div>
+            </div>
+{% endif %}
 
 {% endblock %}
