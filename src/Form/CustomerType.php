@@ -105,17 +105,17 @@ class CustomerType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ])
-        ->add('user', EntityType::class, [
-            'label' => 'Le client sera lié à l\'utilisateur : ',
-            'required' => true,
-            'disabled' => true,
-            'class' => User::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er  ->createQueryBuilder('u')
-                            ->orderBy('u.id', 'ASC')
-                            ->setFirstResult(1);
-            }
-        ])
+        // ->add('user', EntityType::class, [
+        //     'label' => 'Le client sera lié à l\'utilisateur : ',
+        //     'required' => true,
+        //     'disabled' => true,
+        //     'class' => User::class,
+        //     'query_builder' => function (EntityRepository $er) {
+        //         return $er  ->createQueryBuilder('u')
+        //                     ->orderBy('u.id', 'ASC')
+        //                     ->setFirstResult(1);
+        //     }
+        // ])
         ->add('tariffZone', EntityType::class, [
             'label' => 'Zone Tarifaire : ',
             'class' => TariffZone::class,
@@ -138,7 +138,8 @@ class CustomerType extends AbstractType
             'data_class' => Customer::class,
             'attr' => [
                 'novalidate' => "novalidate"
-            ]
+            ],
+            'user' => User::class
         ]);
     }
 }

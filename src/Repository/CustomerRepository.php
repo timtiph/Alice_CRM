@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Class\Search;
 use App\Entity\Customer;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Customer>
@@ -37,6 +38,27 @@ class CustomerRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+/**
+ * Requête qui me permet de recup les clients en fonction d'une string saisie par le User
+ * @return Customer[]
+*/
+
+    public function findWithSearch(Search $search) 
+    {
+        $query = $this->createQueryBuilder('c')
+            ->select('customer, c');
+
+        if(!empty($search->string)) {
+            $query = $query
+            ->andWhere('c.name LIKE :string')
+            ->setParameter('string', "%{$search->string}%");
+            //"%{}%" = recherche partielle sur search string
+
+        }
+
+        return $query->getQuery()->getResult(); 
     }
 
 //    /**
