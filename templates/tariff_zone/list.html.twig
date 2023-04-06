@@ -4,38 +4,57 @@
 
 {% block body %}
     <h1 class="mb-3">Zone Tarifaire</h1>
-    <div class="d-flex justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice-lg">Nouvelle Zone</a>
-    </div>
-    TODO : Les zones tarifaire sont une FK de la table client, elle ne peuvent etre supprimée. Voir pour obliger la création d'une zone tarifaire dans le formulaire de création de client si pas de zone dans la BDD.
 
-    <table class="table mt-3">
-        <thead>
-            <tr>
-                
-                <th>Nom</th>
-                <th>Tarif</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tariff_zone in tariff_zones %}
-            <tr>
-                
-                <td>{{ tariff_zone.name }}</td>
-                <td>{{ tariff_zone.amount }} €</td>
-                <td>
-                    <div class="d-flex">
-                        <a href="{{ path('app_tariff_zone_show', {'id': tariff_zone.id}) }}" class="buttonShowTariffZone m-0"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+    {% if tariff_zones is not empty %}
+        
+        <div class="d-flex justify-content-center justify-content-lg-end">
+            <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice-lg">Nouvelle Zone</a>
+        </div>
+        TODO : Les zones tarifaire sont une FK de la table client, elle ne peuvent etre supprimée. Voir pour obliger la création d'une zone tarifaire dans le formulaire de création de client si pas de zone dans la BDD.
+
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    
+                    <th>Nom</th>
+                    <th>Tarif</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tariff_zone in tariff_zones %}
+                <tr>
+                    
+                    <td>{{ tariff_zone.name }}</td>
+                    <td>{{ tariff_zone.amount }} €</td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{{ path('app_tariff_zone_show', {'id': tariff_zone.id}) }}" class="buttonShowTariffZone m-0"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Vous n'avez pas encore renseigné de Zone Tarifaire.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="mb-5">Aucun Zone Tarifaire définies</h4>
+            <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Souhaitez-vous ajouter une zone tarifaire ?</h6>
+                        <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice-lg">Nouvelle Zone</a>
                     </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Vous n'avez pas encore renseigné de Zone Tarifaire.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+                </div>
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Ou retourner à l'accueil ?</h6>
+                        <a href=" {{ path('app_home') }} " class="btn btn-alice-lg">Accueil</a>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
 {% endblock %}
