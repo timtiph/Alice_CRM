@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partenaire | Alice_CRM{% endblock %}
+
+{% block body %}
+        TODO : Les partenaires sont une FK de la table client, elle ne peuvent etre supprimée. Voir pour obliger la création d'une zone tarifaire dans le formulaire de création de client si pas de zone dans la BDD. 
+    <h1 class="mb-3">Les Partenariats</h1>
+    {% if partners is not empty %}
+        <div class="d-flex justify-content-center justify-content-lg-end me-2">
+            <a href="{{ path('app_partner_new') }}" class="btn btn-alice-lg">Nouveau Partenaire</a>
+        </div>
+
+
+        
+        <div class="d-flex mt-3 flex-column align-items-center align-items-md-stretch justify-content-center flex-md-row">
+            {% for partner in partners %}
+                <div class="card bgg-alice-light m-1" style="width: 18rem;">
+                    <div class="d-flex col-12 mt-1">
+                        <h5 class="card-title text-center my-auto col-6">{{ partner.name }}</h5>
+                        <div class="d-flex col-6">
+                            <a href="{{ path('app_partner_show', {'id': partner.id}) }}" class="buttonShowPartner"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% if partner.customers is not empty %}
+                                {% for customer in customers %}
+                                    {% if customer.partner.id == partner.id %}
+                                        <li class="list-group-item bgg-alice-light">
+                                            <a href="{{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }}">{{ customer.name }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <li class="list-group-item bgg-alice-light">
+                                    <p class="text-secondary fst-italic">Aucun client n'est encore lié à ce partenariat</p>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+            <h4 class="mb-5">Aucun Partenariat</h4>
+            <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Souhaitez-vous ajouter un partenariat ?</h6>
+                        <a href="{{ path('app_partner_new') }}" class="btn btn-alice-lg">Nouveau Partenaire</a>
+                    </div>
+                </div>
+                <div class="card col-md-5 bgg-alice-light m-2">
+                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                        <h6 class="card-title mb-2">Ou retourner à l'accueil ?</h6>
+                        <a href=" {{ path('app_home') }} " class="btn btn-alice-lg">Accueil</a>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+{% endblock %}

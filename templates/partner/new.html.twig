@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Partenaire | Alice CRM{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h1>Créer un nouveau partenaire</h1>
+
+
+    <div class="d-flex justify-content-center justify-content-lg-end">
+        <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg">Retour à la liste</a>
+    </div>
+
+    
+    <div class="form">
+        {{ include('partner/_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partenariat | Alice CRM{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">Détail partenariat : {{ partner.name }}</h1>
+
+    <div class="d-flex justify-content-center justify-content-lg-end">
+        <a href="{{ path('app_partner_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
+        <a href="{{ path('app_partner_edit', {'id': partner.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
+        {# {% if customers is empty %} #}
+                {{ include('partner/_delete_form.html.twig') }}
+        {# {% else %} #}
+    </div>
+        {# {% endif %} #}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ partner.name }}</td>
+            </tr>
+            <tr>
+                <th>Remise</th>
+                <td>{{ partner.discountRate }} %</td>
+            </tr>
+        </tbody>
+    </table>
+
+<h1 class="mt-5">Liste des clients liés à ce partenariat</h1>
+    {% if customers is empty %}
+    <p>Aucun client</p>
+    {% else %}
+        <table class="table mt-5">
+            <tbody>
+                <tr>
+                    <th>Nom</th>
+                </tr>
+                {% for customer in customers %}
+                <tr>
+                    <td><a href="{{ path('app_customer', { 'id': customer.id, 'slug': customer.slug }) }}">{{ customer.name }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}
