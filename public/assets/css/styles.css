@@ -442,7 +442,8 @@ img[data-name='imgSuppContact']:hover{
 .buttonEditContract, 
 .buttonEditContact,
 .buttonShowTariffZone,
-.buttonEditTariffZone{
+.buttonEditTariffZone,
+.buttonShowPartner{
     width: 25px;
     height: 25px;
     margin: auto;
@@ -451,7 +452,8 @@ img[data-name='imgSuppContact']:hover{
 .buttonEditContract:hover, 
 .buttonEditContact:hover,
 .buttonShowTariffZone:hover,
-.buttonEditTariffZone:hover{
+.buttonEditTariffZone:hover,
+.buttonShowPartner:hover{
     cursor: pointer;
 }
 
