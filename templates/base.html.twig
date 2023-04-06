@@ -23,6 +23,9 @@
     
     {% include 'includes/nav.html.twig' %}
 
+
+    
+
     <div class="container-fluid container-alice">
         <div class="row">
 
@@ -30,8 +33,8 @@
 
             <main class="col-lg-10 ms-auto ps-lg-5">
 
-        
-            {% if app.user and app.user.isVerified == false %}
+    
+        {% if app.user and app.user.isVerified == false %}
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <div class="alert-message">

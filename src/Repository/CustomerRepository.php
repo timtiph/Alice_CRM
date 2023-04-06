@@ -40,27 +40,6 @@ class CustomerRepository extends ServiceEntityRepository
         }
     }
 
-/**
- * Requête qui me permet de recup les clients en fonction d'une string saisie par le User
- * @return Customer[]
-*/
-
-    public function findWithSearch(Search $search) 
-    {
-        $query = $this->createQueryBuilder('c')
-            ->select('customer, c');
-
-        if(!empty($search->string)) {
-            $query = $query
-            ->andWhere('c.name LIKE :string')
-            ->setParameter('string', "%{$search->string}%");
-            //"%{}%" = recherche partielle sur search string
-
-        }
-
-        return $query->getQuery()->getResult(); 
-    }
-
 //    /**
 //     * @return Customer[] Returns an array of Customer objects
 //     */

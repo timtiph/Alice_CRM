@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Class\Search;
 use App\Entity\Customer;
-use App\Form\SearchType;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,19 +27,8 @@ class HomeController extends AbstractController
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $customers = $this->entityManager->getRepository(Customer::class)->findAll();
-        $search = new Search;
-        $form = $this->createForm(SearchType::class, $search);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()&&$form->isValid()){
-            $customers = $this->entityManager->getRepository(Customer::class)->findWithSearch($search);
-        }
-
-        return $this->render('home/index.html.twig', [
-            'customers' => $customers,
-            'form' => $form
-        ]);
+        
+        return $this->render('home/index.html.twig');
     }
+
 }

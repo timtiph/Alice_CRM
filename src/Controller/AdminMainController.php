@@ -12,6 +12,7 @@ use App\Form\CustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
 use App\Form\EditCustomerType;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
