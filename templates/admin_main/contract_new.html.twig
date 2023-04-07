@@ -9,38 +9,38 @@
 
     <h6>Utilisateur : {{ user.firstname }} {{ user.lastname }}</h6>
 
-<div class="form mt-3 mt-lg-0">
+    <div class="form mt-3 mt-lg-0">
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-    {{ form_errors(form) }}
+        {{ form_errors(form) }}
 
-    <div class="mb-3">
-        <label class="form-label required" for="contract_customer">Client</label>
-        <input 
-            id="contract_customer" 
-            class="form-control" 
-            type="text" 
-            name="contract[customer]" 
-            placeholder="{{ customer.name }}" 
-            disabled="true"></input>
+            <div class="mb-3">
+                <label class="form-label required" for="contract_customer">Client</label>
+                <input 
+                    id="contract_customer" 
+                    class="form-control" 
+                    type="text" 
+                    name="contract[customer]" 
+                    placeholder="{{ customer.name }}" 
+                    disabled="true"></input>
+            </div>
+
+        
+        
+        {{ form_row(form.name) }}
+        {{ form_row(form.date) }}
+        {{ form_row(form.amountCharged) }}
+        {{ form_row(form.timeCharged) }}
+        {{ form_row(form.amountReal) }}
+        {{ form_row(form.timeReal) }}
+        {{ form_row(form.websiteLink) }}
+        {{ form_row(form.paymentFrequency) }}
+        {{ form_row(form.openArea) }}
+        {{ form_row(form.submit) }}
+
+        {{ form_end(form) }}
+
     </div>
-
-    
-    {# {{ form_row(form.customer) }} #}
-    {{ form_row(form.name) }}
-    {{ form_row(form.date) }}
-    {{ form_row(form.amountCharged) }}
-    {{ form_row(form.timeCharged) }}
-    {{ form_row(form.amountReal) }}
-    {{ form_row(form.timeReal) }}
-    {{ form_row(form.websiteLink) }}
-    {{ form_row(form.paymentFrequency) }}
-    {{ form_row(form.openArea) }}
-    {{ form_row(form.submit) }}
-
-{{ form_end(form) }}
-
-</div>
 
 {% endblock %}

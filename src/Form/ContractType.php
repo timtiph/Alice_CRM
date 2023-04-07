@@ -7,9 +7,9 @@ use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -39,19 +39,27 @@ class ContractType extends AbstractType
                 'label' => 'Date du contrat'
             ])
             ->add('amountCharged', MoneyType::class, [
-                'label' => 'Montant facturé'
+                'label' => 'Montant facturé',
             ])
             ->add('timeCharged', NumberType::class, [
                 'label' => 'Durée facturée',
+                'invalid_message' => 'Veuillez saisir un nombre.'
             ])
             ->add('amountReal', MoneyType::class, [
                 'label' => 'Montant réel'
             ])
             ->add('timeReal', NumberType::class, [
                 'label' => 'Durée Réelle',
+                'invalid_message' => 'Veuillez saisir un nombre.'
             ])
-            ->add('websiteLink', TextType::class, [
-                'label' => 'lien site client'
+            ->add('websiteLink', UrlType::class, [
+                'label' => 'lien site client',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+                        'message' => 'Veuillez saisir une URL valide. Auriez-vous saisi un caractère spécial ?'
+                    ])
+                ],
             ])
             ->add('paymentFrequency', ChoiceType::class, [
                 'label' => 'fractionnement',
@@ -65,16 +73,6 @@ class ContractType extends AbstractType
             ->add('openArea', TextareaType::class, [
                 'label' => 'Remarques'
             ])
-            // ->add('customer', EntityType::class, [
-            //     'label' => 'Client : ',
-            //     'class' => Customer::class,
-            //     'required' => true,
-            //     'multiple' => false,
-            //     'expanded' => false,
-            //     'attr' => [
-            //         'placeholder' => $customer,
-            //         ]
-            // ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

@@ -20,74 +20,100 @@ class NewUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => 'Email',
-                'attr' => [
-                    'placeholder' => 'example@mail.com'
-                ],
-                'constraints' => [
-                    new Length([
-                        'min' => 5, 
-                        'max' => 255,
-                        'minMessage' => 'Votre email contient moins de 5 caractères ?',
-                        'maxMessage' => 'Votre email est trop long !' 
-                    ]),
-                    new NotBlank([
-                        'message' => 'Veuillez renseigner votre adresse email !'
-                    ]),
-                    new Regex([
-                        // on accept alfa num . _ -  +@ et alfa num +. 2 à 4 (.com, .fr, .asso)
-                        'pattern' => '/^[a-b0-9.-_]+@[a-b0-9.-_]+\.[a-z]{2,4}$/i',
-                        'message' => 'Veuillez saisir une adresse Email valide'
-                    ]),
-                ],
-                'invalid_message' => 'Veuillez renseigner une adresse email valide',
-            ])
+        ->add('email', EmailType::class, [
+            'label' => 'Email',
+            'attr' => [
+                'placeholder' => 'Entrez votre adresse email'
+            ],
+            'constraints' => [
+                new Length([
+                    'min' => 5, 
+                    'max' => 255,
+                    'minMessage' => 'Votre email contient moins de 5 caractères ?',
+                    'maxMessage' => 'Votre email est trop long !' 
+                ]),
+                new NotBlank([
+                    'message' => 'Veuillez renseigner votre adresse email.'
+                ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/',
+                    'message' => 'L\'adresse email "{{ value }}" n\'est pas valide.',
+                ]),
+            ],
+            'invalid_message' => 'Veuillez saisir une adresse mail valide.'
+        ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'attr' => [
                     'placeholder' => 'Entrez un mot de passse provisoire'
-                ]
+                ],
+                'constraints' => [
+                    // longueure min 8 max 20
+                    new Length([
+                        'min' => 8, 
+                        'max' => 20,
+                        'minMessage' => 'Le mot depasse doit contenir au moins 8 caractères',
+                        'maxMessage' => 'Le mot depasse doit contenir moins de 20 caractères' 
+                    ]),
+                    // invalide si null
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un mot de passe !'
+                    ]),
+                    // Oblige à entrer un MDP avec 8 à 20 char + 1 maj + 1 min + chiffre + caractere spé 
+                    new Regex([
+                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/',
+                        'message' => 'Votre mot de passe doit contenir 1 majuscule, 1 minuscule, 1 caractère spécial, 1 chiffre et doit être composé de 8 à 20 caractères'
+                    ]),
+                ],
+                // TODO : revoir cette partie sur le MDP provisoire .............
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'constraints' => [
                     new Length([
                         'min' => 2, 
+                        'minMessage' => 'Le Prénom contient moins de {{ limit }} caractères ?',
                         'max' => 30,
-                        'minMessage' => 'Votre Prénom contient moins de 2 lettres ?',
-                        'maxMessage' => 'Votre Prénom est trop long !' 
+                        'maxMessage' => 'Le Prénom contient plus de {{ limit }} caractères ?'
                     ]),
                     new NotBlank([
-                        'message' => 'Veuillez renseigner votre Prénom !'
+                        'message' => 'Veuillez renseigner un Prénom !'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z\-\s]+$/',
+                        'message' => 'Le champ ne doit contenir que des lettres et des tirets.'
                     ]),
                 ],
                 'attr' => [
                     'placeholder' => 'John'
                 ],
-                
+    
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
                 'constraints' => [
                     new Length([
                         'min' => 2, 
+                        'minMessage' => 'Le Nom contient seulement 1 caractère ?',
                         'max' => 30,
-                        'minMessage' => 'Votre Nom contient moins de 2 lettres ?',
-                        'maxMessage' => 'Votre Nom est trop long !' 
+                        'maxMessage' => 'Le Nom contient plus de 30 caractères ?'
                     ]),
                     new NotBlank([
-                        'message' => 'Veuillez renseigner votre Nom !'
+                        'message' => 'Veuillez renseigner un Nom !'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9_\-\s]+$/',
+                        'message' => 'Le champ ne doit contenir que des lettres, des chiffres, des tirets et des underscores.'
                     ]),
                 ],
                 'attr' => [
                     'placeholder' => 'Doe'
                 ],
-                
             ])
             ->add('role', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices'  => [
+                    'DEFAUT' => ' ',
                     'COMPTA' => "COMPTA",
                     'COLLAB' => "COLLAB",
                     'CLIENT' => "CLIENT",

@@ -176,6 +176,7 @@ class ContactController extends AbstractController
         $userId = $user->getId();
         $slug = $user->getSlug();
         $csrf_token = $request->query->get('csrf_token', '');
+
         
         if (!$this->isCsrfTokenValid('delete_contact' . $contact->getId(), $csrf_token)) {
             $this->addFlash(
@@ -203,6 +204,10 @@ class ContactController extends AbstractController
             } else {
                 
                 // si le contact est lié à un utilisateur autre que client 
+
+                $entityManager = $doctrine->getManager();
+                $entityManager->remove($contact);
+                $entityManager->flush(); // push les données
                 
                 $this->addFlash(
                     'success',

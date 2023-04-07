@@ -7,9 +7,33 @@
 
 
 
-<h1 class="mb-3">Modification du contrat {{ contract.name }} du client {{ contract.customer.name }}</h1>
 
-<p>Utilisateur : {{ contract.customer.user.firstname }} {{ contract.customer.user.lastname }}</p>
+    <div class="d-flex my-5 justify-content-between flex-column">
+        
+        <h1 class="mb-3">Modification de contrat</h1>
+
+        <div class="d-flex">
+
+
+            <div class="card m-2" style="width: 15rem;">
+                <div class="card-body bgg-alice-light">
+                    <p class="card-subtitle mb-2 fs-6">Contrat</p>
+                    <h6 class="card-title">{{ contract.name }}</h6>
+                </div>
+            </div>   
+
+            <div class="card m-2" style="width: 15rem;">
+                <div class="card-body bgg-alice-light">
+                    <p class="card-subtitle mb-2 fs-6">Utilisateur</p>
+                    <h6 class="card-title">{{ contract.customer.user.firstname }} {{ contract.customer.user.lastname }}</h6>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
 
     <div class="form mt-3 mt-lg-0">
         
@@ -17,7 +41,16 @@
 
         {{ form_errors(form) }}
 
-            {{ form_row(form.customer) }}
+            <div class="mb-3">
+                <label class="form-label required" for="contract_customer">Client</label>
+                <input 
+                id="contract_customer" 
+                class="form-control" 
+                type="text" 
+                name="contract[customer]" 
+                placeholder="{{ customer.name }}" 
+                disabled="true"></input>
+            </div>
             {{ form_row(form.name) }}
             {{ form_row(form.date) }}
             {{ form_row(form.amountCharged) }}

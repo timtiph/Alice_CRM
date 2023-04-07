@@ -4,20 +4,21 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Contact;
+use App\Entity\Partner;
 use App\Entity\Contract;
 use App\Entity\Customer;
 use App\Form\NewUserType;
-use App\Form\ContractType;
+use App\Entity\TariffZone;
 use App\Form\CustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
 use App\Form\EditCustomerType;
-use App\Repository\CustomerRepository;
+use App\Repository\PartnerRepository;
+use App\Repository\TariffZoneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -219,6 +220,15 @@ class AdminMainController extends AbstractController
     {
 
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
+        $tariffZone = $this->entityManager->getRepository(TariffZone::class)->findAll();
+
+        if (!$tariffZone) {
+            $this->addFlash(
+                'notice',
+                'Vous n\'avez pas encore définit de zone tarifaire. Merci de renseigner préalablement cet élément. Vous pourrez retourner sur le formulaire de création client par la suite.',
+            );
+            return $this->redirectToRoute('app_tariff_zone_new');
+        }
 
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer, [
@@ -230,6 +240,8 @@ class AdminMainController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $customer = $form->getData();
+                // on enlève les espaces entre les groupes de chiffre
+                $siret = str_replace(' ', '', $form->get('siret')->getData());
 
                 // création Slug
                 $fullname = $customer->getName();
@@ -239,7 +251,11 @@ class AdminMainController extends AbstractController
                 
                 // récup User Id
                 $customer->setUser($user);
-                
+
+                //on set le siret sans espace 
+                $customer->setSiret($siret);
+
+
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($customer); //figer les données 
                 $entityManager->flush(); // push les données
@@ -286,6 +302,9 @@ class AdminMainController extends AbstractController
         
         $form->handleRequest($request);        
         if ($form->isSubmitted() && $form->isValid()) {
+            $siret = str_replace(' ', '', $form->get('siret')->getData());
+            $customer->setSiret($siret);
+            
             
             $this->entityManager->flush();
 

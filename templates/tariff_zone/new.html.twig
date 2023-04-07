@@ -8,10 +8,14 @@
 
 
     <h1 class="mb-2">Création d'une nouvelle zone tarifaire</h1>
-    <div class="d-flex justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg">Retour à la liste</a>
-    </div>
+        
+        {% if tariff_zone is empty %}    
+            <div class="d-flex justify-content-center justify-content-lg-end">
+                <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg">Retour à la liste</a>
+            </div>
 
+        {% endif %}
+        
     <div class="form mt-3">
         {{ include('tariff_zone/_form.html.twig') }}
     </div>

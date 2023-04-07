@@ -338,10 +338,6 @@ main{
     margin: 10px 0;
     width: 100px !important;
 }
-.btn-alice:hover, .btn-alice-lg:hover, .btn-alice-nw:hover{
-    background-color: rgba(76, 158, 189, 0.5) !important;
-    color: #19374D !important;
-}
 
 .btn-alice-lg{
     background-color: #19374D;
@@ -366,6 +362,18 @@ main{
     width: 250px !important;
 }
 
+.btn-alice-sm {
+    background-color: #19374D;
+    color: #FAFAFF ;
+    border: #4C9EBD solid 1px;
+    font-size: small;
+    margin: 10px 0;
+}
+
+.btn-alice:hover, .btn-alice-lg:hover, .btn-alice-nw:hover, .btn-alice-sm:hover{
+    background-color: rgba(76, 158, 189, 0.5) !important;
+    color: #19374D !important;
+}
 
 /*
 *  Personnalisation formulaires RESET_PASSWORD

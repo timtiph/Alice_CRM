@@ -32,7 +32,7 @@
                 <tbody>
                     <tr>
                         <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} ">{{ contract.customer.name }}</a></td>
-                        <td>{{ contract.name|upper }}</td>
+                        <td><a href=" {{ path('app_contract_show', { 'id': contract.id}) }} ">{{ contract.name|upper }}</a></td>
                         <td>{{ contract.date|date("d/m/Y") }}</td>
                         <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
                         <td>{{ contract.openArea }}</td>

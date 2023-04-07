@@ -4,18 +4,21 @@
 
 {% block body %}
     <h1 class="mb-5">Détail Zone Tarifaire : {{ tariff_zone.name }}</h1>
-    <div class="d-flex justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
-        <a href="{{ path('app_tariff_zone_edit', {'id': tariff_zone.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
-        {% if customers is empty %}
-            {{ include('tariff_zone/_delete_form.html.twig') }}
-        {% else %}
-    </div>
+
+    
+        <div class="d-flex justify-content-center justify-content-lg-end">
+            <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
+            <a href="{{ path('app_tariff_zone_edit', {'id': tariff_zone.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
+            {% if customers is empty %}
+                {{ include('tariff_zone/_delete_form.html.twig') }}
+            {% else %}
+        </div>
+    
         <div class="deleteTariffZoneInfo">
             <p class="m-0">La suppression de cette zone tarifaire est impossible.</p>
             <p class="m-0">Si vous souhaitez la supprimer, merci de retirer tous les clients attachés à cette zone.</p>
+            {% endif %}
         </div>
-        {% endif %}
 
     <table class="table mt-5">
         <tbody>
@@ -25,27 +28,27 @@
             </tr>
             <tr>
                 <th>Tarif</th>
-                <td>{{ tariff_zone.amount }}</td>
+                <td>{{ tariff_zone.amount }} €</td>
             </tr>
         </tbody>
     </table>
 
-<h1 class="mt-5">Liste des clients rattachés</h1>
-    {% if customers is empty %}
-    <p>Aucun client</p>
-    {% else %}
-        <table class="table mt-5">
-            <tbody>
-                <tr>
-                    <th>Nom</th>
-                </tr>
-                {% for customer in customers %}
-                <tr>
-                    <td><a href="{{ path('app_customer', { 'id': customer.id, 'slug': customer.slug }) }}">{{ customer.name }}</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <h1 class="mt-5">Liste des clients rattachés</h1>
+        {% if customers is empty %}
+        <p>Aucun client</p>
+        {% else %}
+            <table class="table mt-5">
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                    </tr>
+                    {% for customer in customers %}
+                    <tr>
+                        <td><a href="{{ path('app_customer', { 'id': customer.id, 'slug': customer.slug }) }}">{{ customer.name }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
     {% endif %}
 
 

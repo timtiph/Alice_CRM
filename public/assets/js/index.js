@@ -68,3 +68,34 @@ for (var i = 0; i < btnsSupprimer.length; i++) {
     }
   });
 }
+
+const isStatusCheckboxes = document.querySelectorAll('input[name="customer[isPartner]"], input[name="customer[isProfessional]"], input[name="edit_customer[isPartner]"], input[name="edit_customer[isProfessional]"]');
+const inputStatuses = document.querySelectorAll('#createCustomerPartner, #createCustomerSiret, #editCustomerPartner, #editCustomerSiret');
+console.log(isStatusCheckboxes);
+console.log(inputStatuses);
+
+// On cache les champs input au chargement de la page
+for (let i = 0; i < inputStatuses.length; i++) {
+  inputStatuses[i].style.display = 'none';
+}
+
+// On ajoute un écouteur d'événements sur chaque case à cocher isPartner / isProfessional
+for (let i = 0; i < isStatusCheckboxes.length; i++) {
+  const isStatusCheckbox = isStatusCheckboxes[i];
+  const inputStatus = inputStatuses[i];
+
+  if (isStatusCheckbox.checked) {
+    inputStatus.style.display = 'block';
+  } else {
+    inputStatus.style.display = 'none';
+  }
+  
+
+  isStatusCheckbox.addEventListener('change', function() {
+    if (isStatusCheckbox.checked) {
+      inputStatus.style.display = 'block';
+    } else {
+      inputStatus.style.display = 'none';
+    }
+  });
+}

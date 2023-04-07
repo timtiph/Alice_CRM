@@ -2,16 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use App\Entity\Customer;
 use App\Entity\Partner;
+use App\Entity\Customer;
 use App\Entity\TariffZone;
-use Doctrine\ORM\EntityRepository;
+use App\Repository\PartnerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,9 +19,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EditCustomerType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -33,21 +35,28 @@ class EditCustomerType extends AbstractType
                 ]),
             ]
         ])
-        // TODO : Revoir les pattern
         ->add('siret', TextType::class, [
             'label' => 'SIREN ou SIRET',
             'required' => false, 
             'constraints' => [
-                new Length([
-                    'min' => 9,
-                    'minMessage' => 'Le numéro est trop court',
-                    'max' => 14,
-                    'maxMessage' => 'Le Le numéro est trop long'
+                new Callback([
+                    'callback' => function ($numSirenSiret, ExecutionContextInterface $context) {
+                        // Suppression des espaces entre les groupes de chiffres
+                        $numSirenSiret = str_replace(' ', '', $numSirenSiret);
+                        // Validation du numéro SIREN/SIRET
+                        $regex = '/^(?:\d{9}|\d{14})$/';
+                        if (!preg_match($regex, $numSirenSiret)) {
+                            $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
+                        }
+                        
+                    },
+                    'payload' => null,
                 ]),
-                new Regex([
-                    'pattern' => '/(\d{3}(\s*)?){3}(\d{5})?/',
-                    'message' => 'Il semble que le numéro saisi soit incorrect.'
-                ]),
+            ],
+            'attr' => [
+                'oninput' => "this.value=this.value.replace(/[^0-9 ]+/g,'').replace(/^(\d{3}) ?(\d{3}) ?(\d{3}) ?(\d{0,5}).*/, '$1 $2 $3 $4').trim()",
+                'maxlength' => '18',
+                'inputmode' => 'numeric'
             ],
         ])
         ->add('address', TextType::class, [
@@ -97,23 +106,12 @@ class EditCustomerType extends AbstractType
             'label' => 'Client Partenaire ?',
             'required' => false
         ])
-        // ->add('user', EntityType::class, [
-        //     'label' => 'Le client sera lié à l\'utilisateur : ',
-        //     'required' => true,
-        //     'disabled' => true,
-        //     'class' => User::class,
-        //     'query_builder' => function (EntityRepository $er) {
-        //         return $er  ->createQueryBuilder('u')
-        //                     ->orderBy('u.id', 'ASC')
-        //                     ->setFirstResult(1);
-        //     }
-        // ])
         ->add('partner', EntityType::class, [
             'label' => 'Patenariat : ',
             'class' => Partner::class,
             'required' => true,
             'multiple' => false,
-            'expanded' => false
+            'expanded' => false,
         ])
         ->add('tariffZone', EntityType::class, [
             'label' => 'Zone Tarifaire : ',
@@ -127,10 +125,10 @@ class EditCustomerType extends AbstractType
             'attr' => [
                 'class' => 'btn-alice-form'
             ]
-        ]);
+        ])
         ;
+       
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

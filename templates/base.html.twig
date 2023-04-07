@@ -34,7 +34,7 @@
             <main class="col-lg-10 ms-auto ps-lg-5">
 
     
-        {% if app.user and app.user.isVerified == false %}
+            {% if app.user and app.user.isVerified == false %}
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <div class="alert-message">
@@ -43,17 +43,17 @@
                     </div>
                 </div>
 
-            {# {% else %} #}
+                {# {% else %} #}
 
             {% endif %}
 
-            {# TODO : Trouver un moyen de donner acces que si IsVerifed +  #}
+                {# TODO : Trouver un moyen de donner acces que si IsVerifed +  #}
             {% include 'includes/_flashes.html.twig' %}
 
             
             {% block body %}{% endblock %}
             
-            {# {% endif %} #}
+                {# {% endif %} #}
                 
             </main>
 

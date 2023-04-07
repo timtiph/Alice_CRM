@@ -19,14 +19,33 @@
 
             {{ form_row(form.name) }}
             {{ form_row(form.isPartner) }}
-            {{ form_row(form.partner) }}
+
+            <div id="editCustomerPartner">
+                {% if form.partner.vars.choices is empty %}
+                    {{ form_row(form.partner, { 'attr': {'class': 'd-none'} }) }}
+                    <p>Aucun partenariat n'est défini. Veuillez ajouter un partenariat en cliquant sur le bouton ci-dessous :</p>
+                    <a href="{{ path('app_partner_new') }}" class="btn btn-alice-form" >Ajouter un partenariat</a>
+                    {% else %}
+                    {{ form_row(form.partner) }}
+                {% endif %}
+            </div>
+
             {{ form_row(form.isProfessional) }}
-            {{ form_row(form.siret) }}
+
+            <div id="editCustomerSiret">
+                {{ form_row(form.siret) }}
+            </div>
+
             {{ form_row(form.address) }}
             {{ form_row(form.zipCode) }}
             {{ form_row(form.city) }}
             {{ form_row(form.country) }}
             {{ form_row(form.tariffZone) }}
+            <div>
+                <p>Vous pouvez ajouter une Zone Tarifaire en vous rendant sur le formulaire : <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice-sm">Ajouter une Zone Tarifaire</a>
+                <br> Vous devrez revenir sur ce formulaire pour reprendre la saisie de la modification de votre client.</p>
+                
+            </div>
             {{ form_row(form.submit) }}
 
         {{ form_end(form) }}
