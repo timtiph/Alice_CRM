@@ -1,0 +1,22 @@
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+        filter_field_name: filterField
+        filter_value_name: filterValue
+        default_limit: 10
+        # You could enable max limit and define the maximum number of items to display
+        # max_limit: 100
+        # limit_parameter_name: '_limit'
+        # You could define additional parameters to the pagination items, by default only limit is added
+        # parameters:
+        #   sort: { key: getSort, direction: asc }
+        #   foo: bar
+    template:
+        pagination: '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+        sortable: '@KnpPaginator/Pagination/bootstrap_v5_bi_sortable_link.html.twig'
+        filtration: '@KnpPaginator/Pagination/bootstrap_v5_filtration.html.twig'
+

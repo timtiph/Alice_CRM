@@ -6,6 +6,7 @@
 parameters:
     app.mailjet.public_key: '%env(MJ_APIKEY_PUBLIC)%'
     app.mailjet.private_key: '%env(MJ_APIKEY_PRIVATE)%'
+    documents_directory: '%kernel.project_dir%/public/uploads/documents'
 
 services:
     # default configuration for services in *this* file
