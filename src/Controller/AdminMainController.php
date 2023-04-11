@@ -254,6 +254,7 @@ class AdminMainController extends AbstractController
 
                 //on set le siret sans espace 
                 $customer->setSiret($siret);
+                //dd($siret);
 
 
                 $entityManager = $doctrine->getManager();
@@ -304,8 +305,6 @@ class AdminMainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $siret = str_replace(' ', '', $form->get('siret')->getData());
             $customer->setSiret($siret);
-            
-            
             $this->entityManager->flush();
 
             $this->addFlash(

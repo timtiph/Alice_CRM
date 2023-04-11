@@ -28,7 +28,7 @@
         <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Écrire à Antoine</a>
         {% endif %}
     </div>
-
+{# TODO : reste à gérer si on peut supprimer ou pas les zones tarifaires, les partenariats, la modification : au risque que ça impacte les contrats !! #}
     <div class="row grid-alice">
 
         {% if is_granted('ROLE_ADMIN') %}
@@ -38,8 +38,12 @@
                     {# Fonctionnalité GOOGLE CALENDAR #}
                 </div>
             </div>
-            <a href="{{ path('app_partner_index') }}">Manage les partenaires</a>
-            <a href="{{ path('app_tariff_zone_index') }}">Manage les tariff Zone</a>
+            <div class="d-flex justify-content-center align-items-center bg-primary-subtle">
+                <a href="{{ path('app_partner_index') }}" class="fs-3">Gérer les partenaires</a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center bg-success-subtle">
+                <a href="{{ path('app_tariff_zone_index') }}" class="fs-3">Gérer les Zones Tarifaires</a>
+            </div>
 
         {% endif %}
 

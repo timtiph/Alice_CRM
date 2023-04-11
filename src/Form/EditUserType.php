@@ -22,7 +22,6 @@ class EditUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email',
@@ -74,11 +73,12 @@ class EditUserType extends AbstractType
             ->add('role', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices'  => [
-                    'DEFAUT' => ' ',
+                    'DEFAUT' => '',
                     'COMPTA' => "COMPTA",
                     'COLLAB' => "COLLAB",
                     'CLIENT' => "CLIENT",
-                ]
+                ],
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

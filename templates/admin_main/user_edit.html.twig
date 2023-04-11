@@ -21,7 +21,18 @@
             {{ form_row(form.firstname) }}
             {{ form_row(form.lastname) }}
             {{ form_row(form.email) }}
+{# {{ dump(form.vars.value.role) }} #}
+        {% if form.vars.value.role == "ADMIN" %}
+
             {{ form_row(form.role) }}
+
+        <input type="text" name="edit_user[role]" id="edit_user_role" value="{{ user.role }}" class="form-control" disabled="disabled">
+        {% else %}    
+        
+            {{ form_row(form.role) }}
+        
+        {% endif %}
+            
             {{ form_row(form.submit) }}
 
         {{ form_end(form) }}
