@@ -17,7 +17,7 @@ body {
  Personal color
 */
 
-.bgg-alice-light{
+.bgg-alice-light {
     background-color: #FAFAFF;
 }
 
@@ -31,41 +31,41 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-  }
+}
 
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
     .bd-placeholder-img-lg {
-      font-size: 3.5rem;
+        font-size: 3.5rem;
     }
-  }
+}
 
-  .b-example-divider {
+.b-example-divider {
     height: 3rem;
     background-color: rgba(0, 0, 0, .1);
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
+}
 
-  .b-example-vr {
+.b-example-vr {
     flex-shrink: 0;
     width: 1.5rem;
     height: 100vh;
-  }
+}
 
-  .bi {
+.bi {
     vertical-align: -.125em;
     fill: currentColor;
-  }
+}
 
-  .nav-scroller {
+.nav-scroller {
     position: relative;
     z-index: 2;
     height: 2.75rem;
     overflow-y: hidden;
-  }
+}
 
-  .nav-scroller .nav {
+.nav-scroller .nav {
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 1rem;
@@ -74,7 +74,7 @@ body {
     text-align: center;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-  }
+}
 
 /********************** < Injection Bootstrap pout le graphique et la nav >  */
 
@@ -91,11 +91,11 @@ body {
 * Couleur du site
 */
 
-.bg-alice-dark{
+.bg-alice-dark {
     background-color: #19374D;
 }
 
-.bg-alice-light{
+.bg-alice-light {
     background-color: rgba(76, 158, 189, 0.2);
 }
 
@@ -104,11 +104,11 @@ body {
 * personalisation de la NAVBAR 
 */
 
-.navbar-brand{
+.navbar-brand {
     max-width: 220px;
 }
 
-.navbar-brand-alice{
+.navbar-brand-alice {
     background-color: #19374D !important;
 }
 
@@ -118,9 +118,9 @@ body {
 */
 
 @media screen and (max-width: 991px) {
-    .navbar-alice{
+    .navbar-alice {
         background-color: #19374D !important;
-    }    
+    }
 }
 
 
@@ -160,13 +160,13 @@ body {
     max-height: 100vh;
 }
 
-.sidebar-sticky-alice{
+.sidebar-sticky-alice {
     padding-top: 80px;
 }
 
 .nav-item-alice {
     display: flex;
-    
+
     border-radius: 5px;
     transition: background-color 0.5s ease-out !important;
 }
@@ -185,7 +185,8 @@ body {
     width: 100%;
     padding: 5px 1px;
 }
-.nav-link-alice:hover{
+
+.nav-link-alice:hover {
     color: #19374D !important;
 }
 
@@ -205,14 +206,14 @@ body {
 * Nom de la personne connectée 
 */
 
-.user-auth hr{
+.user-auth hr {
     margin: 10px auto;
     color: #4C9EBD;
     width: 90%;
     opacity: 1;
 }
 
-.user-auth p{
+.user-auth p {
     color: #4C9EBD;
     width: 90%;
     margin: 0 auto 10px;
@@ -225,16 +226,16 @@ body {
 
 /**************************** Container Main partie droite */
 
-main{
+main {
     overflow: scroll !important;
     max-height: 90vh;
 }
 
-.form-search > form{
+.form-search>form {
     width: 100%;
 }
 
-.form-search > form > div{
+.form-search>form>div {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -245,7 +246,7 @@ main{
 * Systeme grid de la section main
 */
 
-.grid-alice{
+.grid-alice {
     padding: 0 !important;
     margin: 0 !important;
     display: grid;
@@ -253,24 +254,28 @@ main{
     gap: 10px;
 }
 
-@media screen and (min-width: 768px){
-    
-    .grid-alice{
+@media screen and (min-width: 768px) {
+
+    .grid-alice {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 
-@media screen and (min-width: 1200px){
-    
-    main{
+@media screen and (min-width: 1200px) {
+
+    main {
         margin-right: 1% !important;
     }
 }
 
 
 
-#calendar, #documents, #graphic, #statistics, #notifications{
+/* #calendar,
+#documents,
+#graphic,
+#statistics,
+#notifications {
     height: auto;
     width: 100%;
     border: solid #4C9EBD 1px;
@@ -278,22 +283,22 @@ main{
     font-size: 20px;
     background-color: rgba(76, 158, 189, 0.2);
     padding: 0;
-}
+} */
 
 /* Table Notifications */
 
-.table-alice{
+.table-alice {
     background-color: #FAFAFF;
     border: #4c9ebd;
     margin-bottom: 0;
 }
 
-.table-alice tr th{
+.table-alice tr th {
     font-weight: 600;
     font-size: 18px;
 }
 
-.table-alice tr td{
+.table-alice tr td {
     font-weight: 400;
     font-size: 16px;
 }
@@ -303,22 +308,28 @@ main{
 * Formulaire d'inscription et de connexion
 */
 
-.form{
+.form {
     margin: auto;
     max-width: 500px;
-}   
+}
 
 /* Bouton validation des forms */
 
-.btn-alice-form, #register_submit, #login_submit, #change_password_submit{
+.btn-alice-form,
+#register_submit,
+#login_submit,
+#change_password_submit {
     background-color: #19374D;
-    color: #FAFAFF ;
+    color: #FAFAFF;
     font-size: large;
     margin: 10px 0;
     width: 100%;
 }
 
-.btn-alice-form:hover, #register_submit:hover, #login_submit:hover, #change_password_submit:hover{
+.btn-alice-form:hover,
+#register_submit:hover,
+#login_submit:hover,
+#change_password_submit:hover {
     background-color: rgba(76, 158, 189, 0.5) !important;
     color: #19374D !important;
 }
@@ -330,33 +341,33 @@ main{
 * button personnalisé
 */
 
-.btn-alice{
+.btn-alice {
     background-color: #19374D;
-    color: #FAFAFF ;
+    color: #FAFAFF;
     border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
     width: 100px !important;
 }
 
-.btn-alice-lg{
+.btn-alice-lg {
     background-color: #19374D;
-    color: #FAFAFF ;
+    color: #FAFAFF;
     border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
     width: 250px !important;
 }
 
-.btn-alice-nw{
+.btn-alice-nw {
     background-color: #19374D;
-    color: #FAFAFF ;
+    color: #FAFAFF;
     border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
 }
 
-.btn-alice-supp{
+.btn-alice-supp {
     font-size: large;
     margin: 10px 0;
     width: 250px !important;
@@ -364,13 +375,16 @@ main{
 
 .btn-alice-sm {
     background-color: #19374D;
-    color: #FAFAFF ;
+    color: #FAFAFF;
     border: #4C9EBD solid 1px;
     font-size: small;
     margin: 10px 0;
 }
 
-.btn-alice:hover, .btn-alice-lg:hover, .btn-alice-nw:hover, .btn-alice-sm:hover{
+.btn-alice:hover,
+.btn-alice-lg:hover,
+.btn-alice-nw:hover,
+.btn-alice-sm:hover {
     background-color: rgba(76, 158, 189, 0.5) !important;
     color: #19374D !important;
 }
@@ -380,7 +394,7 @@ main{
 */
 
 
-#reset_password_request_form_email{
+#reset_password_request_form_email {
     margin: 15px 0;
 }
 
@@ -395,23 +409,25 @@ main{
 input[type=number] {
     -moz-appearance: textfield;
 }
- 
+
 /* Chrome */
 input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button { 
-	-webkit-appearance: none;
-	margin:0;
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
- 
+
 /* Opéra*/
 input::-o-inner-spin-button,
-input::-o-outer-spin-button { 
-	-o-appearance: none;
-	margin:0
+input::-o-outer-spin-button {
+    -o-appearance: none;
+    margin: 0
 }
 
 
-#customer_user, #edit_customer_user, #contact_user {
+#customer_user,
+#edit_customer_user,
+#contact_user {
     --bs-form-select-bg-img: red;
 }
 
@@ -419,7 +435,8 @@ input::-o-outer-spin-button {
 *  Personnalisation Affichage de la fiche client
 */
 
-.picto-check-professional, .picto-check-partner{
+.picto-check-professional,
+.picto-check-partner {
     width: 20px;
     height: 20px;
 }
@@ -427,48 +444,55 @@ input::-o-outer-spin-button {
 
 /************ Affichage des tables détail client et contrats  ************/
 
-table[data-name='tableContract'], table[data-name='tableContact']{
+table[data-name='tableContract'],
+table[data-name='tableContact'] {
     display: none;
 }
 
-img[data-name='imgAddContract'], 
-img[data-name='imgSuppContract'], 
-img[data-name='imgAddContact'], 
-img[data-name='imgSuppContact']{
+img[data-name='imgAddContract'],
+img[data-name='imgSuppContract'],
+img[data-name='imgAddContact'],
+img[data-name='imgSuppContact'] {
     width: 25px;
     height: 25px;
     margin: auto;
 }
 
-img[data-name='imgAddContract']:hover, 
-img[data-name='imgSuppContract']:hover, 
-img[data-name='imgAddContact']:hover, 
-img[data-name='imgSuppContact']:hover{
+img[data-name='imgAddContract']:hover,
+img[data-name='imgSuppContract']:hover,
+img[data-name='imgAddContact']:hover,
+img[data-name='imgSuppContact']:hover {
     cursor: pointer;
 }
 
-.buttonEditContract, 
+.buttonEditContract,
 .buttonEditContact,
 .buttonShowTariffZone,
 .buttonEditTariffZone,
-.buttonShowPartner{
+.buttonShowPartner,
+.buttonShowDocument,
+.buttonDownloadDocument,
+.buttonEditDocument {
     width: 25px;
     height: 25px;
     margin: auto;
 }
 
-.buttonEditContract:hover, 
+.buttonEditContract:hover,
 .buttonEditContact:hover,
 .buttonShowTariffZone:hover,
 .buttonEditTariffZone:hover,
-.buttonShowPartner:hover{
+.buttonShowPartner:hover,
+.buttonShowDocument:hover,
+.buttonDownloadDocument:hover,
+.buttonEditDocument:hover {
     cursor: pointer;
 }
 
-  
+
 
 /* Encart Nouveau User */
-.new-user{
+.new-user {
     display: flex;
     border: rgb(25, 55, 77, 0.2) solid 1px;
     border-radius: 5px;
@@ -477,6 +501,38 @@ img[data-name='imgSuppContact']:hover{
 
 /* Affichage info de suppression imposible */
 
-.deleteTariffZoneInfo{
+.deleteTariffZoneInfo {
     border: #19374D;
+}
+
+
+/* Affichage du document */
+
+table tbody tr td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.embedContainer {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+
+}
+
+.embedContainer embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 800px;
+}
+
+.showDocuments tbody tr td {
+    width: 15%;
+}
+
+.columnDate, 
+.columnFamily {
+    width: 10%;
 }

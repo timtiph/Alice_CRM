@@ -8,6 +8,8 @@
 
 {# Page accueil #}
 
+{# TODO : Revoir armonisation de tous les TITLE des pages #}
+
 <h4>Bonjour {{ app.user.firstname|capitalize }}.</h4>
 
 <div class="container text-center">
@@ -49,10 +51,19 @@
 
 
 
-        <div class="my-auto bg-danger">
-            <p class="fs-3">Documents</p>
-            <div id="documents" class="bg-danger-subtle">
-                {# Affichage des documents #}
+        <div class="my-auto bg-danger-subtle">
+            <a href="{{ path('app_document_list') }}" class="fs-3">Documents</a>
+            <div id="documents" class="d-flex flex-column">
+                    {% for document in pagination %}
+                        <div class="d-flex">
+                            <div class="col-6">
+                                <p class="m-0">{{ document.date ? document.date|date('d/m/Y') : '' }}</p>
+                            </div>
+                            <div class="col-6">
+                                <a href="{{ path('app_document_show', {'id': document.id}) }}">{{ document.name }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
             </div>
         </div>
 

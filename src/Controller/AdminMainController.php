@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Contact;
-use App\Entity\Partner;
 use App\Entity\Contract;
 use App\Entity\Customer;
 use App\Form\NewUserType;
@@ -13,8 +12,6 @@ use App\Form\CustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
 use App\Form\EditCustomerType;
-use App\Repository\PartnerRepository;
-use App\Repository\TariffZoneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

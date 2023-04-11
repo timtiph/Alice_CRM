@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Documents | Alice CRM{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">Documents</h1>
+    <div class="d-flex justify-content-center justify-content-lg-end">
+        <a href="{{ path('app_document_new') }}" class="btn btn-alice-lg">Nouveau document</a>
+    </div>
+
+    <table class="table showDocuments">
+        <thead>
+
+            <tr>
+                {# sorting of properties based on query components #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th {% if pagination.isSorted('u.lastname') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'User', 'u.lastname') }}
+                    </th>
+                {% else %}
+                {% endif %}
+
+                <th{% if pagination.isSorted('d.name') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Titre', 'd.name') }}
+                </th>
+                
+                <th class="d-none d-sm-table-cell">Description</th>
+                
+                <th class="columnDate">
+                {{ knp_pagination_sortable(pagination, 'Date', 'd.date') }}
+                </th>
+
+                <th{% if pagination.isSorted(['d.family']) %} class="sorted columnFamily"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Famille', 'd.family') }}
+                </th>
+
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+        <tbody>
+        {% for document in pagination %}
+            <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                <td>{{ document.user.firstname }} {{ document.user.lastname }}</td>
+                {% else %}
+                {% endif %}
+                <td>{{ document.name }}</td>
+                <td class="d-none d-sm-table-cell">{{ document.description }}</td>
+                <td class="columnDate">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
+                <td class="columnFamily">{{ document.family }}</td>
+                <td>
+                    <div class="d-flex">
+                        <a href="{{ path('app_document_show', {'id': document.id}) }}" class="buttonShowDocument mx-2"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+                        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" class="buttonDownloadDocument mx-2"><img src="{{ asset('assets/img/download-solid.svg') }}" alt="Télécharger"></a>
+                        <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="buttonEditDocument mx-2"><img src="{{ asset('assets/img/edit-solid.svg') }}" alt="Modifier"></a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun document</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- afficher les liens de pagination -->
+    <div class="">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+{% endblock %}
