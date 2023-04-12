@@ -528,6 +528,16 @@ table tbody tr td {
     height: 800px;
 }
 
+/* .columnHeaderDocumentList, 
+.columnHeaderDocumentList > a {
+    font-weight: 500;
+    color: #19374D;
+}
+
+.columnHeaderDocumentList > a {
+    text-decoration-style: solid;
+} */
+
 .showDocuments tbody tr td {
     width: 15%;
 }
@@ -535,4 +545,9 @@ table tbody tr td {
 .columnDate, 
 .columnFamily {
     width: 10%;
+}
+
+.imgEmbedDocument {
+    max-width: 100%;
+    height: auto;
 }
