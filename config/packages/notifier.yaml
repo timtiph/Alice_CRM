@@ -13,4 +13,4 @@ framework:
             medium: ['email']
             low: ['email']
         admin_recipients:
-            - { email: ugoblackandwhite@gmail.com }
+            - { email: alice.webdeveloppement@gmail.com }
