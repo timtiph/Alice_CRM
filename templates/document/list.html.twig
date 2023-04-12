@@ -14,27 +14,27 @@
             <tr>
                 {# sorting of properties based on query components #}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <th {% if pagination.isSorted('u.lastname') %} class="sorted"{% endif %}>
+                    <th class="columnHeaderDocumentList" {% if pagination.isSorted('u.lastname') %} class="sorted" {% endif %}>
                     {{ knp_pagination_sortable(pagination, 'User', 'u.lastname') }}
                     </th>
                 {% else %}
                 {% endif %}
 
-                <th{% if pagination.isSorted('d.name') %} class="sorted"{% endif %}>
+                <th class="columnHeaderDocumentList" {% if pagination.isSorted('d.name') %} class="sorted columnHeaderDocumentList"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Titre', 'd.name') }}
                 </th>
                 
-                <th class="d-none d-sm-table-cell">Description</th>
+                <th class="d-none d-sm-table-cell columnHeaderDocumentList">Description</th>
                 
-                <th class="columnDate">
+                <th class="columnDate columnHeaderDocumentList">
                 {{ knp_pagination_sortable(pagination, 'Date', 'd.date') }}
                 </th>
 
-                <th{% if pagination.isSorted(['d.family']) %} class="sorted columnFamily"{% endif %}>
+                <th class="columnHeaderDocumentList"{% if pagination.isSorted('d.family') %} class="sorted columnFamily columnHeaderDocumentList"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Famille', 'd.family') }}
                 </th>
 
-                <th>Actions</th>
+                <th class="columnHeaderDocumentList">Actions</th>
             </tr>
 
         </thead>
@@ -52,7 +52,9 @@
                 <td>
                     <div class="d-flex">
                         <a href="{{ path('app_document_show', {'id': document.id}) }}" class="buttonShowDocument mx-2"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
-                        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" class="buttonDownloadDocument mx-2"><img src="{{ asset('assets/img/download-solid.svg') }}" alt="Télécharger"></a>
+
+                        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" class="buttonDownloadDocument mx-2" target="_blank" rel="noopener noreferrer" download><img src="{{ asset('assets/img/download-solid.svg') }}" alt="Télécharger"></a>
+
                         <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="buttonEditDocument mx-2"><img src="{{ asset('assets/img/edit-solid.svg') }}" alt="Modifier"></a>
                     </div>
                 </td>

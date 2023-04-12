@@ -5,9 +5,11 @@
 {% block body %}
     <h1>Document</h1>
 
-    <a href="{{ path('app_document_list') }}">Retour à la liste</a>
-
-    <a href="{{ path('app_document_edit', {'id': document.id}) }}">Modifier</a>
+    <div class="d-flex flex-column justify-content-center align-items-center flex-md-row justify-content-md-end">
+        <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
+        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" download class="btn btn-alice-lg mx-2">Télécharger</a>
+        <a href="{{ path('app_document_list') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
+    </div>
 
     {# {{ include('document/_delete_form.html.twig') }} #}
 
@@ -21,7 +23,7 @@
         {% else %}
         {% endif %}
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <td>{{ document.name }}</td>
             </tr>
             <tr>
@@ -30,14 +32,10 @@
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ document.date ? document.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ document.date ? document.date|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th>FileName</th>
-                <td>{{ document.fileName }}</td>
-            </tr>
-            <tr>
-                <th>Family</th>
+                <th>Famille</th>
                 <td>{{ document.family }}</td>
             </tr>
         </tbody>
@@ -45,6 +43,14 @@
 
 
     <div class="embedContainer ms-lg-5">
-        <embed src="{{ asset('uploads/documents/' ~ document.fileName) }}" type='application/pdf' alt="{{ document.name }}" width="300" height="1000">
+        {% if document.fileName|lower ends with('.pdf') %}
+            <embed src="{{ asset('uploads/documents/' ~ document.fileName) }}" type='application/pdf' alt="{{ document.name }}" width="300" height="1000">
+        {% else %}
+            <img src="{{ asset('uploads/documents/' ~ document.fileName) }}" alt="{{ document.name }}" class="imgEmbedDocument">
+        {% endif %}
     </div>
+
+
+
+
 {% endblock %}

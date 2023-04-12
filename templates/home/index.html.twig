@@ -23,11 +23,11 @@
     {% endif %} #}
 
     <div class="d-flex flex-column flex-md-row justify-content-evenly justify-content-lg-end my-4">
-        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-lg-2">modifier mon mot de passe</a>
-        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">déposer un document</a>
+        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-lg-2">Modifier mon mot de passe</a>
+        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
         {% if is_granted('ROLE_ADMIN') %}
         {% else %}
-        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Écrire à Antoine</a>
+        <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-lg-2" >Écrire à Antoine</a>
         {% endif %}
     </div>
 {# TODO : reste à gérer si on peut supprimer ou pas les zones tarifaires, les partenariats, la modification : au risque que ça impacte les contrats !! #}
