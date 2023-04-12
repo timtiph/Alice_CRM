@@ -16,7 +16,19 @@ class HomeController extends AbstractController
     public function index(DocumentRepository $documentRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
-        $query = $documentRepository->createQueryBuilder('d')->join('d.user', 'u')->where('u.id = :userId')->setParameter('userId', $user->getId())->orderBy('d.date', 'DESC');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // Si l'utilisateur est un administrateur, afficher tous les documents
+            $query = $documentRepository->createQueryBuilder('d')->orderBy('d.date', 'DESC');
+        } else {
+            // Sinon, afficher seulement les documents de l'utilisateur connecté
+            $query = $documentRepository->createQueryBuilder('d')
+                ->join('d.user', 'u')
+                ->where('u.id = :userId')
+                ->setParameter('userId', $user->getId())
+                ->orderBy('d.date', 'DESC');
+        }
+    
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
