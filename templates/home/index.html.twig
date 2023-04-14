@@ -12,87 +12,73 @@
 
 <h4>Bonjour {{ app.user.firstname|capitalize }}.</h4>
 
-<div class="text-center">
-
-    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-2">Modifier mon mot de passe</a>
-        <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
-        {% if is_granted('ROLE_ADMIN') %}
-        {% else %}
-        <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-2" >Écrire à Antoine</a>
-        {% endif %}
-    </div>
-{# TODO : reste à gérer si on peut supprimer ou pas les zones tarifaires, les partenariats, la modification : au risque que ça impacte les contrats !! #}
-    <div class="row grid-alice">
-
-        {% if is_granted('ROLE_ADMIN') %}
-            {# <div class="my-auto bg-primary">
-                <p class="fs-3">Calendrier Google Calendar</p>
-                <div id="calendar" class="col-12 bg-primary-subtle">
-                    {# Fonctionnalité GOOGLE CALENDAR #}
-                {# </div>
-            </div> #}
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-            
 
 
-            <div class="d-flex justify-content-center align-items-center bg-primary-subtle">
-                <a href="{{ path('app_partner_index') }}" class="fs-3">Gérer les partenaires</a>
-            </div>
-            <div class="d-flex justify-content-center align-items-center bg-success-subtle">
-                <a href="{{ path('app_tariff_zone_index') }}" class="fs-3">Gérer les Zones Tarifaires</a>
-            </div>
+<div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
+    <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-2">Modifier mon mot de passe</a>
+    <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    {% else %}
+    <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-2" >Écrire à Antoine</a>
+    {% endif %}
+</div>
 
-        {% endif %}
+<div class="row">
 
-    {# Fonctionnalité Documents #}
+    {% if is_granted('ROLE_ADMIN') %}
+    
+        {# Google Calendar #}
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
+            <p class="fs-4 text-center">Agenda</p>
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" style="border:solid 1px #777" width="auto" height="600" frameborder="0" scrolling="no" class="ratio ratio-4x3"></iframe>
+        </div>
+    {% endif %}
 
-        <div class="my-auto bg-danger-subtle">
-            <a href="{{ path('app_document_list') }}" class="fs-3">Documents</a>
-            <div id="documents" class="d-flex flex-column">
-                    {% for document in pagination %}
-                        <div class="d-flex">
-                            <div class="col-6">
-                                <p class="m-0">{{ document.date ? document.date|date('d/m/Y') : '' }}</p>
-                            </div>
-                            <div class="col-6 d-flex justify-content-start">
-                                <a href="{{ path('app_document_show', {'id': document.id}) }}">{{ document.name }}</a>
-                            </div>
+        {# Documents #}
+
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
+            <a href="{{ path('app_document_list') }}" class="fs-4 text-center">Documents</a>
+            <div class="d-flex flex-column my-3">
+                {% for document in pagination %}
+                    <div class="d-flex">
+                        <div class="col-5">
+                            <p class="m-0 text-end px-3 my-1">{{ document.date ? document.date|date('d/m/Y') : '' }}</p>
                         </div>
-                    {% endfor %}
+                        <div class="col-7 d-flex justify-content-start px-3 my-1">
+                            <a href="{{ path('app_document_show', {'id': document.id}) }}">{{ document.name }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <div class="my-auto bg-success">
+        {# Fonctionnalité Graphique #}
+            {# <div class="my-auto bg-success">
                 <p class="fs-3">Statistiques</p>
                 <div id="graphic" class="col-12 bg-success-subtle">
-                    {# Fonctionnalité Graphique #}
-                    {# <canvas class="mb-3 border" id="myChart" width="900" height="380"></canvas> #}
+                    <canvas class="mb-3 border" id="myChart" width="900" height="380"></canvas>
                 </div>
-            </div>
-        {% endif %}
+            </div> #}
 
-        {% if is_granted('ROLE_ADMIN') %}
-            <div class="my-auto bg-info">
+        {# Affichage du tableau des stats #}
+            {# <div class="my-auto bg-info">
                 <p class="fs-3 text-center">Analyse Financière</p>
                 <div id="statistics" class="col-12 bg-info-subtle">
-                    {# Affichage du tableau des stats #}
                 </div>
-            </div>
+            </div> #}
         {% endif %}
 
 
             {# Affichage des notifications #}
 
-        <div id="notifications" class="">
+        {# <div id="notifications" class="">
             <table class="table table-hover table-alice">
                 <p class="fs-3">Notifications</p>
                 <tr>
                     <th>Date</th>
                     <th>Message</th>
                 </tr>
-                {# for each notifications #}
                 <tr class="tr-alice">
                     <td>12/03/2022</td>
                     <td>Nouveau documents</td>
@@ -101,13 +87,12 @@
                     <td>15/03/2023</td>
                     <td>Date prochaine Ech Exemple</td>
                 </tr>
-                {# {% endfor %} #}
             </table>
-        </div>
-
-    </div>
+        </div> #}
 
 </div>
+
+
 
 
 
