@@ -9,7 +9,8 @@
                 <div class="mb-5">
                     Vous êtes connectez en tant que <strong>{{ app.user.userIdentifier }}</strong> : <a href="{{ path('app_logout') }}"> déconnexion.</a>
                 </div>
-            {% endif %}
+            {% else %}
+            
 
     <form method="post" class="row form mt-5 mt-lg-0">
 
@@ -50,6 +51,6 @@
 		<p class="text-center mt-5">Ou souhaitez-vous <a href="{{ path('app_register') }}">créer un compte</a> ?</p>
     </form>
 
-
+{% endif %}
 
 {% endblock %}

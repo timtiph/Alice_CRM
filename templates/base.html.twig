@@ -33,27 +33,9 @@
 
             <main class="col-lg-10 ms-auto">
 
-    
-            {% if app.user and app.user.isVerified == false %}
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <div class="alert-message">
-                        <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('app_forgot_password_request') }}">renvoyer le lien d'activation</a>
-                {# TODO : A finaliser #}
-                    </div>
-                </div>
+                {% include 'includes/_flashes.html.twig' %}
 
-                {# {% else %} #}
-
-            {% endif %}
-
-                {# TODO : Trouver un moyen de donner acces que si IsVerifed +  #}
-            {% include 'includes/_flashes.html.twig' %}
-
-            
-            {% block body %}{% endblock %}
-            
-                {# {% endif %} #}
+                {% block body %}{% endblock %}
                 
             </main>
 
