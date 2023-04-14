@@ -14,11 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class DocumentType extends AbstractType
+class DocumentSecondType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom du document'
@@ -64,6 +63,7 @@ class DocumentType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
+            
         ;
     }
 

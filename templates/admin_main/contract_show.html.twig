@@ -5,7 +5,7 @@
 {% block body %}
 
     <h1 class="mb-5">{{ contract.name }}</h1>
-    <div class="d-flex justify-content-end my-5">
+    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
 
         <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le contrat</a>
 
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th scope="col">Lien Site Client</th>
-                    <td>{{ contract.websiteLink }}</td>
+                    <td><a href="{{ contract.websiteLink }}">{{ contract.websiteLink }}</a></td>
                 </tr>
                 <tr>
                     <th scope="col">Fractionnement</th>

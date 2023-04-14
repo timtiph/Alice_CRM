@@ -1,4 +1,17 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-alice-form">{{ button_label|default('Save') }}</button>
+    
+
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.fileName) }}
+        {{ form_row(form.family) }}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ form_widget(form.user) }}
+        {% else %}
+            {{ form_widget(form.user, { 'attr': {'class': 'd-none'} }) }}
+        {% endif %}
+
+    <button class="btn btn-alice-form">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

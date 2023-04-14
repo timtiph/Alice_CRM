@@ -99,7 +99,6 @@ body {
     background-color: rgba(76, 158, 189, 0.2);
 }
 
-
 /*
 * personalisation de la NAVBAR 
 */
@@ -270,21 +269,6 @@ main {
 }
 
 
-
-/* #calendar,
-#documents,
-#graphic,
-#statistics,
-#notifications {
-    height: auto;
-    width: 100%;
-    border: solid #4C9EBD 1px;
-    border-radius: 10px;
-    font-size: 20px;
-    background-color: rgba(76, 158, 189, 0.2);
-    padding: 0;
-} */
-
 /* Table Notifications */
 
 .table-alice {
@@ -367,12 +351,6 @@ main {
     margin: 10px 0;
 }
 
-.btn-alice-supp {
-    font-size: large;
-    margin: 10px 0;
-    width: 250px !important;
-}
-
 .btn-alice-sm {
     background-color: #19374D;
     color: #FAFAFF;
@@ -385,8 +363,21 @@ main {
 .btn-alice-lg:hover,
 .btn-alice-nw:hover,
 .btn-alice-sm:hover {
-    background-color: rgba(76, 158, 189, 0.5) !important;
+    background-color: rgba(76, 158, 189, 0.4) !important;
     color: #19374D !important;
+}
+
+.btn-alice-supp {
+    font-size: large;
+    margin: 10px 0;
+    width: 250px !important;
+    background-color: #9e2a2b;
+    color: #FAFAFF;
+}
+
+.btn-alice-supp:hover {
+    background-color: rgb(158, 42, 43, 0.3) !important;
+    color: #9e2a2b !important;
 }
 
 /*
@@ -508,9 +499,17 @@ img[data-name='imgSuppContact']:hover {
 
 /* Affichage du document */
 
-table tbody tr td {
+/* table tbody tr td {
     overflow: hidden;
     text-overflow: ellipsis;
+} */
+
+.showDocument thead tr th{
+    width: 15%;
+}
+
+.showDocumentDescription {
+    width: 30% !important;
 }
 
 .embedContainer {

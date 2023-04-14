@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="mb-5">Détail partenariat : {{ partner.name }}</h1>
 
-    <div class="d-flex justify-content-center justify-content-lg-end">
+    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
         <a href="{{ path('app_partner_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
         <a href="{{ path('app_partner_edit', {'id': partner.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
         {# {% if customers is empty %} #}

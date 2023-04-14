@@ -62,7 +62,7 @@ class EditContractType extends AbstractType
                 ]
             ])
             ->add('openArea', TextareaType::class, [
-                'label' => 'Remarques',
+                'label' => 'Commentaires',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

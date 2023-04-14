@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\DocumentRepository;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DocumentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
 class Document
@@ -29,9 +32,13 @@ class Document
     #[ORM\Column(length: 255)]
     private ?string $family = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documents')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'documents')]
+    private Collection $user;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -98,15 +105,29 @@ class Document
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function addUser(User $user): self
     {
-        $this->user = $user;
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
 
         return $this;
     }
+
+    public function removeUser(User $user): self
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+
 }

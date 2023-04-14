@@ -40,16 +40,6 @@ class DocumentRepository extends ServiceEntityRepository
         }
     }
 
-    public function findVisibleByUser(User $user)
-{
-    return $this->createQueryBuilder('d')
-        ->andWhere('d.user = :user')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult()
-    ;
-}
-
 //    /**
 //     * @return Document[] Returns an array of Document objects
 //     */

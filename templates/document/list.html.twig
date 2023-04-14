@@ -8,33 +8,31 @@
         <a href="{{ path('app_document_new') }}" class="btn btn-alice-lg">Nouveau document</a>
     </div>
 
-    <table class="table showDocuments">
+    <table class="table">
         <thead>
 
             <tr>
                 {# sorting of properties based on query components #}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <th class="columnHeaderDocumentList" {% if pagination.isSorted('u.lastname') %} class="sorted" {% endif %}>
-                    {{ knp_pagination_sortable(pagination, 'User', 'u.lastname') }}
-                    </th>
+                    <th class="d-none d-sm-table-cell" style="width: 10%;">User</th>
                 {% else %}
                 {% endif %}
 
-                <th class="columnHeaderDocumentList" {% if pagination.isSorted('d.name') %} class="sorted columnHeaderDocumentList"{% endif %}>
+                <th class="" style="width: 10%;"{% if pagination.isSorted('d.name') %} class="sorted"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Titre', 'd.name') }}
                 </th>
                 
-                <th class="d-none d-sm-table-cell columnHeaderDocumentList">Description</th>
+                <th class="d-none d-sm-table-cell" style="width: 20%;">Description</th>
                 
-                <th class="columnDate columnHeaderDocumentList">
+                <th class="" style="width: 10%;">
                 {{ knp_pagination_sortable(pagination, 'Date', 'd.date') }}
                 </th>
 
-                <th class="columnHeaderDocumentList"{% if pagination.isSorted('d.family') %} class="sorted columnFamily columnHeaderDocumentList"{% endif %}>
+                <th class="" style="width: 10%;" {% if pagination.isSorted('d.family') %} class="sorted"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Famille', 'd.family') }}
                 </th>
 
-                <th class="columnHeaderDocumentList">Actions</th>
+                <th class="" style="width: 10%;">Actions</th>
             </tr>
 
         </thead>
@@ -42,20 +40,29 @@
         {% for document in pagination %}
             <tr>
                 {% if is_granted('ROLE_ADMIN') %}
-                <td>{{ document.user.firstname }} {{ document.user.lastname }}</td>
-                {% else %}
+                    <td style="width: 20%;">
+                        <div class="">
+                            {% for userElement in document.user.toArray() %}
+                                <div class="form-check">
+                                    <input class="form-check-input" disabled type="checkbox" id="user_{{ userElement.id }}" name="document[user][]" value="{{ userElement.id }}" {% if document.user.contains(userElement) %}checked{% endif %}>
+                                    <label class="form-check-label" for="user_{{ userElement.id }}">
+                                    {{ userElement.lastname|capitalize }} {{ userElement.firstname|upper }} | {{ userElement.role|upper }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
                 {% endif %}
-                <td>{{ document.name }}</td>
-                <td class="d-none d-sm-table-cell">{{ document.description }}</td>
-                <td class="columnDate">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
-                <td class="columnFamily">{{ document.family }}</td>
-                <td>
-                    <div class="d-flex">
-                        <a href="{{ path('app_document_show', {'id': document.id}) }}" class="buttonShowDocument mx-2"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+                <td style="width: 10%;">{{ document.name }}</td>
+                <td style="width: 20%;" class="d-none d-sm-table-cell">{{ document.description }}</td>
+                <td style="width: 10%;" class="">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
+                <td style="width: 10%;" class="">{{ document.family }}</td>
+                <td style="width: 10%;">
+                    <div class="d-flex ">
+                        <a href="{{ path('app_document_show', {'id': document.id}) }}" class="buttonShowDocument m-0 mx-2"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
 
-                        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" class="buttonDownloadDocument mx-2" target="_blank" rel="noopener noreferrer" download><img src="{{ asset('assets/img/download-solid.svg') }}" alt="Télécharger"></a>
+                        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" class="buttonDownloadDocument m-0 mx-2" target="_blank" rel="noopener noreferrer" download><img src="{{ asset('assets/img/download-solid.svg') }}" alt="Télécharger" style="height: 23px;"></a>
 
-                        <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="buttonEditDocument mx-2"><img src="{{ asset('assets/img/edit-solid.svg') }}" alt="Modifier"></a>
                     </div>
                 </td>
             </tr>

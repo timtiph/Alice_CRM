@@ -12,34 +12,30 @@
 
 <h4>Bonjour {{ app.user.firstname|capitalize }}.</h4>
 
-<div class="container text-center">
+<div class="text-center">
 
-    {# {% if is_granted('ROLE_ADMIN') %}
-
-        <div class="d-block d-md-flex justify-content-end form-search">
-                {{ form(form) }}
-        </div>
-
-    {% endif %} #}
-
-    <div class="d-flex flex-column flex-md-row justify-content-evenly justify-content-lg-end my-4">
-        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-lg-2">Modifier mon mot de passe</a>
+    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
+        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-2">Modifier mon mot de passe</a>
         <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
         {% if is_granted('ROLE_ADMIN') %}
         {% else %}
-        <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-lg-2" >Écrire à Antoine</a>
+        <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-2" >Écrire à Antoine</a>
         {% endif %}
     </div>
 {# TODO : reste à gérer si on peut supprimer ou pas les zones tarifaires, les partenariats, la modification : au risque que ça impacte les contrats !! #}
     <div class="row grid-alice">
 
         {% if is_granted('ROLE_ADMIN') %}
-            <div class="my-auto bg-primary">
+            {# <div class="my-auto bg-primary">
                 <p class="fs-3">Calendrier Google Calendar</p>
                 <div id="calendar" class="col-12 bg-primary-subtle">
                     {# Fonctionnalité GOOGLE CALENDAR #}
-                </div>
-            </div>
+                {# </div>
+            </div> #}
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            
+
+
             <div class="d-flex justify-content-center align-items-center bg-primary-subtle">
                 <a href="{{ path('app_partner_index') }}" class="fs-3">Gérer les partenaires</a>
             </div>
@@ -49,7 +45,7 @@
 
         {% endif %}
 
-
+    {# Fonctionnalité Documents #}
 
         <div class="my-auto bg-danger-subtle">
             <a href="{{ path('app_document_list') }}" class="fs-3">Documents</a>
@@ -59,7 +55,7 @@
                             <div class="col-6">
                                 <p class="m-0">{{ document.date ? document.date|date('d/m/Y') : '' }}</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 d-flex justify-content-start">
                                 <a href="{{ path('app_document_show', {'id': document.id}) }}">{{ document.name }}</a>
                             </div>
                         </div>

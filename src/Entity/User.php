@@ -51,9 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Document::class)]
+    #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'user')]
     private Collection $documents;
-
 
     public function __toString()
     {
@@ -261,7 +260,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->documents->contains($document)) {
             $this->documents->add($document);
-            $document->setUser($this);
+            $document->addUser($this);
         }
 
         return $this;
@@ -270,14 +269,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeDocument(Document $document): self
     {
         if ($this->documents->removeElement($document)) {
-            // set the owning side to null (unless already changed)
-            if ($document->getUser() === $this) {
-                $document->setUser(null);
-            }
+            $document->removeUser($this);
         }
 
         return $this;
     }
+
 
 }
 
