@@ -15,6 +15,7 @@ use App\Entity\DynamicContent;
 use App\Form\EditCustomerType;
 use App\Form\DynamicContentType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -291,13 +292,13 @@ class AdminMainController extends AbstractController
                 return $this->redirectToRoute('app_customer', [ 'id' => $customerId, 'slug' => $slugify ]);
             }
         }
-        // else {
-        //     $this->addFlash(
-        //         'alert',
-        //         'Une Erreur est survenue, veuillez recommencer.'
-        //     );
-            //return $this->redirectToRoute('app_customer_add');
-        // }
+         else {
+             $this->addFlash(
+                 'alert',
+                 'Une Erreur est survenue, veuillez recommencer.'
+             );
+            return $this->redirectToRoute('app_customer_add');
+         }
 
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(),
@@ -349,8 +350,10 @@ class AdminMainController extends AbstractController
             'customer' => $customer
         ]);
     }
-    #[Route('/contenu-dynamique/modifier/{name}/', name: 'dynamic_content_edit', requirements: ["name" => "[a-z0-9_-]{2,50}"])]
-    public function dynamicContentEdit($name, PersistenceManagerRegistry $doctrine, Request $request): Response
+    #[Route('/contenu-dynamique/modifier/{id}/{slug}/{name}/', name: 'dynamic_content_edit', requirements: ["name" => "[a-z0-9_-]{2,50}"])]
+    #[ParamConverter('customer', options: ['mapping' => ['slug' => 'slug']])]
+    #[ParamConverter('customer', options: ['mapping' => ['id' => 'id']])]
+    public function dynamicContentEdit($name, PersistenceManagerRegistry $doctrine, Request $request, Customer $customer): Response
     {
 
         //On va chercher par nom (qui sert de clé) le dynamic content correspondant
@@ -378,7 +381,11 @@ class AdminMainController extends AbstractController
 
             $this->addFlash('success', 'Le contenu a bien été modifié !');
 
-            return $this->redirectToRoute('app_customer_list');
+            return $this->redirectToRoute('app_customer', [
+                'id' => $customer->getId(),
+                'slug' => $customer->getSlug()
+            ]
+            );
 
         }
 

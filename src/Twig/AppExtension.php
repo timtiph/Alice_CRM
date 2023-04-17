@@ -39,7 +39,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function displayDynamicContent(string $name): string
+    public function displayDynamicContent(string $name, string $slug, int $id): string
     {
 
 // On va chercher par nom le dynamic content que l'on souhaite
@@ -49,7 +49,7 @@ class AppExtension extends AbstractExtension
 
         if($this->authenticateUser->isGranted('ROLE_ADMIN')){
 // Si l'utilisateur est admin, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
-            return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('dynamic_content_edit', ['name' => $name]) . '">Modifier</a>');
+            return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('dynamic_content_edit', ['name' => $name, 'slug' => $slug, 'id' =>$id]) . '">Modifier</a>');
 
         } else {
             //Sinon, on affiche le contenu dynamique
