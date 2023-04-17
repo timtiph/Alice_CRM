@@ -21,7 +21,7 @@ class DynamicContentRepository extends ServiceEntityRepository
         parent::__construct($registry, DynamicContent::class);
     }
 
-    public function save(DynamicContent $entity, bool $flush = false): void
+    public function add(DynamicContent $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -44,10 +44,10 @@ class DynamicContentRepository extends ServiceEntityRepository
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
+//        return $this->createQueryBuilder('h')
+//            ->andWhere('h.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
+//            ->orderBy('h.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -56,8 +56,8 @@ class DynamicContentRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?DynamicContent
 //    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
+//        return $this->createQueryBuilder('h')
+//            ->andWhere('h.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

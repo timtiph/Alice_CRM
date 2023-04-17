@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\DynamicContentRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DynamicContentRepository::class)]
@@ -11,14 +10,14 @@ class DynamicContent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[ORM\Column(type: 'string', length: 50)]
+    private $name;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $content;
 
     public function getId(): ?int
     {
@@ -48,4 +47,5 @@ class DynamicContent
 
         return $this;
     }
+
 }

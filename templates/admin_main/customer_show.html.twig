@@ -11,8 +11,8 @@
 
 
     <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le client</a>        
-        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>        
+        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le client</a>
+        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un contact</a>
         <a href="{{ path('app_contract_add', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Ajouter un Contrat</a>
         {# TODO : Ajouter un bouton RDV #}
     </div>
@@ -31,7 +31,7 @@
 
 
             <div class="col-12 d-flex flex-column p-2 border">
-                
+
                 {#### Identification Client  ####}
 
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between">
@@ -54,7 +54,7 @@
                 <div class="d-flex flex-column mt-2 border">
 
                     <h5 class="w-100 text-center m-0 py-1 bg-alice-light ">Contact Pricipal</h5>
-                    
+
                     {% if contacts %}
 
                         {% for contact in contacts %}
@@ -78,7 +78,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             {% endif %}
 
                         {% endfor %}
@@ -87,7 +87,7 @@
                         <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice-nw mx-auto">Créer un contact</a>
                     {% endif %}
 
-        
+
 
                 </div>
 
@@ -122,17 +122,17 @@
                         </tbody>
                     </table>
 
-                </div>   
+                </div>
             </div>
 
                 {#### Autres contacts  ####}
-                
+
             <div class="col-12">
 
                 <div class="d-flex flex-column mt-1 border p-0">
 
                     <h6 class="w-100 text-center m-0 bg-alice-light py-1">Autres Contacts</h6>
-                    
+
                     {% for contact in contacts %}
                         {% if contact.isMain == false %}
 
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <tbody>
                                     <tr>
                                         <td>Email</td>
@@ -174,18 +174,18 @@
 
                         {% endif %}
                     {% endfor %}
-                </div>     
+                </div>
 
             </div>
 
-                    
+
 
         </div>
 
-  
+
 
         {# div right #}
-        
+
         <div class="d-flex flex-wrap flex-column col-12 col-lg-6 mt-2">
 
                 {#### CONTRATS ####}
@@ -199,9 +199,9 @@
                     <div class="d-flex flex-column">
 
                                 {% for contract in contracts %}
-                        
+
                             <div class="d-flex flex-column mt-1 border p-0 col-12">
-                            
+
                                 <table class="table mb-0" data-name="tableContract">
 
                                     <div class="d-flex bg-alice-light justify-content-between">
@@ -219,7 +219,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <tbody>
                                         <tr>
                                             <td>Date</td>
@@ -257,7 +257,7 @@
 
                                 </table>
 
-                            </div>   
+                            </div>
 
                         {% endfor %}
 
@@ -266,14 +266,14 @@
                 </div>
 
             </div>
-        
+
         </div>
 
     </div>
 
         <div id="dynamicContent">
-                {% include 'dynamic_content/_form.html.twig' %}
-            </div>  
+                {{ display_dynamic_content('test') }}
+            </div>
 
 </div>
 
