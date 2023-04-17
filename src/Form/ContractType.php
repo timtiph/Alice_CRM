@@ -57,7 +57,7 @@ class ContractType extends AbstractType
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
-                        'message' => 'Veuillez saisir une URL valide. Auriez-vous saisi un caractère spécial ?'
+                        'message' => 'Veuillez saisir une URL valide.'
                     ])
                 ],
             ])

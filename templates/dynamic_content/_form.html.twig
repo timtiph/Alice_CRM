@@ -1,0 +1,10 @@
+<div class="mt-5">
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.content) }}
+
+        <button class="btn btn-alice-form">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+
+</div>

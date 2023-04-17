@@ -85,6 +85,8 @@ body {
 .logo-alice {
     max-width: 100%;
     height: auto;
+    margin: 0;
+    outline: none;
 }
 
 /*
@@ -230,16 +232,6 @@ main {
     max-height: 90vh;
 }
 
-.form-search>form {
-    width: 100%;
-}
-
-.form-search>form>div {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin: 0;
-}
 
 /*
 * Systeme grid de la section main
@@ -499,11 +491,6 @@ img[data-name='imgSuppContact']:hover {
 
 /* Affichage du document */
 
-/* table tbody tr td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-} */
-
 .showDocument thead tr th{
     width: 15%;
 }
@@ -527,16 +514,6 @@ img[data-name='imgSuppContact']:hover {
     height: 800px;
 }
 
-/* .columnHeaderDocumentList, 
-.columnHeaderDocumentList > a {
-    font-weight: 500;
-    color: #19374D;
-}
-
-.columnHeaderDocumentList > a {
-    text-decoration-style: solid;
-} */
-
 .showDocuments tbody tr td {
     width: 15%;
 }
@@ -550,3 +527,6 @@ img[data-name='imgSuppContact']:hover {
     max-width: 100%;
     height: auto;
 }
+
+/*************** CKEditor */
+

@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "fakerphp/faker": "^1.21",
+        "friendsofsymfony/ckeditor-bundle": "^2.4",
         "karser/karser-recaptcha3-bundle": "^0.1.23",
         "knplabs/knp-paginator-bundle": "^6.2",
         "mailjet/mailjet-apiv3-php": "^1.5",
@@ -86,7 +87,9 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "ckeditor:install --clear=drop": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DynamicContent{% endblock %}
+
+{% block body %}
+    <h1>Edit DynamicContent</h1>
+
+    {{ include('dynamic_content/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_dynamic_content_index') }}">back to list</a>
+
+    {{ include('dynamic_content/_delete_form.html.twig') }}
+{% endblock %}

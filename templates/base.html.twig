@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/sidebars.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
+        {% block cssEditor %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
         <title>{% block title %}CRM Alice{% endblock %}</title>
@@ -49,6 +51,12 @@
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/sidebars.js') }}"></script>
     <script src="{{ asset('assets/js/index.js') }}"></script>
+
+    {# CKEditor #}
+    {% block javascriptEditor %}{% endblock %}
+
+
+
 
 
     {# Open source icons #}

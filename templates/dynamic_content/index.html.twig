@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DynamicContent index{% endblock %}
+
+{% block body %}
+    <h1>DynamicContent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dynamic_content in dynamic_contents %}
+            <tr>
+                <td>{{ dynamic_content.id }}</td>
+                <td>{{ dynamic_content.name }}</td>
+                <td>{{ dynamic_content.content }}</td>
+                <td>
+                    <a href="{{ path('app_dynamic_content_show', {'id': dynamic_content.id}) }}">show</a>
+                    <a href="{{ path('app_dynamic_content_edit', {'id': dynamic_content.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dynamic_content_new') }}">Create new</a>
+{% endblock %}

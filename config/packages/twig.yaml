@@ -9,6 +9,3 @@ when@test:
 
         # pour un custom des input du formualire personnalisé
         # form_themes: ['form/register_theme.html.twig']
-        
-
-

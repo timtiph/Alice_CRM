@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CRM Alice | Client {{ customer.name }}{% endblock %}
+{% block cssEditor %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/fosckeditor/contents.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
+{% block title %}CRM Alice | Client {{ customer.name }}{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
 
 
@@ -20,7 +25,9 @@
 
     <div class="row">
 
-        <div class="divN1 d-flex flex-wrap flex-column col-12 col-lg-6">
+    {# div left #}
+
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
 
 
             <div class="col-12 d-flex flex-column p-2 border">
@@ -171,9 +178,13 @@
 
             </div>
 
-
+                    
 
         </div>
+
+  
+
+        {# div right #}
         
         <div class="d-flex flex-wrap flex-column col-12 col-lg-6 mt-2">
 
@@ -260,11 +271,19 @@
 
     </div>
 
-
+        <div id="dynamicContent">
+                {% include 'dynamic_content/_form.html.twig' %}
+            </div>  
 
 </div>
 
-
-
 {% endblock %}
 
+{% block javascriptEditor %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosckeditor/adapters/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/fosckeditor/build-config.js') }}"></script>
+    <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/fosckeditor/config.js') }}"></script>
+    <script src="{{ asset('bundles/fosckeditor/styles.js') }}"></script>
+{% endblock %}

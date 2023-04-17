@@ -11,7 +11,9 @@ use App\Entity\TariffZone;
 use App\Form\CustomerType;
 use App\Form\EditUserType;
 use Cocur\Slugify\Slugify;
+use App\Entity\DynamicContent;
 use App\Form\EditCustomerType;
+use App\Form\DynamicContentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -185,7 +187,7 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/client/{id}/{slug}', name: 'app_customer')]
-    public function showCustomer($id) 
+    public function showCustomer($id, Request $request): Response 
     {
 
         // récup données client
@@ -198,16 +200,39 @@ class AdminMainController extends AbstractController
         $contacts = $this->entityManager->getRepository(Contact::class)->findBy(['user' => $user]);   
         // récup contrats associés au customer
         $contracts = $this->entityManager->getRepository(Contract::class)->findBy(['customer' => $customer]);
-        
+
         if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
             return $this->redirectToRoute('app_customer_list');
+        }
+
+        $customerName = $customer->getName();
+
+        // Générer le nom du contenu dynamique en fonction du nom du client
+        $dynamicContentName = 'Contenu pour ' . $customerName;
+        
+        // Création d'un nouvel objet DynamicContent pour stocker le contenu dynamique
+        $dynamicContent = new DynamicContent();
+        
+        $dynamicContent->setName($dynamicContentName);
+
+        // Création d'un formulaire pour créer ou modifier le contenu dynamique
+        $form = $this->createForm(DynamicContentType::class, $dynamicContent);
+
+        // Traitement des données soumises par le formulaire
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrement du contenu dynamique en base de données
+            $this->entityManager->persist($dynamicContent);
+            $this->entityManager->flush();
         }
 
         return $this->render('admin_main/customer_show.html.twig', [
             'customer' => $customer,
             'user' => $user,
             'contacts' => $contacts,
-            'contracts' => $contracts
+            'contracts' => $contracts,
+            'dynamicContent' => $dynamicContent,
+            'form' => $form->createView(),
         ]);
 
     }
