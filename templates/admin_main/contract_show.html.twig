@@ -94,6 +94,15 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="d-flex flex-lg-row justify-content-lg-around align-items-lg-center">
+        <input type="text" id="keyword"></input>
+        <input type="text" id="url"></input>
+        <button id="search" class="btn btn-alice" onclick='checkRank()'>Chercher</button>
+        <div id="rank"></div>
+    </div>
 </div>
+
+<script src="{{ asset('assets/js/serp_checker.js') }}"></script>
 
 {% endblock %}
