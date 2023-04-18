@@ -271,9 +271,10 @@
 
     </div>
 
-        <div id="dynamicContent">
-                {{ display_dynamic_content("notes" ~ customer.slug ~ customer.id, customer.slug, customer.id) }}
-            </div>
+    <h3 class="mt-5">Notes</h3>
+    <div id="dynamicContent" class="border p-3 mt-1 mb-5">
+            {{ display_dynamic_content("notes" ~ customer.slug ~ customer.id, customer.slug, customer.id) }}
+    </div>
 
 </div>
 

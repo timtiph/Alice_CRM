@@ -8,10 +8,10 @@ html {
 }
 
 main {
-  height: 100vh;
+  /* height: 100vh; */
   height: -webkit-fill-available;
-  max-height: 100vh;
-  overflow-x: auto;
+  /* max-height: 100vh;
+  overflow-x: auto; */
 }
 
 .dropdown-toggle { outline: 0; }
