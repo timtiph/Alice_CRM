@@ -34,9 +34,9 @@ class DynamicContentType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [
-                    'class' => 'btn btn-primary col-12'
-        ]
-    ]);
+                    'class' => 'btn btn-alice-lg col-12'
+                ]
+            ]);
 
     }
 
