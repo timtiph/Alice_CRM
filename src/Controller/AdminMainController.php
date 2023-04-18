@@ -234,10 +234,9 @@ class AdminMainController extends AbstractController
     #[Route('/client/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
     public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
     {
-
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
         $tariffZone = $this->entityManager->getRepository(TariffZone::class)->findAll();
-
+        
         if (!$tariffZone) {
             $this->addFlash(
                 'notice',
@@ -245,20 +244,27 @@ class AdminMainController extends AbstractController
             );
             return $this->redirectToRoute('app_tariff_zone_new');
         }
-
+        
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer, [
             'user' => $user
         ]);
         $customer->setUser($user);
-
+        
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
+            $form->getErrors(true);
             if ($form->isValid()) {
                 $customer = $form->getData();
-                // on enlève les espaces entre les groupes de chiffre
-                $siret = str_replace(' ', '', $form->get('siret')->getData());
-
+               
+                if($customer->getSiret()){
+                    // on enlève les espaces entre les groupes de chiffre
+                    $siret = str_replace(' ', '', $form->get('siret')->getData());
+                    //on set le siret sans espace
+                    $customer->setSiret($siret);
+                    //dd($siret);
+                }
+                
                 // création Slug
                 $fullname = $customer->getName();
                 $slugify = new Slugify();
@@ -267,11 +273,6 @@ class AdminMainController extends AbstractController
 
                 // récup User Id
                 $customer->setUser($user);
-
-                //on set le siret sans espace
-                $customer->setSiret($siret);
-                //dd($siret);
-
 
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($customer); //figer les données
@@ -283,15 +284,14 @@ class AdminMainController extends AbstractController
                 );
                 $customerId = $customer->getId();
                 return $this->redirectToRoute('app_customer', [ 'id' => $customerId, 'slug' => $slugify ]);
+            } else {
+                $this->addFlash(
+                    'alert',
+                    'Une Erreur est survenue, veuillez recommencer.'
+                );
+               return $this->redirectToRoute('app_customer_add', [ 'id' => $id, 'slug' => $user->getSlug() ]);
             }
-        }
-         else {
-             $this->addFlash(
-                 'alert',
-                 'Une Erreur est survenue, veuillez recommencer.'
-             );
-            return $this->redirectToRoute('app_customer_add');
-         }
+        } 
 
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(),

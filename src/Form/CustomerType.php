@@ -6,12 +6,9 @@ use App\Entity\User;
 use App\Entity\Partner;
 use App\Entity\Customer;
 use App\Entity\TariffZone;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -42,14 +39,15 @@ class CustomerType extends AbstractType
             'constraints' => [
                 new Callback([
                     'callback' => function ($numSirenSiret, ExecutionContextInterface $context) {
-                        // Suppression des espaces entre les groupes de chiffres
-                        $numSirenSiret = str_replace(' ', '', $numSirenSiret);
-                        // Validation du numéro SIREN/SIRET
-                        $regex = '/^(?:\d{9}|\d{14})$/';
-                        if (!preg_match($regex, $numSirenSiret)) {
-                            $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
+                        if (!empty($numSirenSiret)) { // On vérifie si le champ est non vide
+                            // Suppression des espaces entre les groupes de chiffres
+                            $numSirenSiret = str_replace(' ', '', $numSirenSiret);
+                            // Validation du numéro SIREN/SIRET
+                            $regex = '/^(?:\d{9}|\d{14})$/';
+                            if (!preg_match($regex, $numSirenSiret)) {
+                                $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
+                            }
                         }
-                        
                     },
                     'payload' => null,
                 ]),
