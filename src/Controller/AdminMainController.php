@@ -206,15 +206,8 @@ class AdminMainController extends AbstractController
             return $this->redirectToRoute('app_customer_list');
         }
 
-        $customerName = $customer->getName();
-
-        // Générer le nom du contenu dynamique en fonction du nom du client
-        $dynamicContentName = 'Contenu pour ' . $customerName;
-
         // Création d'un nouvel objet DynamicContent pour stocker le contenu dynamique
         $dynamicContent = new DynamicContent();
-
-        $dynamicContent->setName($dynamicContentName);
 
         // Création d'un formulaire pour créer ou modifier le contenu dynamique
         $form = $this->createForm(DynamicContentType::class, $dynamicContent);
@@ -384,8 +377,7 @@ class AdminMainController extends AbstractController
             return $this->redirectToRoute('app_customer', [
                 'id' => $customer->getId(),
                 'slug' => $customer->getSlug()
-            ]
-            );
+            ]);
 
         }
 
