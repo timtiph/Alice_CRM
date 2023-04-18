@@ -19,53 +19,81 @@
         
     <table class="table">
 
-            <thead>
-                <tr>
-                    <th scope="col">Client</th>
-                    <td>{{ contract.customer }}</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="col">Date</th>
-                    <td>{{ contract.date|date("d/m/Y") }}</td>
-                </tr>
-                <tr>
-                    <th scope="col">Montant Facturé</th>
-                    <td>{{ contract.amountCharged }} €</td>
-                </tr>
-                <tr>
-                    <th scope="col">Temps Facturé</th>
-                    <td>{{ contract.timeCharged }} heures</td>
-                </tr>
-                <tr>
-                    <th scope="col">Montant Réel</th>
-                    <td>{{ contract.amountReal }} €</td>
-                </tr>
-                <tr>
-                    <th scope="col">Temps Réel</th>
-                    <td>{{ contract.timeReal }} heures</td>
-                </tr>
-                <tr>
-                    <th scope="col">Lien Site Client</th>
-                    <td><a href="{{ contract.websiteLink }}">{{ contract.websiteLink }}</a></td>
-                </tr>
-                <tr>
-                    <th scope="col">Fractionnement</th>
-                    <td>{{ contract.paymentFrequency }}</td>
-                </tr>
-                <tr>
-                    <th scope="col">Commentaires</th>
-                    <td>{{ contract.openArea }}</td>
-                </tr>
-            </tbody>
+        <thead>
+            <tr>
+                <th scope="col">Client</th>
+                <td>{{ contract.customer }}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">Date</th>
+                <td>{{ contract.date|date("d/m/Y") }}</td>
+            </tr>
 
-                    
-
+            <tr>
+                <th scope="col">Lien Site Client</th>
+                <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
+            </tr>
+            <tr>
+                <th scope="col">Fractionnement</th>
+                <td>{{ contract.paymentFrequency }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Commentaires</th>
+                <td>{{ contract.openArea }}</td>
+            </tr>
+        </tbody>
     </table>
-
 </div>
 
-
+<div class="mt-5">
+    <h3>Point de vue financier : </h3>
+    {% set differenceAmount = contract.amountCharged - contract.amountReal %}
+    {% set differenceTime = contract.timeCharged - contract.timeReal %}
+                        
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="row">Heures</th>
+                <th scope="row">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">Élément Facturés</th>
+                <td>{{ contract.timeCharged }}</td>
+                <td>{{ contract.amountCharged }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Élément Réels</th>
+                <td>{{ contract.timeReal }}</td>
+                <td>{{ contract.amountReal }}</td>
+            </tr>
+            <tr>
+                <th class="d-flex">
+                    <p class="m-0 {% if contract.timeCharged > contract.timeReal %} text-success {% else %} text-danger {% endif %}">Delta
+                    {% if contract.timeCharged > contract.timeReal %}positif{% else %}négatif{% endif %}
+                    </p>
+                </th>
+                <th>
+                    {% if contract.timeCharged > contract.timeReal %}
+                        <p class="text-success m-0">{{ differenceTime }} heures</p>
+                    {% else %}
+                        <p class="text-danger m-0">{{ differenceTime }} heures</p>
+                    {% endif %}
+                </td>
+                <th>
+                    {% if contract.amountCharged > contract.amountReal %}
+                        <p class="text-success m-0">{{ differenceAmount|format_currency('EUR') }}</p>
+                    {% else %}
+                        <p class="text-danger m-0">{{ differenceAmount|format_currency('EUR') }}</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
