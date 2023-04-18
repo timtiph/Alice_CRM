@@ -18,7 +18,6 @@ class DocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom du document'
@@ -64,6 +63,7 @@ class DocumentType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
+            
         ;
     }
 

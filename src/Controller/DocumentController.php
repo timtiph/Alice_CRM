@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Document;
 use App\Form\DocumentType;
-use App\Form\DocumentSecondType;
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -32,10 +31,13 @@ class DocumentController extends AbstractController
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
-    
+        
         if ($this->isGranted('ROLE_ADMIN')) {
             // Si l'utilisateur est un administrateur, afficher tous les documents
-            $query = $this->entityManager->getRepository(Document::class)->createQueryBuilder('d')->join('d.user', 'u');
+            $query = $this->entityManager->getRepository(Document::class)
+                ->createQueryBuilder('d')
+                ->leftJoin('d.user', 'u');
+
         } else {
             // Sinon, afficher seulement les documents de l'utilisateur connecté
             $query = $this->entityManager
@@ -84,7 +86,7 @@ class DocumentController extends AbstractController
         }
 
         $document->setDate(new \DateTime());
-        $form = $this->createForm(DocumentSecondType::class, $document);
+        $form = $this->createForm(DocumentType::class, $document);
 
         $form->handleRequest($request);
         
@@ -96,8 +98,9 @@ class DocumentController extends AbstractController
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension(); // devine l'xtention et l'ajoute
-                
+                $safeFilename = substr($safeFilename, 0, 20); // extrait les 20 premiers caractères
+                $currentDate = date('Ymd');
+                $newFilename = $currentDate.'-'.$safeFilename.'-'.uniqid().'.'.$file->guessExtension(); // devine l'xtention et l'ajoute
                 // Move the file to the directory where brochures are stored
                 try {
                     $file->move(
