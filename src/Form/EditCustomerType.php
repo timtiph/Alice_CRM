@@ -41,14 +41,15 @@ class EditCustomerType extends AbstractType
             'constraints' => [
                 new Callback([
                     'callback' => function ($numSirenSiret, ExecutionContextInterface $context) {
-                        // Suppression des espaces entre les groupes de chiffres
-                        $numSirenSiret = str_replace(' ', '', $numSirenSiret);
-                        // Validation du numéro SIREN/SIRET
-                        $regex = '/^(?:\d{9}|\d{14})$/';
-                        if (!preg_match($regex, $numSirenSiret)) {
-                            $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
+                        if (!empty($numSirenSiret)) { // On vérifie si le champ est non vide
+                            // Suppression des espaces entre les groupes de chiffres
+                            $numSirenSiret = str_replace(' ', '', $numSirenSiret);
+                            // Validation du numéro SIREN/SIRET
+                            $regex = '/^(?:\d{9}|\d{14})$/';
+                            if (!preg_match($regex, $numSirenSiret)) {
+                                $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
+                            }
                         }
-                        
                     },
                     'payload' => null,
                 ]),

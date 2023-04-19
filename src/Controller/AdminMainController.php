@@ -319,8 +319,13 @@ class AdminMainController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $siret = str_replace(' ', '', $form->get('siret')->getData());
-            $customer->setSiret($siret);
+            if($customer->getSiret()){
+                // on enlève les espaces entre les groupes de chiffre
+                $siret = str_replace(' ', '', $form->get('siret')->getData());
+                //on set le siret sans espace
+                $customer->setSiret($siret);
+                //dd($siret);
+            }
             $this->entityManager->flush();
 
             $this->addFlash(
