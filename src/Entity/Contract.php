@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContractRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,6 +46,14 @@ class Contract
 
     #[ORM\Column(nullable: true)]
     private ?int $timeReal = null;
+
+    #[ORM\OneToMany(mappedBy: 'contract', targetEntity: SerpInfo::class)]
+    private Collection $serpInfos;
+
+    public function __construct()
+    {
+        $this->serpInfos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,6 +176,36 @@ class Contract
     public function setTimeReal(?int $timeReal): self
     {
         $this->timeReal = $timeReal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SerpInfo>
+     */
+    public function getSerpInfos(): Collection
+    {
+        return $this->serpInfos;
+    }
+
+    public function addSerpInfo(SerpInfo $serpInfo): self
+    {
+        if (!$this->serpInfos->contains($serpInfo)) {
+            $this->serpInfos->add($serpInfo);
+            $serpInfo->setContract($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSerpInfo(SerpInfo $serpInfo): self
+    {
+        if ($this->serpInfos->removeElement($serpInfo)) {
+            // set the owning side to null (unless already changed)
+            if ($serpInfo->getContract() === $this) {
+                $serpInfo->setContract(null);
+            }
+        }
 
         return $this;
     }

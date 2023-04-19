@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Contract;
 use App\Entity\Customer;
+use App\Entity\SerpInfo;
 use App\Form\ContractType;
 use App\Form\EditContractType;
+use App\Form\SerpInfoType;
 use App\Repository\ContractRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,12 +39,35 @@ class ContractController extends AbstractController
     }
 
     #[Route('/admin/contrat/{id}', name: 'app_contract_show')]
-    public function showContract($id): Response
+    public function showContract($id, Request $request, \Doctrine\Persistence\ManagerRegistry $doctrine): Response
     {
         $contract = $this->entityManager->getRepository(Contract::class)->findOneById($id);
+        $serpInfos = $contract->getSerpInfos();
+
+        $serpInfoForm=$this->createForm(SerpInfoType::class);
+        $serpInfoForm->handleRequest($request);
+
+        if($serpInfoForm->isSubmitted() && $serpInfoForm->isValid()) {
+            $newSerpInfo = new SerpInfo();
+            $newKeyword = $serpInfoForm->get('keyword')->getData();
+            $newSerpInfo->setKeyword($newKeyword);
+            $newSerpInfo->setContract($contract);
+
+
+            $em = $doctrine->getManager();
+            $em->persist($newSerpInfo);
+            $em->flush();
+
+            $this->addFlash('success', 'Mot clé avec succès');
+
+            return $this->redirectToRoute('app_contract_show', ['id' => $id]);
+        }
+
 
         return $this->render('admin_main/contract_show.html.twig', [
-            'contract' => $contract
+            'serpInfoForm' => $serpInfoForm->createView(),
+            'contract' => $contract,
+            'serpInfos' => $serpInfos,
         ]);
     }
 
@@ -50,41 +76,41 @@ class ContractController extends AbstractController
     {
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
         $slug = $customer->getSlug();
-        
+
         $contract = new Contract;
-        
+
 
         $form = $this->createForm(ContractType::class, $contract, [
             'customer' => $customer,
         ]);
         $contract->setCustomer($customer);
-        
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $contract = $form->getData();
                 //dd($contract);
-                
+
                 $entityManager = $doctrine->getManager();
-                $entityManager->persist($contract); //figer les données 
+                $entityManager->persist($contract); //figer les données
                 $entityManager->flush(); // push les données
-                
+
                 $this->addFlash(
                     'success',
                     'La Création du contrat et bien enregistrée.'
                 );
-                
+
                 return $this->redirectToRoute('app_customer', ['id' => $id, 'slug' => $slug]);
-                
+
             }
         }
-        
+
         return $this->render('admin_main/contract_new.html.twig', [
             'customer' => $customer,
             'user' => $customer->getUser(),
             'flash' => $this,
-            'form' => $form->createView(), 
+            'form' => $form->createView(),
         ]);
     }
 
@@ -98,14 +124,14 @@ class ContractController extends AbstractController
         $userId = $user->getId();
 
         if (!$contract) {
-            return $this->redirectToRoute('app_customer_list'); 
+            return $this->redirectToRoute('app_customer_list');
         }
 
         $form = $this->createForm(EditContractType::class, $contract);
 
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             return $this->redirectToRoute('app_contract_show', array('id' => $id));
@@ -123,22 +149,22 @@ class ContractController extends AbstractController
     #[Route('/admin/contrat/{id}/supprimer', name: 'app_contract_remove')]
     public function removeContract(Contract $contract, Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
     {
-    
+
         $customer = $contract->getCustomer();
         $customerId = $customer->getId();
         $customerSlug = $customer->getSlug();
         $csrf_token = $request->query->get('csrf_token', '');
-        
+
         if (!$this->isCsrfTokenValid('delete_contract' . $contract->getId(), $csrf_token)) {
-            
+
             $this->addFlash(
                 'error',
                 'Vous ne pouvez pas supprimer cet élément.'
             );
-    
+
         } else {
            dump('OK');
-       
+
                 $entityManager = $doctrine->getManager();
                 $entityManager->remove($contract);
                 $entityManager->flush(); // push les données
@@ -151,4 +177,5 @@ class ContractController extends AbstractController
         return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
 
     }
+
 }

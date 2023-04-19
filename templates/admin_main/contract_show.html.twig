@@ -16,7 +16,7 @@
 
 <div class="table-responsive me-lg-5">
 
-        
+
     <table class="table">
 
         <thead>
@@ -33,7 +33,7 @@
 
             <tr>
                 <th scope="col">Lien Site Client</th>
-                <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
+                <td><a href="{{ contract.websiteLink }}" target="_blank" id="url">{{ contract.websiteLink }}</a></td>
             </tr>
             <tr>
                 <th scope="col">Fractionnement</th>
@@ -51,7 +51,7 @@
     <h3>Point de vue financier : </h3>
     {% set differenceAmount = contract.amountCharged - contract.amountReal %}
     {% set differenceTime = contract.timeCharged - contract.timeReal %}
-                        
+
     <table class="table">
         <thead>
             <tr>
@@ -94,6 +94,37 @@
             </tr>
         </tbody>
     </table>
-</div>
+    <div class="row d-flex flex-row mb-3 align-items-center">
+        <span class="add-serp-button btn btn-success">Ajouter</span>
+        <div class="serp-info-form">
+            <div class="col-5 col-md-3 offset-md-2">
+                <span>Mot clé: </span>
+            </div>
+            <div class="col-7 d-flex flex-row align-items-center">
+                <div class="me-2">
+                    {{ form_start(serpInfoForm) }}
+                    {{ form_row(serpInfoForm.keyword) }}
+                </div>
+                <div class=" me-2">
+                    {{ form_row(serpInfoForm.save) }}
+                    {{ form_end(serpInfoForm) }}
+                </div>
+                <div class="">
+                    <button class="btn btn-danger px-3 close-serp-form">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for serpInfo in serpInfos %}
 
+    <div class="keyword-container d-flex flex-lg-row justify-content-lg-around align-items-lg-center" data-keyword="{{ serpInfo.id }}" >
+        <div type="text" class="keyword">{{ serpInfo.keyword }}</div>
+        <div class="rank{{ serpInfo.id }}"></div>
+    </div>
+    {% endfor %}
+    <div id="serp" class="btn btn-alice">Chercher</div>
+
+</div>
+    <script src="{{ asset('assets/js/serp_checker.js') }}"></script>
 {% endblock %}
+

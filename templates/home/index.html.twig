@@ -2,9 +2,11 @@
 
 {% block title %}CRM Alice | Accueil{% endblock %}
 
+
+
 {% block body %}
 {# {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} #}
-    
+
 
 {# Page accueil #}
 
@@ -26,11 +28,13 @@
 <div class="row">
 
     {% if is_granted('ROLE_ADMIN') %}
-    
+
         {# Google Calendar #}
         <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
             <p class="fs-4 text-center">Agenda</p>
+
             <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" style="border:solid 1px #777" width="auto" height="600" frameborder="0" scrolling="no" class="ratio ratio-4x3"></iframe>
+
         </div>
     {% endif %}
 
@@ -97,3 +101,4 @@
 
 
 {% endblock %}
+
