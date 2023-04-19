@@ -47,6 +47,8 @@
     </table>
 </div>
 
+{# Point de vue Financier  #}
+
 <div class="mt-5">
     <h3>Point de vue financier : </h3>
     {% set differenceAmount = contract.amountCharged - contract.amountReal %}
@@ -95,8 +97,12 @@
         </tbody>
     </table>
 
-    <div class="row d-flex flex-row mb-3 align-items-center">
-        <span class="add-serp-button btn btn-success">Ajouter</span>
+    {# classement web #}
+    <div class="mt-5">
+        <h3>Classement web</h3>
+    </div>
+    <div class="row d-flex flex-row my-4 mx-auto align-items-center">
+        <span class="add-serp-button btn btn-alice-lg">Ajouter un mot clé</span>
         <div class="serp-info-form">
             <div class="col-5 col-md-3 offset-md-2">
                 <span>Mot clé: </span>
