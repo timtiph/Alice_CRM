@@ -291,7 +291,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     max-width: 500px;
 }
 
-/* Bouton validation des forms */
+/* Bouton validation des forms ALICE */
 
 .btn-alice-form,
 #register_submit,
@@ -316,7 +316,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 
 
 /*
-* button personnalisé
+* button personnalisé ALICE
 */
 
 .btn-alice {
@@ -560,4 +560,29 @@ img[data-name='imgSuppContact']:hover {
     background-color: rgba(76, 158, 189, 0.5) !important;
     color: #19374D !important;
     border-color: transparent;
+}
+
+/**************** SERP */
+
+#serp_info_keyword {
+    height: 2.34rem;
+    border: #19374D solid 1px;
+    border-radius: 5px;
+    padding: 0.375rem 0.75rem;
+    background-color: #FAFAFF;
+    color: #19374D;
+}
+
+#serp_info_save{
+    background-color: #19374D;
+    color: #FAFAFF;
+    border: #4C9EBD solid 1px;
+    font-size: large;
+    margin: 10px 0;
+    outline: none !important;
+    height: 2.34rem;
+}
+#serp_info_save:hover {
+    background-color: rgba(76, 158, 189, 0.4) !important;
+    color: #19374D !important;
 }

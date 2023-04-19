@@ -23,3 +23,4 @@
 ### Custom Settings ###
 .env
 uploads
+analyses/use_cases.puml

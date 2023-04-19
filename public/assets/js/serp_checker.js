@@ -1,10 +1,9 @@
 
-function checkRank(elements) {
-  let url = document.getElementById("url").value;
-  elements.forEach(element => {
+function checkRank(element) {
+  let url = document.getElementById("url").innerHTML;
 
   // On saisit le mot clé et l'url du site à vérifier (sans le https://)
-  let keyword = document.querySelector(".keyword").innerHTML;
+  let keyword = element.firstElementChild.innerHTML;
 
   // ON saisit l'api google custom search avec la clé après key et le moteur de recherche (créé sur l'api google) à utiliser après cx. On passe le mot clé en paramètre de la query string après q et on précise que l'on veut du json en sortie après alt
   let api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBSBSc6PUZG8waNxQ9wOsRSfmTBqaXlrUI&cx=973460c980706448d&q=" + keyword + "&alt=json";
@@ -28,11 +27,14 @@ function checkRank(elements) {
             break;
           }
         }
+        let rankElement = document.querySelector("#rank"+element.dataset.keyword)
         if (rank > 0) {
 
-          document.querySelector(".rank").innerHTML = "Le site est au rang: " + rank;
+          rankElement.innerHTML = "Le site est au rang: " + rank;
+          // rankElement.innerHTML = element.dataset.keyword;
         } else {
-          document.querySelector(".rank").innerHTML = "Le site n'est pas dans les 10 premiers résultats";
+          rankElement.innerHTML = "Le site n'est pas dans les 10 premiers résultats";
+          // rankElement.innerHTML = element.dataset.keyword;
         }
       } else {
         console.log("error"+ element.dataset.keyword);
@@ -45,7 +47,6 @@ function checkRank(elements) {
 
     };
     request.send();
-  });
 }
 
 // function test(elements) {
@@ -56,9 +57,13 @@ function checkRank(elements) {
 // }
 
 let keywords = document.querySelectorAll(".keyword-container");
+
 let searchButton = document.querySelector("#serp");
 searchButton.addEventListener("click", function() {
-  checkRank(keywords);
+  keywords.forEach(keyword => {
+    checkRank(keyword);
+  })
+
 });
 
 // Affichage dynamique du form
