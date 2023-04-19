@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable | Alice CRM{% endblock %}
+
+{% block body %}
+    <div class="ms-md-5">
+        <h2 class="mb-5">{{ 'page_not_found'|trans }}</h2>
+        <p>Désolé, cette page ne semble pas accessible pour le moment</p>
+        
+        <a href="{{ path('app_home') }}" class="btn btn-alice-lg">Revenir à l'accueil</a>
+    </div>
+{% endblock %}
+
+{# Pour personnaliser chaque type d'erreur, nommé des fichier dans le dossier :  templates/bundles/TwigBundle/Exception 
+
+error404.html.twig
+error403.html.twig
+error500.html.twig 
+...........................
+
+ces view-erreurs sont visible uniquement quand le fichier .env est : APP_ENV=prod
+si on remet : APP_ENV=dev, les erreurs symfony sont visibles 
+
+#}

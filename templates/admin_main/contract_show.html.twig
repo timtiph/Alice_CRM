@@ -127,11 +127,11 @@
                 <div type="text" class="keyword text-start fw-semibold col-md-5 text-md-end me-md-2">
                     {{ serpInfo.keyword|capitalize }}
                 </div>
-                <div id="rank{{ serpInfo.id }}" class="ms-3 col-md-6">Le site n'est pas dans les 10 premiers résultats</div>
+                <div id="rank{{ serpInfo.id }}" class="ms-3 col-md-6">Le site est au rang: </div>
             </div>
         {% endfor %}
-        <div class="d-flex justify-content-center">
-            <div id="serp" class="btn btn-alice-lg col-12">Chercher</div>
+        <div class="d-flex justify-content-center mb-5">
+            <div id="serp" class="btn btn-alice-lg">Chercher</div>
         </div>
 
 </div>
