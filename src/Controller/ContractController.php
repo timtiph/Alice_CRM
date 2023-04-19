@@ -6,16 +6,14 @@ use App\Entity\Contract;
 use App\Entity\Customer;
 use App\Entity\SerpInfo;
 use App\Form\ContractType;
-use App\Form\EditContractType;
 use App\Form\SerpInfoType;
-use App\Repository\ContractRepository;
-use Doctrine\ORM\EntityManager;
+use App\Form\EditContractType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class ContractController extends AbstractController
@@ -119,7 +117,6 @@ class ContractController extends AbstractController
     {
         $contract = $this->entityManager->getRepository(Contract::class)->findOneById($id);
         $customer = $contract->getCustomer();
-        $slug = $customer->getSlug();
         $user = $customer->getUser();
         $userId = $user->getId();
 
@@ -163,8 +160,6 @@ class ContractController extends AbstractController
             );
 
         } else {
-           dump('OK');
-
                 $entityManager = $doctrine->getManager();
                 $entityManager->remove($contract);
                 $entityManager->flush(); // push les données
@@ -175,6 +170,40 @@ class ContractController extends AbstractController
         }
 
         return $this->redirectToRoute('app_customer', ['id' => $customerId, 'slug' => $customerSlug]);
+
+    }
+
+    #[Route('/admin/contrat/{id}/supprimer-serp-info/{serpInfoId}', name: 'app_serp_info_remove')]
+    #[ParamConverter('serpInfo', options: ['id' => 'serpInfoId'])]
+    public function removeSerpInfo(SerpInfo $serpInfo, Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    {
+
+        $contract = $serpInfo->getContract();
+        $contractId = $contract->getId();
+        $csrf_token = $request->query->get('csrf_token', '');
+
+        if (!$this->isCsrfTokenValid('delete_serp_info' . $serpInfo->getId(), $csrf_token)) {
+
+            $this->addFlash(
+                'error',
+                'Vous ne pouvez pas supprimer cet élément.'
+            );
+
+        } else {
+            dump('OK');
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($serpInfo);
+            $entityManager->flush(); // push les données
+            $this->addFlash(
+                'success',
+                'Le mot clé à bien été supprimé.'
+            );
+        }
+
+        return $this->redirectToRoute('app_contract_show', [
+            'id' => $contractId,
+        ]);
 
     }
 

@@ -108,7 +108,7 @@
                 <span class="fs-5 mb-3 mb-md-0">Mot clé : </span>
             </div>
             <div class="d-flex flex-column align-items-center mx-auto mt-2 flex-sm-row">
-                <div class="mx-3">
+                <div class="mx-sm-3">
                     {{ form_start(serpInfoForm) }}
                     {{ form_row(serpInfoForm.keyword) }}
                 </div>
@@ -123,8 +123,11 @@
 
         {% for serpInfo in serpInfos %}
             <div class="keyword-container d-flex flex-column flex-md-row my-3" data-keyword="{{ serpInfo.id }}" >
-                <div type="text" class="keyword text-start fw-semibold col-md-5 text-md-end me-md-2">{{ serpInfo.keyword|capitalize }}</div>
-                <div id="rank{{ serpInfo.id }}" class="ms-3"></div>
+                <a href="{{ path('app_serp_info_remove', { 'id': contract.id, 'serpInfoId': serpInfo.id, 'csrf_token': csrf_token('delete_serp_info' ~ serpInfo.id) }) }}" class="btn btn-block btn-sm btn-outline-danger text-start col-md-1 ms-md-5" id="btn-sup-keyword">X</a>
+                <div type="text" class="keyword text-start fw-semibold col-md-5 text-md-end me-md-2">
+                    {{ serpInfo.keyword|capitalize }}
+                </div>
+                <div id="rank{{ serpInfo.id }}" class="ms-3 col-md-6">Le site n'est pas dans les 10 premiers résultats</div>
             </div>
         {% endfor %}
         <div class="d-flex justify-content-center">

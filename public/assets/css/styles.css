@@ -586,3 +586,8 @@ img[data-name='imgSuppContact']:hover {
     background-color: rgba(76, 158, 189, 0.4) !important;
     color: #19374D !important;
 }
+
+#btn-sup-keyword{
+    width: 27px;
+    height: 30px;
+}
