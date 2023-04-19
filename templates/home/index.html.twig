@@ -5,12 +5,8 @@
 
 
 {% block body %}
-{# {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} #}
-
 
 {# Page accueil #}
-
-{# TODO : Revoir armonisation de tous les TITLE des pages #}
 
 <h4>Bonjour {{ app.user.firstname|capitalize }}.</h4>
 
@@ -18,7 +14,7 @@
 
 <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
     <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-2">Modifier mon mot de passe</a>
-    <a href="#" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
+    <a href="{{ path('app_document_new') }}" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
     {% if is_granted('ROLE_ADMIN') %}
     {% else %}
     <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-2" >Écrire à Antoine</a>
@@ -56,32 +52,31 @@
             </div>
         </div>
 
+        {# Contact du User #}
+
     {% if is_granted('ROLE_ADMIN') %}
     {% else %}
-        {# Contact du User #}
         <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
             <a href="{{ path('app_contacts_user') }}"  class="fs-4 text-center">Mes contacts</a>
                 {% if contacts is defined %}
-                    <div>
+                    <div class="my-3">
                         {% for contact in contacts %}
                        
 
-                            <div class="d-flex flex-column mt-1 border p-0 col-12">
+                            <div class="d-flex flex-column mt-1 p-0 col-12 border">
 
                                 <table class="table mb-0 mt-1" data-name="tableContact">
 
 
-                                    <div class="d-flex bg-alice-light justify-content-between">
-                                        <div class="">
-                                            <p class="text-center m-0 py-1 fs-6 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
-                                            <p class="p-0 m-0 fs-6 fst-italic">{{ contact.position }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex align-items-baseline col-11">
+                                            <p class="m-0 py-1 fs-6 fw-medium col-5 text-start">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
+                                            <p class="p-0 m-0 fs-6 fst-italic col-4 text-start">{{ contact.position }}</p>
                                              {% if contact.isMain == true %}
-                                             <p class="p-0 m-0 fs-6 fst-italic">Principal</p>
+                                             <p class="p-0 m-0 fs-6 fst-italic col-3 text-start">Principal</p>
                                              {% endif %}
                                         </div>
-                                        <div class="d-flex">
-                                            <div class="d-flex">
-                                            </div>
+                                        <div class="d-flex col-1">
                                             <div data-name="controlButtonDivContact" class="d-flex">
                                                 <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
                                                 <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
