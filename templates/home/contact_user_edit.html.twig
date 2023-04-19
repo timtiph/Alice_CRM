@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CRM Alice | Modifier un contact{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="mb-5">Modification d'un contact</h3>
+
+<div class="form mt-3 mt-lg-0">
+
+    {{ form(form) }}
+
+</div>
+
+{% endblock %}

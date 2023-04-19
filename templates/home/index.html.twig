@@ -56,6 +56,61 @@
             </div>
         </div>
 
+    {% if is_granted('ROLE_ADMIN') %}
+    {% else %}
+        {# Contact du User #}
+        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
+            <a href="{{ path('app_contacts_user') }}"  class="fs-4 text-center">Mes contacts</a>
+                {% if contacts is defined %}
+                    <div>
+                        {% for contact in contacts %}
+                       
+
+                            <div class="d-flex flex-column mt-1 border p-0 col-12">
+
+                                <table class="table mb-0 mt-1" data-name="tableContact">
+
+
+                                    <div class="d-flex bg-alice-light justify-content-between">
+                                        <div class="">
+                                            <p class="text-center m-0 py-1 fs-6 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
+                                            <p class="p-0 m-0 fs-6 fst-italic">{{ contact.position }}</p>
+                                             {% if contact.isMain == true %}
+                                             <p class="p-0 m-0 fs-6 fst-italic">Principal</p>
+                                             {% endif %}
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="d-flex">
+                                            </div>
+                                            <div data-name="controlButtonDivContact" class="d-flex">
+                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
+                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <tbody>
+                                            <tr>
+                                                <td>Email</td>
+                                                <th class="overflow-x-hidden">{{ contact.email }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Tel</td>
+                                                <th>{{ contact.phone }}</th>
+                                            </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        
+                    {% endfor %}
+                    </div>
+                {% endif %}
+        </div>
+    {% endif %}
+
         {% if is_granted('ROLE_ADMIN') %}
         {# Fonctionnalité Graphique #}
             {# <div class="my-auto bg-success">
@@ -72,28 +127,6 @@
                 </div>
             </div> #}
         {% endif %}
-
-
-            {# Affichage des notifications #}
-
-        {# <div id="notifications" class="">
-            <table class="table table-hover table-alice">
-                <p class="fs-3">Notifications</p>
-                <tr>
-                    <th>Date</th>
-                    <th>Message</th>
-                </tr>
-                <tr class="tr-alice">
-                    <td>12/03/2022</td>
-                    <td>Nouveau documents</td>
-                </tr>
-                <tr class="tr-alice">
-                    <td>15/03/2023</td>
-                    <td>Date prochaine Ech Exemple</td>
-                </tr>
-            </table>
-        </div> #}
-
 </div>
 
 

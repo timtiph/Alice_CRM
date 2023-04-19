@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes contacts | Alice_CRM{% endblock %}
+
+{% block body %}
+        
+    <h1 class="mb-3">Mes contacts</h1>
+
+        <div class="d-flex justify-content-center justify-content-lg-end me-2">
+            <a class="btn btn-alice-lg mx-1" href="{{ path('app_home') }}">Accueil</a>
+            <a href="{{ path('app_contact_user_add', { id: user.id, slug: user.slug }) }}" class="btn btn-alice-lg mx-1">Nouveau contact</a>
+        </div>
+    
+    {% if contacts is not empty %}
+
+        <div class="table-responsive mt-5">
+
+            <table class="table table-responsive">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Téléphone</th>
+                        <th scope="col">Fonction</th>
+                        <th scope="col">Contact principal</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+
+                {% for contact in contacts %}
+
+                    <tbody>
+                        <tr>
+                            <td>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.phone }}</td>
+                            <td>{{ contact.position }}</td>
+            
+                            <td>{% if contact.isMain == true %}
+                                <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                            {% endif %}</td>
+                            <td><a class="" href="{{ path('app_contacts_user_edit', { id: contact.id, slug: contact.slug }) }}">Modifier</a></td>
+                        </tr>
+                    </tbody>
+
+                {% endfor %} 
+            </table>
+        </div>
+    {% else %}
+                <h4 class="mb-5">Aucun Contacts</h4>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+                    <div class="card col-md-5 bgg-alice-light m-2">
+                        <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                            <h6 class="card-title mb-2">Souhaitez-vous créer un nouveau contact ?</h6>
+                            <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg">Nouveau contact</a>
+                        </div>
+                    </div>
+                </div>
+    {% endif %}
+{% endblock %}
