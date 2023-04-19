@@ -56,7 +56,7 @@ class ContractController extends AbstractController
             $em->persist($newSerpInfo);
             $em->flush();
 
-            $this->addFlash('success', 'Mot clé avec succès');
+            $this->addFlash('success', 'Mot clé enregistré avec succès');
 
             return $this->redirectToRoute('app_contract_show', ['id' => $id]);
         }
