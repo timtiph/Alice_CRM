@@ -489,8 +489,9 @@ img[data-name='imgSuppContact']:hover {
 
 /* Affichage info de suppression imposible */
 
-.deleteTariffZoneInfo {
-    border: #19374D;
+.deleteTariffZoneInfo, 
+.deletePartnerInfo {
+    
 }
 
 
