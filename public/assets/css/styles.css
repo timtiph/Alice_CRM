@@ -222,7 +222,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 }
 
 .user-auth p {
-    color: #4C9EBD;
+    color: #4C9EBD !important;
     width: 90%;
     margin: 0 auto 10px;
     text-transform: capitalize;

@@ -68,7 +68,12 @@
                                                     <div class="card-body mb-1">
                                                         <p class="card-title fs-5 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
                                                         <p class="card-text mb-1">Email : <strong>{{ contact.email }}</strong></p>
-                                                        <p class="card-text mb-1">Tel : <strong>{{ contact.phone }}</strong></p>
+                                                        <p class="card-text mb-1">Tel : 
+                                                            <strong>
+                                                                {% set phone = contact.phone %}
+                                                                {{ phone[:2] }} {{ phone[2:2] }} {{ phone[4:2] }} {{ phone[6:2] }} {{ phone[8:2] }} {{ phone[10:2] }}
+                                                            </strong>
+                                                        </p>
                                                         <div class="d-flex justify-content-around px-5">
                                                             <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
                                                         </div>
@@ -107,13 +112,18 @@
                                 <td>Nom</td>
                                 <th>{{ customer.name|upper }}</th>
                             </tr>
+                            {% if customer.siret is not empty %}
                             <tr>
                                 <td>Siret</td>
-                                <th>{{ customer.siret }}</th>
+                                <th>
+                                    {% set siret = customer.siret %}
+                                    {{ siret[:3] }} {{ siret[3:3] }} {{ siret[6:3] }} {{ siret[9:5] }}
+                                </th>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td>Adresse</td>
-                                <th>{{ customer.address }}</th>
+                                <th>{{ customer.address|title }}</th>
                             </tr>
                             <tr>
                                 <td>CP Ville Pays</td>
@@ -165,7 +175,10 @@
                                     </tr>
                                     <tr>
                                         <td>Tel</td>
-                                        <th>{{ contact.phone }}</th>
+                                        <th>
+                                            {% set phone = contact.phone %}
+                                            {{ phone[:2] }} {{ phone[2:2] }} {{ phone[4:2] }} {{ phone[6:2] }} {{ phone[8:2] }} {{ phone[10:2] }}
+                                        </th>
                                     </tr>
                             </tbody>
 
