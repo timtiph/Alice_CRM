@@ -26,11 +26,17 @@
     {% if is_granted('ROLE_ADMIN') %}
 
         {# Google Calendar #}
-        <div class="d-flex flex-wrap flex-column col-12 col-lg-6">
-            <p class="fs-4 text-center">Agenda</p>
+        <div class="my-5  col-12 col-lg-6">
 
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" style="border:solid 1px #777" width="auto" height="600" frameborder="0" scrolling="no" class="ratio ratio-4x3"></iframe>
+            <div class="d-flex flex-wrap flex-column">
+                <div class="bg-alice-light d-flex align-items-center justify-content-center container-calendar-title">
+                    <p class="calendar-title">Agenda</p>
+                </div>
 
+                <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23ffffff&ctz=Europe%2FParis&mode=AGENDA&showPrint=0&showTitle=0&showTz=0&showCalendars=1&src=YWxpY2Uud2ViZGV2ZWxvcHBlbWVudEBnbWFpbC5jb20&src=YW50b2luZWx1ZHdpZ2dhbGxpQGdtYWlsLmNvbQ&color=%23039BE5&color=%238E24AA" width="auto" height="600" frameborder="0" scrolling="no" class="container-calendar"></iframe>
+
+            </div>
+        
         </div>
     {% endif %}
 
@@ -59,7 +65,7 @@
                         <tr class="border-alice-doc">
                                 
                             <td scope="col-1">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
-                            <td scope="col-1">{{ document.name }}</td>
+                            <td scope="col-1"><a href="{{ path('app_document_show', {'id': document.id}) }}" class="link-show-document-page">{{ document.name }}</a></td>
 
                         </tr>
                     {% endfor %}
