@@ -4,9 +4,6 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
     <h1 class="mb-5">Télécharger un nouveau document</h1>
-    <div class="d-flex justify-content-center justify-content-lg-end me-3">
-        <a href="{{ path('app_document_list') }}" class="btn btn-alice-lg">Retour à la liste</a>
-    </div>
 
     <div class="form">
         {{ include('document/_form.html.twig') }}

@@ -4,14 +4,15 @@
 
         {{ form_row(form.name) }}
         {{ form_row(form.description) }}
-        {{ form_row(form.fileName) }}
         {{ form_row(form.family) }}
-
         {% if is_granted('ROLE_ADMIN') %}
-            {{ form_widget(form.user) }}
-        {% else %}
-            {{ form_widget(form.user, { 'attr': {'class': 'd-none'} }) }}
+            {{ form_row(form.user) }}  
         {% endif %}
+        {{ form_row(form.fileName) }}
 
-    <button class="btn btn-alice-form">{{ button_label|default('Enregistrer') }}</button>
+        <div class="d-flex justify-content-around">
+            <button class="btn btn-alice-form">{{ button_label|default('Envoyer') }}</button>
+            <button onclick="window.history.back();" class="btn btn-alice-back">Retour</button>
+        </div>
+
 {{ form_end(form) }}
