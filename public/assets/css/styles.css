@@ -616,14 +616,29 @@ img[data-name='imgSuppContact']:hover {
 
 /********** Link Alice Home Page */
 
-.link-document-home-page {
+.head-table-contact {
+    height: 2.945rem;
+    border: #4C9EBD solid 1px;
+    background-color: rgba(76, 158, 189, 0.2);
+}
+
+.link-document-home-page,
+.link-contact-home-page {
     text-decoration: none;
     color: #19374D;
     font-weight: 400;
     font-size: 20px;
+
 }
 
-.link-document-home-page:hover {
+.link-document-home-page:hover,
+.link-contact-home-page:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.contact-home-page {
+    border-left: #4C9EBD solid 1px;
+    border-bottom: #4C9EBD solid 1px;
+    border-right: #4C9EBD solid 1px;
 }
