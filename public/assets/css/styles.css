@@ -23,6 +23,10 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     background-color: #FAFAFF;
 }
 
+.color-alice-dark {
+    color: #19374D !important;
+}
+
 
 /********************** < Injection Bootstrap pout le graphique et la nav */
 
@@ -169,13 +173,12 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 
 .nav-item-alice {
     display: flex;
-
     border-radius: 5px;
     transition: background-color 0.5s ease-out !important;
 }
 
 .nav-item-alice:hover {
-    background-color: #4C9EBD;
+    background-color: #4C9EBD !important;
     color: #19374D !important;
 }
 
@@ -281,6 +284,10 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     font-size: 16px;
 }
 
+.border-alice-doc {
+    border: #4c9ebd 1px solid;
+    border-top-left-radius: 20px;
+}
 
 /*
 * Formulaire d'inscription et de connexion
@@ -290,6 +297,22 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     margin: auto;
     max-width: 500px;
 }
+
+/* Bouton validation connexion */
+
+#login_submit {
+    background-color: #19374D;
+    color: #FAFAFF;
+    font-size: large;
+    margin: 10px 0;
+    width: 100% !important;
+}
+
+#login_submit:hover {
+    background-color: rgba(76, 158, 189, 0.3) !important;
+    color: #19374D !important;
+}
+
 
 /* Bouton validation des forms ALICE */
 
@@ -301,17 +324,29 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     color: #FAFAFF;
     font-size: large;
     margin: 10px 0;
-    width: 100%;
+    width: 40%;
 }
 
 .btn-alice-form:hover,
 #register_submit:hover,
 #login_submit:hover,
 #change_password_submit:hover {
-    background-color: rgba(76, 158, 189, 0.5) !important;
+    background-color: rgba(76, 158, 189, 0.3) !important;
     color: #19374D !important;
 }
 
+.btn-alice-back {
+    background-color: rgba(76, 158, 189, 0.3) !important;
+    color: #19374D !important;
+    font-size: large;
+    margin: 10px 0;
+    width: 40%;
+}
+
+.btn-alice-back:hover {
+    background-color: #19374D !important;
+    color: #FAFAFF !important;
+}
 
 
 
@@ -337,14 +372,6 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     width: 250px !important;
 }
 
-.btn-alice-nw {
-    background-color: #19374D;
-    color: #FAFAFF;
-    border: #4C9EBD solid 1px;
-    font-size: large;
-    margin: 10px 0;
-}
-
 .btn-alice-sm {
     background-color: #19374D;
     color: #FAFAFF;
@@ -355,7 +382,6 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 
 .btn-alice:hover,
 .btn-alice-lg:hover,
-.btn-alice-nw:hover,
 .btn-alice-sm:hover {
     background-color: rgba(76, 158, 189, 0.4) !important;
     color: #19374D !important;
@@ -479,20 +505,15 @@ img[data-name='imgSuppContact']:hover {
 
 
 
-/* Encart Nouveau User */
-.new-user {
-    display: flex;
-    border: rgb(25, 55, 77, 0.2) solid 1px;
-    border-radius: 5px;
-    padding: 0 50px 0 50px;
+/* Personnalisation des inputs des form */
+
+.form-control {
+    background-color: rgba(76, 158, 189, 0.2) !important;
 }
+
 
 /* Affichage info de suppression imposible */
 
-.deleteTariffZoneInfo, 
-.deletePartnerInfo {
-    
-}
 
 
 /* Affichage du document */
@@ -591,4 +612,18 @@ img[data-name='imgSuppContact']:hover {
 #btn-sup-keyword{
     width: 27px;
     height: 30px;
+}
+
+/********** Link Alice Home Page */
+
+.link-document-home-page {
+    text-decoration: none;
+    color: #19374D;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.link-document-home-page:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
