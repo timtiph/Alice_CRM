@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Document;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,9 +15,17 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class DocumentType extends AbstractType
 {
+    private $authChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authChecker)
+    {
+        $this->authChecker = $authChecker;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -26,7 +36,10 @@ class DocumentType extends AbstractType
                 'label' => 'Description'
             ])
             ->add('fileName', FileType::class, [
-                'label' => 'Télécharger votre document',
+                'label' => 'Envoyer un document',
+                'attr' => [
+                    'class' => 'mb-3',
+                ],
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
 
@@ -51,18 +64,28 @@ class DocumentType extends AbstractType
                 'multiple' => false,
                 'expanded' => true,
                 'choices' => [
-                    'Facture' => 'Facture',
-                    'Maquette' => 'Maquette',
-                    'Devis' => 'Devis',
-                    'Rapport' => 'Rapport'
+                    'Facture'       => 'Facture',
+                    'Maquette'      => 'Maquette',
+                    'Devis'         => 'Devis',
+                    'Rapport'       => 'Rapport',
+                    'Autre'         => 'Autre',
                 ]
-            ])
-            ->add('user', EntityType::class, [
-                'label' => 'Pour qui ce document est-il destiné ?',
-                'class' => User::class,
-                'multiple' => true,
-                'expanded' => true,
-            ])
+            ]);
+
+            // conditionner l'affichage du champ 'user' en fonction du rôle de l'utilisateur
+            if ($this->authChecker->isGranted('ROLE_ADMIN')) {
+                $builder->add('user', EntityType::class, [
+                    'label' => 'Pour qui ce document est-il destiné ?',
+                    'class' => User::class,
+                    'multiple' => true,
+                    'expanded' => true,
+                ]);
+            } elseif ($this->authChecker->isGranted('ROLE_USER')) {
+                $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                    $form = $event->getForm();
+                    $form->remove('user');
+                });
+            }
             
         ;
     }
