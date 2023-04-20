@@ -284,10 +284,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     font-size: 16px;
 }
 
-.border-alice-doc {
-    border: #4c9ebd 1px solid;
-    border-top-left-radius: 20px;
-}
+
 
 /*
 * Formulaire d'inscription et de connexion
@@ -350,6 +347,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 
 
 
+
 /*
 * button personnalisé ALICE
 */
@@ -361,6 +359,13 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     font-size: large;
     margin: 10px 0;
     width: 100px !important;
+}
+
+.btn-alice-serp {
+    background-color: #19374D;
+    color: #FAFAFF;
+    border: #4C9EBD solid 1px;
+    font-size: large;
 }
 
 .btn-alice-lg {
@@ -600,7 +605,8 @@ img[data-name='imgSuppContact']:hover {
     color: #FAFAFF;
     border: #4C9EBD solid 1px;
     font-size: large;
-    margin: 10px 0;
+    display: flex;
+    align-items: center;
     outline: none !important;
     height: 2.34rem;
 }
@@ -613,6 +619,12 @@ img[data-name='imgSuppContact']:hover {
     width: 27px;
     height: 30px;
 }
+
+.add-serp-button {
+    font-weight: bold;
+    border: #19374d 1px solid;
+}
+
 
 /********** Link Alice Home Page */
 
@@ -641,4 +653,9 @@ img[data-name='imgSuppContact']:hover {
     border-left: #4C9EBD solid 1px;
     border-bottom: #4C9EBD solid 1px;
     border-right: #4C9EBD solid 1px;
+}
+
+.border-alice-doc {
+    border: #4c9ebd 1px solid;
+    border-top-left-radius: 20px;
 }

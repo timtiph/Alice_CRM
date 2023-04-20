@@ -97,42 +97,40 @@
         </tbody>
     </table>
 
-    {# classement web #}
-    <div class="mt-5">
-        <h3>Classement web</h3>
-    </div>
-    <div class="row d-flex flex-row my-4 mx-auto align-items-center justify-content-center">
-        <span class="add-serp-button btn btn-alice-lg">Ajouter un mot clé</span>
-        <div class="serp-info-form flex-column flex-md-row">
-            <div class="offset-md-2 align-self-center">
-                <span class="fs-5 mb-3 mb-md-0">Mot clé : </span>
-            </div>
-            <div class="d-flex flex-column align-items-center mx-auto mt-2 flex-sm-row">
-                <div class="mx-sm-3">
-                    {{ form_start(serpInfoForm) }}
-                    {{ form_row(serpInfoForm.keyword) }}
-                </div>
-                <div class="d-flex flex-column justify-content-center flex-sm-row">
-                    {{ form_row(serpInfoForm.save) }}
-                    {{ form_end(serpInfoForm) }}
-                    <button class="btn btn-danger px-3 close-serp-form m-auto mx-3">X</button>
-                </div>
-            </div>
-        </div>
+{# classement web #}
+    <div class="my-5">
+        <h3>Référencement par mots-clés</h3>
     </div>
 
         {% for serpInfo in serpInfos %}
-            <div class="keyword-container d-flex flex-column flex-md-row my-3" data-keyword="{{ serpInfo.id }}" >
-                <a href="{{ path('app_serp_info_remove', { 'id': contract.id, 'serpInfoId': serpInfo.id, 'csrf_token': csrf_token('delete_serp_info' ~ serpInfo.id) }) }}" class="btn btn-block btn-sm btn-outline-danger text-start col-md-1 ms-md-5" id="btn-sup-keyword">X</a>
-                <div type="text" class="keyword text-start fw-semibold col-md-5 text-md-end me-md-2">
+            <div class="row keyword-container d-flex flex-row mb-2 align-items-center" data-keyword="{{ serpInfo.id }}" >
+                <a href="{{ path('app_serp_info_remove', { 'id': contract.id, 'serpInfoId': serpInfo.id, 'csrf_token': csrf_token('delete_serp_info' ~ serpInfo.id) }) }}" class="btn btn-block btn-sm btn-outline-danger col-3 offset-1 col-md-1 offset-md-1" id="btn-sup-keyword">X</a>
+                <div type="text" class="keyword fw-semibold col-6 col-md-5 offset-md-1">
                     {{ serpInfo.keyword|capitalize }}
                 </div>
-                <div id="rank{{ serpInfo.id }}" class="ms-3 col-md-6"></div>
+                <div id="rank{{ serpInfo.id }}" class="col-12 mt-2 col-md-4"></div>
             </div>
         {% endfor %}
-        <div class="d-flex justify-content-center mb-5">
-            <div id="serp" class="btn btn-alice-lg">Chercher</div>
+    <div class="row d-flex flex-row my-5 align-items-center justify-content-center">
+        <span class="add-serp-button btn col-10 col-md-6 col-lg-4">Ajouter un mot clé</span>
+        <div class="serp-info-form flex-column flex-md-row justify-content-center align-items-center">
+            <span class="fs-5 mb-3 mb-md-0">Mot clé : </span>
+            <div class="d-flex flex-column align-items-center flex-md-row">
+                <div class="mx-sm-3 ">
+                    {{ form_start(serpInfoForm) }}
+                    {{ form_row(serpInfoForm.keyword) }}
+                </div>
+                <div class="d-flex flex-row mt-2 mt-md-0" >
+                    {{ form_row(serpInfoForm.save) }}
+                    {{ form_end(serpInfoForm) }}
+                    <button class="btn btn-danger px-3 close-serp-form m-auto mx-3">Annuler</button>
+                </div>
+            </div>
         </div>
+        <div class="d-flex justify-content-center mb-5 px-0 mt-2">
+            <div id="serp" class="btn btn-alice-serp col-10 col-md-6 col-lg-4">Chercher</div>
+        </div>
+    </div>
 
 </div>
     <script src="{{ asset('assets/js/serp_checker.js') }}"></script>
