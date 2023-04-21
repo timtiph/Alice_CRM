@@ -34,7 +34,7 @@ function checkRank(element) {
           // rankElement.innerHTML = element.dataset.keyword;
 
         } else {
-          rankElement.innerHTML = "Le site n'est pas dans les 10 premiers résultats";
+          rankElement.innerHTML = "Le site n'est pas dans les 10 premiers résultats : " + rank;
           // rankElement.innerHTML = element.dataset.keyword;
         }
       } else {

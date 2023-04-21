@@ -9,6 +9,7 @@ use App\Entity\TariffZone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -62,31 +63,48 @@ class CustomerType extends AbstractType
             'label' => 'Adresse',
             'constraints' => [
                 new NotBlank([
-                    'message' => 'Ce champs ne peut pas être vide.'
-                ])
+                    'message' => 'Ce champ ne peut pas être vide.'
+                ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z0-9\s]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                ]),
+                new Length([
+                    'max' => 255,
+                    'maxMessage' => 'Votre saisie est trop longue.'
+                ]),
             ]
         ])
-        // TODO : Revoir les pattern
-        ->add('zipCode', IntegerType::class, [
+        ->add('zipCode', TextType::class, [
             'label' => 'Code Postal',
             'constraints' => [
-                new Length([
-                    'min' => 4,
-                    'minMessage' => 'Le numéro est trop court',
-                    'max' => 10,
-                    'maxMessage' => 'Le Le numéro est trop long'
+                new Regex([
+                    'pattern' => '/^[A-Z0-9 ]{4,8}$/i',
+                    'message' => 'Le code postal doit comporter entre 4 et 8 caractères, composés de lettres majuscules, de chiffres et d\'espaces.'
                 ]),
                 new NotBlank([
-                    'message' => 'Ce champs ne peut pas être vide.'
+                    'message' => 'Ce champ ne peut pas être vide.'
                 ]),
-            ]
+                new Length([
+                    'max' => 10,
+                    'maxMessage' => 'Votre saisie est trop longue.'
+                ]),
+            ],
         ])
         ->add('city', TextType::class, [
             'label' => 'Ville',
             'constraints' => [
                 new NotBlank([
-                    'message' => 'Ce champs ne peut pas être vide.'
-                ])
+                    'message' => 'Ce champ ne peut pas être vide.'
+                ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z0-9]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                ]),
+                new Length([
+                    'max' => 255,
+                    'maxMessage' => 'Votre saisie est trop longue.'
+                ]),
             ]
         ])
         ->add('country', CountryType::class, [
@@ -132,9 +150,6 @@ class CustomerType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Customer::class,
-            'attr' => [
-                'novalidate' => "novalidate"
-            ],
             'user' => User::class
         ]);
     }

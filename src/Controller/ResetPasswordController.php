@@ -160,8 +160,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             ));
-            
-            // TODO : remettre "return $this->redirectToRoute('app_login');" quand les tests seront terminés
+        
             
             return $this->redirectToRoute('app_login');
         }

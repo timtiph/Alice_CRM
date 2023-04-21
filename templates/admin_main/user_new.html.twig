@@ -19,9 +19,17 @@
         {{ form_row(form.email) }}
         {{ form_row(form.password) }}
         {{ form_row(form.role) }}
-        {{ form_row(form.submit) }}
+        
+            {{ form_row(form.submit) }}
+        
+
 
     {{ form_end(form) }}
+
+        <div class="d-flex">
+            <button onclick="window.history.back();" class="btn btn-alice-back">Retour</button>
+        </div>
+
 
 </div>
 

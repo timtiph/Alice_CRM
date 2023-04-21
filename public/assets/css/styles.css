@@ -361,10 +361,7 @@ iframe.container-calendar {
 
 /* Bouton validation des forms ALICE */
 
-.btn-alice-form,
-#register_submit,
-#login_submit,
-#change_password_submit {
+.btn-alice-form {
     background-color: #19374D;
     color: #FAFAFF;
     font-size: large;
@@ -381,9 +378,6 @@ iframe.container-calendar {
 }
 
 .btn-alice-form:hover,
-#register_submit:hover,
-#login_submit:hover,
-#change_password_submit:hover,
 .btn-alice-send-email-reset-password:hover {
     background-color: rgba(76, 158, 189, 0.3) !important;
     color: #19374D !important;
@@ -417,14 +411,7 @@ iframe.container-calendar {
     border: #4C9EBD solid 1px;
     font-size: large;
     margin: 10px 0;
-    width: 100px !important;
-}
-
-.btn-alice-serp {
-    background-color: #19374D;
-    color: #FAFAFF;
-    border: #4C9EBD solid 1px;
-    font-size: large;
+    transition: background-color 0.5s ease-out;
 }
 
 .btn-alice-lg {
@@ -434,6 +421,7 @@ iframe.container-calendar {
     font-size: large;
     margin: 10px 0;
     width: 250px !important;
+    transition: background-color 0.5s ease-out;
 }
 
 .btn-alice-sm {
@@ -442,11 +430,13 @@ iframe.container-calendar {
     border: #4C9EBD solid 1px;
     font-size: small;
     margin: 10px 0;
+    transition: background-color 0.5s ease-out;
 }
 
 .btn-alice:hover,
 .btn-alice-lg:hover,
-.btn-alice-sm:hover {
+.btn-alice-sm:hover,
+.btn-alice-serp:hover {
     background-color: rgba(76, 158, 189, 0.4) !important;
     color: #19374D !important;
 }
@@ -457,6 +447,7 @@ iframe.container-calendar {
     width: 250px !important;
     background-color: #9e2a2b;
     color: #FAFAFF;
+    transition: background-color 0.5s ease-out;
 }
 
 .btn-alice-supp:hover {
@@ -464,6 +455,24 @@ iframe.container-calendar {
     color: #9e2a2b !important;
 }
 
+.btn-alice-serp {
+    background-color: #19374D;
+    color: #FAFAFF;
+    border: #4C9EBD solid 1px;
+    font-size: large;
+    transition: background-color 0.5s ease-out;
+}
+
+.add-serp-button {
+    font-weight: bold;
+    border: #19374d 1px solid;
+    transition: background-color 0.5s ease-out;
+}
+
+.add-serp-button:hover {
+    background-color: rgb(76, 158, 189, 0.2);
+    border: #19374d 1px solid;
+}
 /*
 *  Personnalisation formulaires RESET_PASSWORD
 */
@@ -684,9 +693,6 @@ img[data-name='imgSuppContact']:hover {
     height: 30px;
 }
 
-.add-serp-button {
-    font-weight: bold;
-    border: #19374d 1px solid;
-}
+
 
 
