@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Class\Mail;
-use App\Class\MailResetPassword;
 use App\Entity\User;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
@@ -16,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -87,6 +84,7 @@ class ResetPasswordController extends AbstractController
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
+            // Si Token ok, on redirige sur la meme vue et on génère un form reset password
             return $this->redirectToRoute('app_reset_password');
         }
 
@@ -128,6 +126,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
+            // redirect pour login 
             return $this->redirectToRoute('app_login');
         }
 
@@ -165,6 +164,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        // TODO : mettre les bonnes adresses mail
         $email = (new TemplatedEmail())
             ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
             ->to($user->getEmail())

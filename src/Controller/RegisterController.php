@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
-use App\Class\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Cocur\Slugify\Slugify;
 use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -29,7 +31,7 @@ class RegisterController extends AbstractController
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper, MailerInterface $mailer): Response
     {
 
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
@@ -67,17 +69,37 @@ class RegisterController extends AbstractController
                     $user->getEmail(),
                     ['id' => $user->getId()]
                 );
+                // dd($signatureComponents); ok, génére Token, URI ....
 
-                $mail = new Mail();
-                $api_key_public = $this->getParameter('app.mailjet.public_key');
-                $api_key_secret = $this->getParameter('app.mailjet.private_key');
-                $title = 'Confirmez votre Email';
-                $subject = "Votre compte est en attende de la validation.";
-                $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
-                $sign_key = $signatureComponents->getSignedUrl();
-                // complete le mail de la class Mail
-                $mail->sendConfirmEmail($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key);
-                
+                // TODO: in a real app, send this as an email!
+                $this->addFlash('success', 'Confirm your email at: '.$signatureComponents->getSignedUrl());
+                // Confirm your email at: https://127.0.0.1:8000/verification-email?expires=1682060604&id=38&signature=qtmpJIe%2FmNb5zBgXOC592iizCUbpSUL0FmpKkQRYVm4%3D&token=U%2BIn4Vpi8Q2iEIyoZxfoFS8j4W%2Fwret4RbygfnyhxxM%3D
+
+
+                $email = (new TemplatedEmail())
+                ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
+                ->to($user->getEmail())
+                ->subject('Confirmation de votre Email | Alice CRM')
+                ->htmlTemplate('register/email.html.twig')
+                ->context([
+                    'signatureComponents' => $signatureComponents,
+                ])
+            ;
+            $mailer->send($email);
+            //dd($mailer);
+
+                // TODO: Revoir le template envoi email : templates/reset_password/email.html.twig
+                // Est ce que pour autoriser l'acces apres vérif de l'email, il convient de Flush seulement après click sur le lien de l'email, qui renvoit donc toutes les infos necessaire dans la BDD ? C'est à dire revoir la logic dans l'autre sens ???
+                // $mail = new Mail();
+                // $api_key_public = $this->getParameter('app.mailjet.public_key');
+                // $api_key_secret = $this->getParameter('app.mailjet.private_key');
+                // $title = 'Confirmez votre Email';
+                // $subject = "Votre compte est en attende de la validation.";
+                // $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
+                // $sign_key = $signatureComponents->getSignedUrl();
+                // // complete le mail de la class Mail
+                // $mail->sendConfirmEmail($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key);
+
                 
                 $this->addFlash(
                     'success',
@@ -101,7 +123,7 @@ class RegisterController extends AbstractController
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
-            'flash' => $this            
+            'flash' => $this,
         ]);
     }
 
@@ -111,8 +133,10 @@ class RegisterController extends AbstractController
         return $this->render('register/register_confirm.html.twig');
     }
 
-    #[Route('/verification-email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    
+
+    #[Route('/verification-email-inscription', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager, string $signatureComponents): Response
     {
         $user = $userRepository->find($request->query->get('id'));
         if (!$user) {
@@ -124,6 +148,7 @@ class RegisterController extends AbstractController
                 $user->getId(),
                 $user->getEmail(),
             );
+            // TODO : j'ai pas fait de vérif en cas d'erreur ... ce que ça donne !!!
         } catch (VerifyEmailExceptionInterface $e) {
             $this->addFlash('error', $e->getReason());
             return $this->redirectToRoute('app_register');
@@ -136,6 +161,8 @@ class RegisterController extends AbstractController
         $this->addFlash('success', 'Votre compte est vérifié! Vous pouvez vous connecter.');
 
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_login', [
+            'signatureComponents' => $signatureComponents,
+        ]);
     }
 }

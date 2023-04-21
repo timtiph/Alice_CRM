@@ -1,2 +1,4 @@
 page_not_found: "Page introuvable"
 
+signatureComponents.expirationMessageKey: "%count% heure|%count% heures"
+
