@@ -71,8 +71,6 @@ class RegisterController extends AbstractController
                 );
                 // dd($signatureComponents); ok, génére Token, URI ....
 
-                // TODO: in a real app, send this as an email!
-                $this->addFlash('success', 'Confirm your email at: '.$signatureComponents->getSignedUrl());
 
                 $email = (new TemplatedEmail())
                 ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))

@@ -5,11 +5,7 @@
 
 <a href="{{ url('app_verify_email', {signatureComponents: signatureComponents}) }}">{{ url('app_verify_email', {signatureComponents: signatureComponents}) }}</a>
 
-{{ dump(signatureComponents.expirationMessageKey|trans(signatureComponents.expirationMessageData)) }}
-
 <p>Ce lien expire dans {{ signatureComponents.expirationMessageKey|trans(signatureComponents.expirationMessageData) }}.</p>
-
-<p>Ce lien expire dans {{ signatureComponents.expirationMessageKey }}.</p>
 
 <p>À tout de suite !!</p>
 
