@@ -73,8 +73,6 @@ class RegisterController extends AbstractController
 
                 // TODO: in a real app, send this as an email!
                 $this->addFlash('success', 'Confirm your email at: '.$signatureComponents->getSignedUrl());
-                // Confirm your email at: https://127.0.0.1:8000/verification-email?expires=1682060604&id=38&signature=qtmpJIe%2FmNb5zBgXOC592iizCUbpSUL0FmpKkQRYVm4%3D&token=U%2BIn4Vpi8Q2iEIyoZxfoFS8j4W%2Fwret4RbygfnyhxxM%3D
-
 
                 $email = (new TemplatedEmail())
                 ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
