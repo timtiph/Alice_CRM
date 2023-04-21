@@ -23,15 +23,21 @@ class RegisterController extends AbstractController
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private $verifyEmailHelper;
+    private $mailer;
+
+    public function __construct(EntityManagerInterface $entityManager, VerifyEmailHelperInterface $helper, MailerInterface $mailer)
     {
         // create entityManager => doctrine manager used for manipulation BDD
         $this->entityManager = $entityManager;
+
+        $this->verifyEmailHelper = $helper;
+        $this->mailer = $mailer;
     }
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper, MailerInterface $mailer): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
 
         // Instance Nouveau User, liée au formulaire registerType pour la création d'un User
@@ -69,33 +75,18 @@ class RegisterController extends AbstractController
                     $user->getEmail(),
                     ['id' => $user->getId()]
                 );
-                // dd($signatureComponents); ok, génére Token, URI ....
 
+                $email = new TemplatedEmail();
+                $email->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'));
+                $email->to($user->getEmail());
+                $email->subject('Confirmation de votre Email | Alice CRM');
+                $email->htmlTemplate('register/email.html.twig');
+                $email->context([
+                    'signedUrl' => $signatureComponents->getSignedUrl(), 
+                    'signatureComponents'=> $signatureComponents,
+                ]);
 
-                $email = (new TemplatedEmail())
-                ->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'))
-                ->to($user->getEmail())
-                ->subject('Confirmation de votre Email | Alice CRM')
-                ->htmlTemplate('register/email.html.twig')
-                ->context([
-                    'signatureComponents' => $signatureComponents,
-                ])
-            ;
-            $mailer->send($email);
-            //dd($mailer);
-
-                // TODO: Revoir le template envoi email : templates/reset_password/email.html.twig
-                // Est ce que pour autoriser l'acces apres vérif de l'email, il convient de Flush seulement après click sur le lien de l'email, qui renvoit donc toutes les infos necessaire dans la BDD ? C'est à dire revoir la logic dans l'autre sens ???
-                // $mail = new Mail();
-                // $api_key_public = $this->getParameter('app.mailjet.public_key');
-                // $api_key_secret = $this->getParameter('app.mailjet.private_key');
-                // $title = 'Confirmez votre Email';
-                // $subject = "Votre compte est en attende de la validation.";
-                // $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."et merci pour votre inscription. <br><br> Afin de pouvoir vous connecter, Merci de cliquer sur ce lien :";
-                // $sign_key = $signatureComponents->getSignedUrl();
-                // // complete le mail de la class Mail
-                // $mail->sendConfirmEmail($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key);
-
+                $this->mailer->send($email);
                 
                 $this->addFlash(
                     'success',
@@ -112,14 +103,14 @@ class RegisterController extends AbstractController
                 return $this->redirectToRoute('app_register');
                 
             }
-            
-            
+                        
         }
 
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
             'flash' => $this,
+            'user' => $user,
         ]);
     }
 
@@ -132,18 +123,24 @@ class RegisterController extends AbstractController
     
 
     #[Route('/verification-email-inscription', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager, string $signatureComponents): Response
+    public function verifyUserEmail(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->find($request->query->get('id'));
+        
+        $id = $request->get('id');
+
+        // Verify the user id exists and is not null
+        if (null === $id) {
+        return $this->redirectToRoute('app_home');
+        }
+
+        $user = $userRepository->find($id);
+
         if (!$user) {
             throw $this->createNotFoundException();
         }
         try {
-            $verifyEmailHelper->validateEmailConfirmation(
-                $request->getUri(),
-                $user->getId(),
-                $user->getEmail(),
-            );
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+
             // TODO : j'ai pas fait de vérif en cas d'erreur ... ce que ça donne !!!
         } catch (VerifyEmailExceptionInterface $e) {
             $this->addFlash('error', $e->getReason());
@@ -157,8 +154,7 @@ class RegisterController extends AbstractController
         $this->addFlash('success', 'Votre compte est vérifié! Vous pouvez vous connecter.');
 
 
-        return $this->redirectToRoute('app_login', [
-            'signatureComponents' => $signatureComponents,
-        ]);
+        return $this->redirectToRoute('app_login');
     }
 }
+
