@@ -70,8 +70,7 @@
                                                         <p class="card-text mb-1">Email : <strong>{{ contact.email }}</strong></p>
                                                         <p class="card-text mb-1">Tel : 
                                                             <strong>
-                                                                {% set phone = contact.phone %}
-                                                                {{ phone[:2] }} {{ phone[2:2] }} {{ phone[4:2] }} {{ phone[6:2] }} {{ phone[8:2] }} {{ phone[10:2] }}
+                                                                <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
                                                             </strong>
                                                         </p>
                                                         <div class="d-flex justify-content-around px-5">
@@ -176,8 +175,7 @@
                                     <tr>
                                         <td>Tel</td>
                                         <th>
-                                            {% set phone = contact.phone %}
-                                            {{ phone[:2] }} {{ phone[2:2] }} {{ phone[4:2] }} {{ phone[6:2] }} {{ phone[8:2] }} {{ phone[10:2] }}
+                                            <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
                                         </th>
                                     </tr>
                             </tbody>

@@ -28,7 +28,7 @@
                 <td>{% if contact.user.customer %}  {{ contact.user.customer.name }} {% endif %}</td>
                 <td><a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}">{{ contact.lastname }} {{ contact.firstname }}</a></td>
                 <td>{{ contact.email }}</td>
-                <td>{{ contact.phone }}</td>
+                <td>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</td>                
                 <td>{{ contact.position }}</td>
 
                 {% if contact.isMain == 1 %}

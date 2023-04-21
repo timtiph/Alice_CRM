@@ -57,7 +57,7 @@
                         <td>{{ contact.lastname|upper }}</td>
                         <td>{{ contact.firstname|capitalize }}</td>
                         <td>{{ contact.email }}</td>
-                        <td>{{ contact.phone }}</td>
+                        <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
                         <td>{{ contact.position|upper }}</td>
                         {% if contact.isMain == 1 %}
                             <td><img src=" {{ asset('/assets/img/Check.png') }} " alt="Check"></td>

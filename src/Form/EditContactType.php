@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Contact;
+use libphonenumber\PhoneNumberFormat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EditContactType extends AbstractType
@@ -82,39 +85,24 @@ class EditContactType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('phone', TelType::class, [
+            
+            ->add('phone', PhoneNumberType::class, [
                 'label' => 'Téléphone',
                 'required' => true,
+                'default_region' => 'FR',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
                 'attr' => [
                     'placeholder' => 'Numéro de téléphone',
-                    'oninput' => "this.value=this.value.replace(/[^0-9 ]+/g,'').replace(/^(\d{2,4}) ?(\d{2}) ?(\d{2}) ?(\d{2}) ?(\d{2}) ?(\d{2}).*/, '$1 $2 $3 $4 $5 ?$6').trim()",
-                    'maxlength' => '14',
-                    'inputmode' => 'numeric'
+                    'maxlength' => '17',
                 ],
-                'help' => 'Veuillez saisir un numéro de téléphone valide, sans espaces, sans points, sans virgules. Si le numéro n\'est pas français, merci d\'ajouter l\'indicatif du pays.',
+                'help' => 'Veuillez saisir un numéro de téléphone valide.',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner un numéro de téléphone.'
                     ]),
-                    new Length([
-                        'min' => 9,
-                        'max' => 13,
-                        'minMessage' => 'Le numéro de téléphone doit comporter au moins {{ limit }} chiffres.',
-                        'maxMessage' => 'Le numéro de téléphone ne doit pas comporter plus de {{ limit }} chiffres, avez-vous mis des espaces ?'
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[+ .-]*\d[\d\s]{7,13}\d[+ .-]*$/',
+                    new PhoneNumber([
                         'message' => 'Numéro de téléphone invalide.'
                     ]),
-                    new Callback([
-                        'callback' => function($phone, ExecutionContextInterface $context) {
-                            if (!ctype_digit(str_replace(['+', ' ', '-', '.'], '', $phone))) {
-                                $context->buildViolation('Le numéro de téléphone ne doit contenir que des chiffres.')
-                                    ->addViolation();
-                            }
-                        },
-                        'payload' => null
-                    ])
                 ],
             ])
             

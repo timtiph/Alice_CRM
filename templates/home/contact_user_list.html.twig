@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</td>
                             <td>{{ contact.email }}</td>
-                            <td>{{ contact.phone }}</td>
+                            <td>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</td>
                             <td>{{ contact.position }}</td>
             
                             <td>{% if contact.isMain == true %}

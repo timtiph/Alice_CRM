@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ContactRepository;
+use libphonenumber\PhoneNumber;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ContactRepository;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
@@ -35,8 +36,8 @@ class Contact
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 17, nullable: true)]
-    private ?string $phone = null;
+    #[ORM\Column(type: 'phone_number', nullable: true)]
+    private ?PhoneNumber $phone = null;
 
     public function getId(): ?int
     {
@@ -127,12 +128,12 @@ class Contact
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getPhone(): ?\libphonenumber\PhoneNumber
     {
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): self
+    public function setPhone(?\libphonenumber\PhoneNumber $phone): self
     {
         $this->phone = $phone;
 
