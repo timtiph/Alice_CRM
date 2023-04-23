@@ -4,8 +4,10 @@
 
 {% block body %}
 
-
-    <h1 class="mb-3">Détail Fiche Contact</h1>
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Détail Fiche Contact</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
     <div class="d-flex flex-column justify-content-around">
         {% if customer is not null %}
@@ -57,7 +59,7 @@
                         <td>{{ contact.lastname|upper }}</td>
                         <td>{{ contact.firstname|capitalize }}</td>
                         <td>{{ contact.email }}</td>
-                        <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
+                        <td>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</td>
                         <td>{{ contact.position|upper }}</td>
                         {% if contact.isMain == 1 %}
                             <td><img src=" {{ asset('/assets/img/Check.png') }} " alt="Check"></td>

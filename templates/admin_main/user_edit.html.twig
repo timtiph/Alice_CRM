@@ -5,9 +5,11 @@
 {% block body %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Modification de l'utilisateur {{ user.firstname }} {{ user.lastname }}</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
-
-<h1 class="mb-3">Modification de l'utilisateur {{ user.firstname }} {{ user.lastname }}</h1>
         {% if user.customer is not empty %}
             <p class="mb-5">Fiche client liée : {{ user.customer }} </p>
         {% endif %}

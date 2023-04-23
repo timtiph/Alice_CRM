@@ -581,6 +581,12 @@ img[data-name='imgSuppContact']:hover {
     cursor: pointer;
 }
 
+/*********** Bouton Retour */
+
+.goBack {
+    width: 25px;
+    height: 25px;
+}
 
 
 /* Personnalisation des inputs des form */

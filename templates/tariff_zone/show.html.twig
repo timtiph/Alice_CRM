@@ -3,9 +3,12 @@
 {% block title %}Zone Tarifaire | Alice CRM{% endblock %}
 
 {% block body %}
-    <h1 class="mb-5">Détail Zone Tarifaire : {{ tariff_zone.name }}</h1>
-
     
+
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Détail Zone Tarifaire : {{ tariff_zone.name }}</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
         <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
             <a href="{{ path('app_tariff_zone_index') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
             <a href="{{ path('app_tariff_zone_edit', {'id': tariff_zone.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>

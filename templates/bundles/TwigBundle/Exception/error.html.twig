@@ -3,8 +3,13 @@
 {% block title %}Page introuvable | Alice CRM{% endblock %}
 
 {% block body %}
+
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>{{ 'page_not_found'|trans }}</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
     <div class="ms-md-5">
-        <h2 class="mb-5">{{ 'page_not_found'|trans }}</h2>
+        
         <p>Désolé, cette page ne semble pas accessible pour le moment</p>
         
         <a href="{{ path('app_home') }}" class="btn btn-alice-lg">Revenir à l'accueil</a>

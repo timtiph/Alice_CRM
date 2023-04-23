@@ -6,7 +6,11 @@
 
 
 <div class="example-wrapper">
-    <h1 class="mb-5">Liste des contrats</h1>
+    
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Liste des contrats</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
         {% if contracts is not empty %}
         <p class="mb-5">Vous pouvez accéder aux contrats depuis cet espace.</p>

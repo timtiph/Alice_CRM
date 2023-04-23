@@ -4,9 +4,11 @@
 
 {% block body %}
 
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Utilisateur : {{ user.firstname|capitalize }} {{ user.lastname|upper }}</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
-
-<h1 class="mb-5">Utilisateur : {{ user.firstname|capitalize }} {{ user.lastname|upper }}</h1>
 <div class="d-flex justify-content-center justify-content-sm-end">
     <a href="{{ path('app_users_list') }}" class="btn btn-block btn-alice-lg">Liste utilisateurs</a> 
 </div>

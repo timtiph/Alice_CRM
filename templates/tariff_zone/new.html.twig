@@ -6,8 +6,10 @@
 {% block body %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-
-    <h1 class="mb-2">Création d'une nouvelle zone tarifaire</h1>
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Création d'une nouvelle zone tarifaire</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
         
         {% if tariff_zone is empty %}    
             <div class="d-flex justify-content-center justify-content-lg-end">

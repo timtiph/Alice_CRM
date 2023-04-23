@@ -5,8 +5,10 @@
 {% block body %}
 
 
-
-<h1 class="mb-5">Liste des clients</h1>
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Liste des clients</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
 {% if customers is not empty %}
     <div class="d-flex flex-column align-items-center flex-lg-row justify-content-lg-end">

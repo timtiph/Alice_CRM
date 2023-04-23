@@ -5,7 +5,10 @@
 
 {% block body %}
 
-<h3 class="mb-5">Création d'un contrat</h3>
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Création d'un contrat</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
     <h6>Utilisateur : {{ user.firstname }} {{ user.lastname }}</h6>
 

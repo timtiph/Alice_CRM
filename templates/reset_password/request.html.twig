@@ -6,7 +6,12 @@
     {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <h1 class="mb-4">Réinitialiser votre mot de passe</h1>
+    
+
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h1>Réinitialiser votre mot de passe</h1>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+    </div>
 
     <div class="d-flex justify-content-center">
         {{ form_start(requestForm) }}
