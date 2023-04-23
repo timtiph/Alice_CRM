@@ -54,7 +54,7 @@ class Customer
     #[ORM\Column(length: 14, nullable: true)]
     private ?string $siret = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 6)]
     private ?string $zipCode = null;
 
     public function __construct()

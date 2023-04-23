@@ -79,15 +79,11 @@ class CustomerType extends AbstractType
             'label' => 'Code Postal',
             'constraints' => [
                 new Regex([
-                    'pattern' => '/^[A-Z0-9 ]{4,8}$/i',
-                    'message' => 'Le code postal doit comporter entre 4 et 8 caractères, composés de lettres majuscules, de chiffres et d\'espaces.'
+                    'pattern' => '/^[A-Z0-9]{4,6}$/',
+                    'message' => 'Le code postal doit comporter entre 4 et 6 caractères, composés de lettres majuscules et/ou de chiffres.'
                 ]),
                 new NotBlank([
                     'message' => 'Ce champ ne peut pas être vide.'
-                ]),
-                new Length([
-                    'max' => 10,
-                    'maxMessage' => 'Votre saisie est trop longue.'
                 ]),
             ],
         ])
@@ -113,7 +109,8 @@ class CustomerType extends AbstractType
                 new NotBlank([
                     'message' => 'Ce champs ne peut pas être vide.'
                 ])
-            ]
+            ],
+            'data' => 'FR'
         ])
         ->add('isProfessional', CheckboxType::class, [
             'label' => 'Client Professionnel',

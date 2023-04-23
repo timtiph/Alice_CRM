@@ -253,7 +253,8 @@ class AdminMainController extends AbstractController
         
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $form->getErrors(true);
+            // $form->getErrors(true);
+
             if ($form->isValid()) {
                 $customer = $form->getData();
                
@@ -284,14 +285,8 @@ class AdminMainController extends AbstractController
                 );
                 $customerId = $customer->getId();
                 return $this->redirectToRoute('app_customer', [ 'id' => $customerId, 'slug' => $slugify ]);
-            } else {
-                $this->addFlash(
-                    'alert',
-                    'Une Erreur est survenue, veuillez recommencer.'
-                );
-               return $this->redirectToRoute('app_customer_add', [ 'id' => $id, 'slug' => $user->getSlug() ]);
-            }
-        } 
+            } 
+        }
 
         return $this->render('admin_main/customer_new.html.twig', [
             'form' => $form->createView(),
@@ -302,7 +297,7 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/client/modifier-un-client/{id}/{slug}', name: 'app_customer_edit')]
-    public function editCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id, $slug): Response
+    public function editCustomer(Request $request, $id, $slug): Response
     {
 
         $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
@@ -341,6 +336,7 @@ class AdminMainController extends AbstractController
             'customer' => $customer
         ]);
     }
+    
     #[Route('/contenu-dynamique/modifier/{id}/{slug}/{name}/', name: 'dynamic_content_edit', requirements: ["name" => "[a-z0-9_-]{2,50}"])]
     #[ParamConverter('customer', options: ['mapping' => ['slug' => 'slug']])]
     #[ParamConverter('customer', options: ['mapping' => ['id' => 'id']])]

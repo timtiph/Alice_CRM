@@ -77,7 +77,7 @@ class RegisterController extends AbstractController
                 );
 
                 $email = new TemplatedEmail();
-                $email->from(new Address('ugoblackandwhite@gmail.com', 'Alice_CRM'));
+                $email->from(new Address('no-reply@alice-le-blog.fr', 'Alice_CRM'));
                 $email->to($user->getEmail());
                 $email->subject('Confirmation de votre Email | Alice CRM');
                 $email->htmlTemplate('register/email.html.twig');
