@@ -20,13 +20,13 @@ class Mail
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => "tiphany.moine@outlook.com",
+                        'Email' => "no-reply@alice-le-blog.fr",
                         'Name' => "Alice CRM"
                     ],
                     'To' => [
                         [
-                            'Email' => "ugoblackandwhite@gmail.com",
-                            'Name' => "Tiphany"
+                            'Email' => "no-reply@alice-le-blog.fr",
+                            'Name' => "Alice CRM"
                             ]
                         ],
                     'TemplateID' => 4672993,
@@ -54,19 +54,19 @@ class Mail
     //$to_email, $to_name, 
     $title, $subject, $content, $sign_key, $token)
     {
-            //  TODO : Faire template pour envoi + vérif les var
+            
         $mj = new Client($api_key_public, $api_key_secret, true, ['version' => 'v3.1']); // instance de l'objet email
         $body = [ // création du corps du mail
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => "tiphany.moine@outlook.com",
+                        'Email' => "no-reply@alice-le-blog.fr",
                         'Name' => "Alice CRM"
                     ],
                     'To' => [
                         [
-                            'Email' => "ugoblackandwhite@gmail.com",
-                            'Name' => "Tiphany"
+                            'Email' => "no-reply@alice-le-blog.fr",
+                            'Name' => "Alice CRM"
                             ]
                         ],
                     'TemplateID' => 4684557,
