@@ -60,15 +60,22 @@
                         <span class="align-text-bottom">Document(s)</span>
                     </a>
                 </li>
+                    
+                <li class="nav-item nav-item-alice">
+                    <a class="nav-link nav-link-alice" href="{{ path('app_forgot_password_request') }}">
+                        <img src="{{ asset('assets/img/VectorPassword.png') }}" alt="Pictogramme user" class="d-inline align-text-center">
+                        <span class="align-text-bottom">Gestion du mot de passe</span>
+                    </a>
+                </li>
 
                 {% if is_granted('ROLE_ADMIN') %}
 
-                <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" target="_blank" href="https://calendar.google.com/calendar/u/0/r">
-                        <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
-                        <span class="align-text-bottom">Agenda</span>
-                    </a>
-                </li>
+                    <li class="nav-item nav-item-alice">
+                        <a class="nav-link nav-link-alice" target="_blank" href="https://calendar.google.com/calendar/u/0/r">
+                            <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
+                            <span class="align-text-bottom">Agenda</span>
+                        </a>
+                    </li>
 
                 {% endif %}
 
@@ -82,7 +89,7 @@
             </ul>
 
 
-            {% if app.user %}
+            {% if app.user and app.user.isVerified == true %}
                 <div class="user-auth">
                     <hr>
                     <p class=""> {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}  </p>
