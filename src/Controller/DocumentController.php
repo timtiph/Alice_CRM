@@ -148,6 +148,8 @@ class DocumentController extends AbstractController
     #[Route('/{id}/modifier', name: 'app_document_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Document $document, DocumentRepository $documentRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+        // Seul ADMIN is authorized to edit document
+        
         $isAuthorized = $authChecker->isGranted('ROLE_ADMIN');
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -166,6 +168,7 @@ class DocumentController extends AbstractController
 
         return $this->render('document/edit.html.twig', [
             'document' => $document,
+            // si $isAuthorized == true, on renvoie $form->createView() avec valeur 'form'. Else $isAuthorized == false, en renvoie null et pas de form créé
             'form' => $isAuthorized ? $form->createView() : null,
             'isAuthorized' => $isAuthorized,
         ]);
