@@ -377,37 +377,13 @@ iframe.container-calendar {
     color: #FAFAFF;
     font-size: large;
     margin: 10px 0;
-    width: 40%;
-}
-
-.btn-alice-send-email-reset-password {
-    background-color: #19374D;
-    color: #FAFAFF;
-    font-size: large;
-    margin: 10px 0;
     width: 100%;
 }
 
-.btn-alice-form:hover,
-.btn-alice-send-email-reset-password:hover {
+.btn-alice-form:hover {
     background-color: rgba(76, 158, 189, 0.3) !important;
     color: #19374D !important;
 }
-
-.btn-alice-back {
-    background-color: rgba(76, 158, 189, 0.3) !important;
-    color: #19374D !important;
-    font-size: large;
-    margin: 10px 0;
-    width: 40%;
-}
-
-.btn-alice-back:hover {
-    background-color: rgb(76, 158, 189, 0.3) !important;
-    color: #FAFAFF !important;
-}
-
-
 
 
 
@@ -420,7 +396,7 @@ iframe.container-calendar {
     background-color: #19374D;
     color: #FAFAFF;
     border: #4C9EBD solid 1px;
-    font-size: large;
+    font-size: medium;
     margin: 10px 0;
     transition: background-color 0.5s ease-out;
 }
@@ -429,7 +405,7 @@ iframe.container-calendar {
     background-color: #19374D;
     color: #FAFAFF;
     border: #4C9EBD solid 1px;
-    font-size: large;
+    font-size: medium;
     margin: 10px 0;
     width: 250px !important;
     transition: background-color 0.5s ease-out;
@@ -453,9 +429,8 @@ iframe.container-calendar {
 }
 
 .btn-alice-supp {
-    font-size: large;
+    font-size: medium;
     margin: 10px 0;
-    width: 250px !important;
     background-color: #9e2a2b;
     color: #FAFAFF;
     transition: background-color 0.5s ease-out;
@@ -606,8 +581,6 @@ img[data-name='imgSuppContact']:hover {
     background-color: rgba(76, 158, 189, 0.2) !important;
 }
 
-
-/* Affichage info de suppression imposible */
 
 
 
