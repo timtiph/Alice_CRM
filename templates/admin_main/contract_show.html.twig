@@ -10,11 +10,11 @@
     
     <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
 
-        <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier le contrat</a>
+        <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice btn-block mx-3">Modifier le contrat</a>
 
-        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
+        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-supp btn-block mx-3 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
 
-        <a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Retour Client</a>
+        <a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}" class="btn btn-alice mx-3">Fiche client</a>
     </div>
 
 <div class="table-responsive me-lg-5">

@@ -14,12 +14,11 @@
     </div>
 
 
-<div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
-    <a href="{{ path('app_forgot_password_request') }}" class="btn btn-alice-lg btn-block mx-2">Modifier mon mot de passe</a>
-    <a href="{{ path('app_document_new') }}" class="btn btn-alice-lg btn-block mx-lg-2">Déposer un document</a>
+<div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end d-none d-lg-flex">
+    <a href="{{ path('app_document_new') }}" class="btn btn-alice mx-lg-2">Déposer un document</a>
     {% if is_granted('ROLE_ADMIN') %}
     {% else %}
-    <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice-lg btn-block mx-2" >Écrire à Antoine</a>
+    <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice mx-2" >Écrire à Antoine</a>
     {% endif %}
 </div>
 
@@ -58,7 +57,7 @@
                         <tr class="border-alice-doc">
                                 
                             <td scope="col-1" class="align-middle">Aucun document</td>
-                        <td scope="col-1"><a href="{{ path('app_document_new') }}" class="btn btn-alice-lg fs-6">Ajouter un document</a></td>
+                        <td scope="col-1"><a href="{{ path('app_document_new') }}" class="btn btn-alice">Ajouter un document</a></td>
 
                         </tr>
 
@@ -85,7 +84,7 @@
     
     <div class="col-12 col-lg-6">
         <div class="d-flex flex-wrap flex-column my-5">
-            <div class="head-table-contact d-flex align-items-center justify-content-center">
+            <div class="head-table-contact d-flex align-items-center justify-content-center p-2 h-25">
                 <a href="{{ path('app_contacts_user') }}"  class="link-contact-home-page">Mes contacts</a>
             </div>
                 {% if contacts is defined %}
@@ -153,6 +152,15 @@
                 </div>
             </div> #}
         {% endif %}
+
+    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-5 me-md-1 justify-content-center justify-content-lg-end d-lg-none">
+        <a href="{{ path('app_document_new') }}" class="btn btn-alice mx-lg-2">Déposer un document</a>
+        {% if is_granted('ROLE_ADMIN') %}
+        {% else %}
+            <a href="mailto:alice.webdeveloppement@gmail.com?subject=Question de {{ app.user }}" class="btn btn-alice mx-2" >Écrire à Antoine</a>
+        {% endif %}
+    </div>
+
 </div>
 
 

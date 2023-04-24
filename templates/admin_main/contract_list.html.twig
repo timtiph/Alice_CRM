@@ -13,9 +13,7 @@
     </div>
 
         {% if contracts is not empty %}
-        <p class="mb-5">Vous pouvez accéder aux contrats depuis cet espace.</p>
-    
-
+        
         <div class="table-responsive">
 
             <table class="table">
@@ -53,13 +51,13 @@
                 <div class="card col-md-5 bgg-alice-light m-2">
                     <div class="d-flex flex-column align-items-center card-body justify-content-between">
                         <h6 class="card-title mb-2">Souhaitez-vous ajouter un contrat à un utilisateur existant ?</h6>
-                        <a href="{{ path('app_users_list') }}" class="btn btn-alice-lg"> Liste des Utilisateurs</a>
+                        <a href="{{ path('app_users_list') }}" class="btn btn-alice"> Liste des Utilisateurs</a>
                     </div>
                 </div>
                 <div class="card col-md-5 bgg-alice-light m-2">
                     <div class="d-flex flex-column align-items-center card-body justify-content-between">
                         <h6 class="card-title mb-2">Ou souhaitez-vous créer un contrat pour un nouvel utilisateur ?</h6>
-                        <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg">Nouvel Utilisateur</a>
+                        <a href=" {{ path('app_user_add') }} " class="btn btn-alice">Nouvel Utilisateur</a>
                     </div>
                 </div>
             </div>

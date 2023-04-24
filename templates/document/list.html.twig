@@ -8,8 +8,8 @@
         <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
-    <div class="d-flex justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_document_new') }}" class="btn btn-alice-lg">Nouveau document</a>
+    <div class="d-flex justify-content-center justify-content-lg-end mb-md-5">
+        <a href="{{ path('app_document_new') }}" class="btn btn-alice">Nouveau document</a>
     </div>
 
     <table class="table">
@@ -44,8 +44,8 @@
         {% for document in pagination %}
             <tr>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td style="width: 20%;">
-                        <div class="">
+                    <td class="d-none d-sm-table-cell" style="width: 20%;">
+                        <div>
                             {% for userElement in document.user.toArray() %}
                                 <div class="form-check">
                                     <input class="form-check-input" disabled type="checkbox" id="user_{{ userElement.id }}" name="document[user][]" value="{{ userElement.id }}" {% if document.user.contains(userElement) %}checked{% endif %}>

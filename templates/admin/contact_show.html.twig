@@ -24,14 +24,14 @@
     </div>
 
     <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
-        <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice-lg btn-block mx-3">Modifier</a>        
+        <a href="{{ path('app_contact_edit', { 'id': contact.id, 'slug': contact.slug }) }}" class="btn btn-alice btn-block mx-3">Modifier</a>        
 
-        <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug, 'csrf_token': csrf_token('delete_contact' ~ contact.id) }) }}" class="btn btn-alice-lg btn-block mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
+        <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug, 'csrf_token': csrf_token('delete_contact' ~ contact.id) }) }}" class="btn btn-alice-supp mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
 
         {% if customer is not null %}       
-            <a href=" {{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+            <a href=" {{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug }) }} " class="btn btn-alice mx-3">Retour {{ user.customer.name }}</a>
         {% else %}
-            <a href=" {{ path('app_user_show', { 'id': user.id, 'slug': user.slug }) }} " class="btn btn-alice-lg btn-block mx-3">Retour</a>
+            <a href=" {{ path('app_user_show', { 'id': user.id, 'slug': user.slug }) }} " class="btn btn-alice mx-3">Retour {{ user.firstname|capitalize }} {{ user.lastname|upper }} </a>
         {% endif %}
     </div>
 

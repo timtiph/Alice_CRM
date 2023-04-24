@@ -14,7 +14,7 @@
 
     <div class="d-flex flex-column align-items-center flex-sm-row justify-content-sm-end align-items-sm-baseline me-sm-2">
         <p class="">Créer un utilisateur :   </p>
-        <a href=" {{ path('app_user_add') }} " class="btn btn-alice-lg ms-sm-3">Nouvel Utilisateur</a>
+        <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-sm-3">Nouvel Utilisateur</a>
     </div>
 
   
@@ -29,21 +29,23 @@
                     {% if user.role == "ADMIN" %}
                         <p>{{ user.role }}</p>
                     {% else %}
-                        <p class="card-text">Role : 
+                        <p class="card-text"> 
                             {% if user.role is null %}
-                            <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}"><img src="{{ asset('assets/img/VectorWarning.png') }}" alt="Attention"></a>
+                                <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
+                            {% else %}
+                                Role : {{ user.role }}
                             {% endif %}
-                            {{ user.role }}</p>
+                        </p>
                     {% endif %}
                 </div>
                 <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
-                    <a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Consulter</a><br>
+                    <a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Consulter</a><br>
                     {% if user.role == "ADMIN" %}
                     {% else %}
                         {% if user.customer is null %}
-                        <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-block btn-alice-lg">Créer une fiche client</a> 
+                        <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Créer une fiche client</a> 
                         {% else %}
-                        <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-block btn-alice-lg">Consulter la fiche client</a> 
+                        <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-alice-lg">Consulter la fiche client</a> 
                         {% endif %}
                     {% endif %}
                 </div>

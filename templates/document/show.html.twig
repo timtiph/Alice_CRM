@@ -11,11 +11,11 @@
 
     <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
         {% if isAuthorized %}
-            <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="btn btn-alice-lg mx-2">Modifier</a>
+            <a href="{{ path('app_document_edit', {'id': document.id}) }}" class="btn btn-alice mx-2">Modifier</a>
         {% endif %}
         
-        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" download class="btn btn-alice-lg mx-2">Télécharger</a>
-        <a href="{{ path('app_document_list') }}" class="btn btn-alice-lg mx-2">Retour à la liste</a>
+        <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" download class="btn btn-alice mx-2">Télécharger</a>
+        <a href="{{ path('app_document_list') }}" class="btn btn-alice mx-2">Retour à la liste</a>
         {% if isAuthorized %}
             {{ include('document/_delete_form.html.twig') }}
         {% endif %}
