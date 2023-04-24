@@ -113,11 +113,11 @@ class NewUserType extends AbstractType
             ->add('role', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices'  => [
-                    'DEFAUT' => ' ',
                     'COMPTA' => "COMPTA",
                     'COLLAB' => "COLLAB",
                     'CLIENT' => "CLIENT",
-                ]
+                ],
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

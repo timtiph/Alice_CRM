@@ -73,7 +73,6 @@ class EditUserType extends AbstractType
             ->add('role', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices'  => [
-                    'DEFAUT' => '',
                     'COMPTA' => "COMPTA",
                     'COLLAB' => "COLLAB",
                     'CLIENT' => "CLIENT",
