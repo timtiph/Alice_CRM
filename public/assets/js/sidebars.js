@@ -19,16 +19,6 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Ajoute un événement de clic sur le bouton pour ouvrir la barre latérale
-sidebarToggleButton.addEventListener('click', function(event) {
-  // Empêche la propagation de l'événement pour éviter qu'il ne soit détecté par l'événement de clic sur le document
-  event.stopPropagation();
-  // Ajoute ou supprime la classe "active" de la barre latérale
-  sidebarMenu.classList.toggle('active');
-});
-
-
-
 
 
 

@@ -5,7 +5,7 @@
 {% block body %}
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>Documents</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+                <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
     <div class="d-flex justify-content-center justify-content-lg-end mb-md-5">
@@ -18,25 +18,25 @@
             <tr>
                 {# sorting of properties based on query components #}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <th class="d-none d-sm-table-cell" style="width: 10%;">User</th>
+                    <th class="d-none d-sm-table-cell">User</th>
                 {% else %}
                 {% endif %}
 
-                <th class="" style="width: 10%;"{% if pagination.isSorted('d.name') %} class="sorted"{% endif %}>
+                <th {% if pagination.isSorted('d.name') %} class="sorted"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Titre', 'd.name') }}
                 </th>
                 
-                <th class="d-none d-sm-table-cell" style="width: 20%;">Description</th>
+                <th class="d-none d-sm-table-cell">Description</th>
                 
-                <th class="" style="width: 10%;">
+                <th>
                 {{ knp_pagination_sortable(pagination, 'Date', 'd.date') }}
                 </th>
 
-                <th class="" style="width: 10%;" {% if pagination.isSorted('d.family') %} class="sorted"{% endif %}>
+                <th {% if pagination.isSorted('d.family') %} class="sorted"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Famille', 'd.family') }}
                 </th>
 
-                <th class="" style="width: 10%;">Actions</th>
+                <th>Actions</th>
             </tr>
 
         </thead>
@@ -44,24 +44,31 @@
         {% for document in pagination %}
             <tr>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td class="d-none d-sm-table-cell" style="width: 20%;">
+                    <td class="d-none d-sm-table-cell">
                         <div>
                             {% for userElement in document.user.toArray() %}
                                 <div class="form-check">
                                     <input class="form-check-input" disabled type="checkbox" id="user_{{ userElement.id }}" name="document[user][]" value="{{ userElement.id }}" {% if document.user.contains(userElement) %}checked{% endif %}>
                                     <label class="form-check-label" for="user_{{ userElement.id }}">
-                                    {{ userElement.lastname|capitalize }} {{ userElement.firstname|upper }} | {{ userElement.role|upper }}
+                                    {{ userElement.lastname|capitalize }} {{ userElement.firstname|upper }} {% if userElement.role %} | {{ userElement.role|upper }} {% endif %}
                                     </label>
                                 </div>
                             {% endfor %}
                         </div>
                     </td>
                 {% endif %}
-                <td style="width: 10%;">{{ document.name }}</td>
-                <td style="width: 20%;" class="d-none d-sm-table-cell">{{ document.description }}</td>
-                <td style="width: 10%;" class="">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
-                <td style="width: 10%;" class="">{{ document.family }}</td>
-                <td style="width: 10%;">
+                <td>{{ document.name }}</td>
+                <td class="d-none d-sm-table-cell">
+                    {% if document.description|length > 40 %}
+                        {{ document.description|slice(0, 40) ~ '...' }}
+                    {% else %}
+                        {{ document.description }}
+                    {% endif %}
+                </td>
+
+                <td>{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
+                <td>{{ document.family }}</td>
+                <td>
                     <div class="d-flex ">
                         <a href="{{ path('app_document_show', {'id': document.id}) }}" class="buttonShowDocument m-0 mx-2"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
 
@@ -79,7 +86,7 @@
     </table>
 
     <!-- afficher les liens de pagination -->
-    <div class="">
+    <div>
         {{ knp_pagination_render(pagination) }}
     </div>
 

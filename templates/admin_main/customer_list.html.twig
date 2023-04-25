@@ -7,67 +7,67 @@
 
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>Liste des clients</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
-{% if customers is not empty %}
-    <div class="d-flex flex-column align-items-center flex-lg-row justify-content-lg-end">
-        <p class="m-0 text-center">Pour ajouter un <strong>nouveau client</strong> vous devez lui créer un espace utilisateur :  </p>
-            <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-lg-5">Nouvel Utilisateur</a>
-    </div>
+    {% if customers is not empty %}
+        <div class="d-flex flex-column align-items-center flex-lg-row justify-content-lg-end">
+            <p class="m-0 text-center">Pour ajouter un <strong>nouveau client</strong> vous devez lui créer un espace utilisateur :  </p>
+                <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-lg-5">Nouvel Utilisateur</a>
+        </div>
 
-    <div class="table-responsive mt-5">
+        <div class="table-responsive mt-5">
 
-        <table class="table">
+            <table class="table">
 
-            <thead>
-                <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Ville</th>
-                    {# <th scope="col">Pays</th> #}
-                    <th scope="col">Client Pro</th>
-                    <th scope="col">Partenaire</th>
-                    <th scope="col">Nom du USER</th>
-                    {# <th scope="col">Contact Principal</th> #}
-                </tr>
-            </thead>
-
-            {% for customer in customers %}
-
-                <tbody>
+                <thead>
                     <tr>
-                        <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td>
-                        <td>{{ customer.city }}</td>
-                        {# <td>{{ customer.country }}</td> #}
-                        <td>{% if customer.isProfessional == true %}
-                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
-                        {% endif %}</td>
-                        <td>{% if customer.isPartner == true %}
-                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
-                        {% endif %}</td>
-                        <td>{{ customer.user.firstname }} {{ customer.user.lastname }}</td>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Ville</th>
+                        {# <th scope="col">Pays</th> #}
+                        <th scope="col">Client Pro</th>
+                        <th scope="col">Partenaire</th>
+                        <th scope="col">Nom du USER</th>
+                        {# <th scope="col">Contact Principal</th> #}
                     </tr>
-                </tbody>
+                </thead>
 
-            {% endfor %} 
-        </table>
-    </div>
-{% else %}
-            <h4 class="mb-5">Aucun Client</h4>
-            <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
-                <div class="card col-md-5 bgg-alice-light m-2">
-                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
-                        <h6 class="card-title mb-2">Souhaitez-vous attribuer le statut CLIENT à un utilisateur existant ?</h6>
-                        <a href="{{ path('app_users_list') }}" class="btn btn-alice"> Liste des Utilisateurs</a>
-                    </div>
-                </div>
-                <div class="card col-md-5 bgg-alice-light m-2">
-                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
-                        <h6 class="card-title mb-2">Ou souhaitez-vous créer un nouvel utilisateur ?</h6>
-                        <a href=" {{ path('app_user_add') }} " class="btn btn-alice">Nouvel Utilisateur</a>
-                    </div>
+                {% for customer in customers %}
+
+                    <tbody>
+                        <tr>
+                            <td><a href=" {{ path('app_customer', { 'id': customer.id, 'slug': customer.slug}) }} ">{{ customer.name }}</a></td>
+                            <td>{{ customer.city }}</td>
+                            {# <td>{{ customer.country }}</td> #}
+                            <td>{% if customer.isProfessional == true %}
+                                <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                            {% endif %}</td>
+                            <td>{% if customer.isPartner == true %}
+                                <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                            {% endif %}</td>
+                            <td><a href="{{ path('app_user_show', { 'id': customer.user.id, 'slug': customer.user.slug  }) }}">{{ customer.user.firstname }} {{ customer.user.lastname }}</a></td>
+                        </tr>
+                    </tbody>
+
+                {% endfor %} 
+            </table>
+        </div>
+    {% else %}
+        <h4 class="mb-5">Aucun Client</h4>
+        <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
+            <div class="card col-md-5 bgg-alice-light m-2">
+                <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                    <h6 class="card-title mb-2">Souhaitez-vous attribuer le statut CLIENT à un utilisateur existant ?</h6>
+                    <a href="{{ path('app_users_list') }}" class="btn btn-alice"> Liste des Utilisateurs</a>
                 </div>
             </div>
-{% endif %}
+            <div class="card col-md-5 bgg-alice-light m-2">
+                <div class="d-flex flex-column align-items-center card-body justify-content-between">
+                    <h6 class="card-title mb-2">Ou souhaitez-vous créer un nouvel utilisateur ?</h6>
+                    <a href=" {{ path('app_user_add') }} " class="btn btn-alice">Nouvel Utilisateur</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

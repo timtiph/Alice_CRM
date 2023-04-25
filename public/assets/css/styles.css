@@ -185,12 +185,12 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 .nav-item-alice {
     display: flex;
     border-radius: 5px;
-    transition: background-color 0.5s ease-out !important;
+    transition: background-color 0.5s ease-out;
 }
 
 .nav-item-alice:hover {
-    background-color: #4C9EBD !important;
-    color: #19374D !important;
+    background-color: #4C9EBD ;
+    color: #19374D;
 }
 
 .nav-link-alice {
@@ -236,7 +236,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 }
 
 .user-auth p {
-    color: #4C9EBD !important;
+    color: #4C9EBD;
     width: 90%;
     margin: 0 auto 10px;
     text-transform: capitalize;
@@ -247,6 +247,14 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 
 
 /**************************** Container Main partie droite */
+
+@media screen and (min-width: 992px) {
+
+    .col-lg-10 {
+        flex: 0 0 auto;
+        width: 82%;
+    }   
+}
 
 
 /*
@@ -282,34 +290,6 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     height: 2.945rem;
     border: #4C9EBD solid 1px;
     background-color: rgba(76, 158, 189, 0.2);
-}
-
-.link-document-home-page,
-.link-contact-home-page {
-    text-decoration: none;
-    color: #19374D;
-    font-weight: 400;
-    font-size: x-large;
-
-}
-
-.link-show-document-page,
-.link-show-contact-page {
-    text-decoration: none;
-    color: #19374D;
-    font-weight: 400;
-}
-
-.link-document-home-page:hover,
-.link-contact-home-page:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.link-show-document-page:hover,
-.link-show-contact-page:hover {
-    text-decoration: underline;
-    cursor: pointer;
 }
 
 .contact-home-page {
@@ -395,7 +375,6 @@ iframe.container-calendar {
 .btn-alice {
     background-color: #19374D;
     color: #FAFAFF;
-    border: #4C9EBD solid 1px;
     font-size: medium;
     margin: 10px 0;
     transition: background-color 0.5s ease-out;
@@ -429,10 +408,11 @@ iframe.container-calendar {
 }
 
 .btn-alice-supp {
-    font-size: medium;
-    margin: 10px 0;
     background-color: #9e2a2b;
     color: #FAFAFF;
+    border: rgb(158, 42, 43, 0.3) 1px solid;
+    font-size: medium;
+    margin: 10px 0;
     transition: background-color 0.5s ease-out;
 }
 
@@ -459,6 +439,19 @@ iframe.container-calendar {
     background-color: rgb(76, 158, 189, 0.2);
     border: #19374d 1px solid;
 }
+
+
+/************** Personnalisation des liens */
+
+a {
+    color: #19374D;
+}
+
+a:hover {
+    color: blue;
+}
+
+
 /*
 *  Personnalisation formulaires RESET_PASSWORD
 */
@@ -574,6 +567,10 @@ img[data-name='imgSuppContact']:hover {
     height: 25px;
 }
 
+.goBack:hover {
+    cursor: pointer;
+}
+
 
 /* Personnalisation des inputs des form */
 
@@ -586,12 +583,13 @@ img[data-name='imgSuppContact']:hover {
 
 /* Affichage du document */
 
-.showDocument thead tr th{
-    width: 15%;
-}
 
-.showDocumentDescription {
-    width: 30% !important;
+
+/************** Container view doc */
+
+.imgEmbedDocument {
+    max-width: 100%;
+    height: auto;
 }
 
 .embedContainer {
@@ -609,19 +607,6 @@ img[data-name='imgSuppContact']:hover {
     height: 800px;
 }
 
-.showDocuments tbody tr td {
-    width: 15%;
-}
-
-.columnDate, 
-.columnFamily {
-    width: 10%;
-}
-
-.imgEmbedDocument {
-    max-width: 100%;
-    height: auto;
-}
 
 /*************** CKEditor */
 

@@ -5,16 +5,14 @@
 {% block body %}
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>{{ contract.name }}</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
     
-    <div class="d-flex flex-column align-items-center flex-sm-row flex-sm-wrap mb-3 me-md-1 justify-content-center justify-content-lg-end">
+    <div class="d-flex my-2 me-md-1 justify-content-end d-none d-lg-flex">
 
-        <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice btn-block mx-3">Modifier le contrat</a>
+        <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice btn-block mx-2">Modifier le contrat</a>
+        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-supp btn-block mx-2 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
 
-        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-supp btn-block mx-3 buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
-
-        <a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}" class="btn btn-alice mx-3">Fiche client</a>
     </div>
 
 <div class="table-responsive me-lg-5">
@@ -25,19 +23,19 @@
         <thead>
             <tr>
                 <th scope="col">Client</th>
-                <td>{{ contract.customer }}</td>
+                <td><a href="{{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug }) }}">{{ contract.customer}}</a></td>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <th scope="col">Lien Site Client</th>
+                <td><a href="{{ contract.websiteLink }}" target="_blank" id="url">{{ contract.websiteLink }}</a></td>
+            </tr>
             <tr>
                 <th scope="col">Date</th>
                 <td>{{ contract.date|date("d/m/Y") }}</td>
             </tr>
 
-            <tr>
-                <th scope="col">Lien Site Client</th>
-                <td><a href="{{ contract.websiteLink }}" target="_blank" id="url">{{ contract.websiteLink }}</a></td>
-            </tr>
             <tr>
                 <th scope="col">Fractionnement</th>
                 <td>{{ contract.paymentFrequency }}</td>
@@ -49,6 +47,13 @@
         </tbody>
     </table>
 </div>
+
+    <div class="btn-toolbar justify-content-center">
+        <div class="btn-group d-lg-none" role="group" aria-label="Groupe de boutons pour gestion contrat">
+            <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn btn-alice">Modifier le contrat</a>
+            <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn btn-alice-supp buttonRemove" data-name="Contrat {{ contract.name }}">Supprimer</a>
+        </div>
+    </div>
 
 {# Point de vue Financier  #}
 

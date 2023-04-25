@@ -6,20 +6,20 @@
 
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>Détail Fiche Contact</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
     <div class="d-flex flex-column justify-content-around">
         {% if customer is not null %}
             <div class="d-flex flex-column">
                 <p class="fs-6">Nom du client : </p>
-                <p class="fs-5 fw-medium">{{ user.customer.name|upper }}</p>
+                <p class="fs-5 fw-medium"><a href="{{ path('app_customer', {'id': user.customer.id, 'slug': user.customer.slug }) }}">{{ user.customer.name|upper }}</a></p>
             </div>
         {% endif %}
 
             <div class="d-flex flex-column">
                 <p class="fs-6">Non Utilisateur :  </p>
-                <p class="fs-5 fw-medium">{{ contact.user.firstname }} {{ contact.user.lastname }}</p>
+                <p class="fs-5 fw-medium"><a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ contact.user.firstname }} {{ contact.user.lastname }}</a></p>
             </div>
     </div>
 
@@ -28,11 +28,6 @@
 
         <a href="{{ path('app_contact_delete', { 'id': contact.id, 'slug': contact.slug, 'csrf_token': csrf_token('delete_contact' ~ contact.id) }) }}" class="btn btn-alice-supp mx-3 buttonRemove" data-name="Contact {{ contact.firstname|capitalize }} {{ contact.lastname|upper }}">Supprimer</a> 
 
-        {% if customer is not null %}       
-            <a href=" {{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug }) }} " class="btn btn-alice mx-3">Retour {{ user.customer.name }}</a>
-        {% else %}
-            <a href=" {{ path('app_user_show', { 'id': user.id, 'slug': user.slug }) }} " class="btn btn-alice mx-3">Retour {{ user.firstname|capitalize }} {{ user.lastname|upper }} </a>
-        {% endif %}
     </div>
 
     <div class="table-responsive me-lg-5">

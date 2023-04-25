@@ -6,14 +6,14 @@
 
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>Liste des Utilisateurs</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
 
 {# Ajouter un utilisateur #}
 
     <div class="d-flex flex-column align-items-center flex-sm-row justify-content-sm-end align-items-sm-baseline me-sm-2">
-        <p class="">Créer un utilisateur :   </p>
+        <p>Créer un utilisateur :   </p>
         <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-sm-3">Nouvel Utilisateur</a>
     </div>
 
@@ -23,7 +23,7 @@
 
         <div class="card m-2">
             <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
-                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
                     <h5 class="card-title">{{ user.firstname|capitalize }} {{ user.lastname|upper }}</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
                     {% if user.role == "ADMIN" %}
@@ -38,7 +38,7 @@
                         </p>
                     {% endif %}
                 </div>
-                <div class="d-flex flex-column justify-content-around col-lg-6 align-items-center">
+                <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
                     <a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Consulter</a><br>
                     {% if user.role == "ADMIN" %}
                     {% else %}

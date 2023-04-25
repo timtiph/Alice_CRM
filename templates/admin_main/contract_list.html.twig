@@ -9,7 +9,7 @@
     
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h1>Liste des contrats</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
         {% if contracts is not empty %}
@@ -20,12 +20,11 @@
 
                 <thead>
                     <tr>
-                        <th scope="col">Client</th>
                         <th scope="col">Nom</th>
+                        <th scope="col">Client</th>
                         <th scope="col">Date contrat</th>
                         <th scope="col">Site Web</th>
-                        <th scope="col">Commentaires   </th>
-                        {# <th scope="col">Contact Principal</th> #}
+                        <th scope="col" class="d-none d-lg-block">Commentaires</th>
                     </tr>
                 </thead>
             
@@ -33,11 +32,11 @@
 
                 <tbody>
                     <tr>
-                        <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} ">{{ contract.customer.name }}</a></td>
                         <td><a href=" {{ path('app_contract_show', { 'id': contract.id}) }} ">{{ contract.name|upper }}</a></td>
+                        <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} ">{{ contract.customer.name }}</a></td>
                         <td>{{ contract.date|date("d/m/Y") }}</td>
                         <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
-                        <td>{{ contract.openArea }}</td>
+                        <td class="d-none d-lg-block">{{ contract.openArea }}</td>
                         
                     </tr>
                 </tbody>
