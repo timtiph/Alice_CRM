@@ -84,7 +84,7 @@ class HomeController extends AbstractController
         // Vérifier si l'utilisateur est un administrateur
         if ($this->isGranted('ROLE_ADMIN')) {
             // Si l'utilisateur est un administrateur, renvoyer une réponse vide
-            return $this->render('contacts/empty.html.twig');
+            return $this->render('home/index.html.twig');
         }
 
         // Récupérer les contacts de l'utilisateur connecté
