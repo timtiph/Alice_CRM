@@ -1,5 +1,8 @@
 "use strict";
 
+/**
+ * Fonction pour open les div contacts et contrats 
+ */
 
 const buttonsContacts = document.querySelectorAll('[data-name^="controlButtonDivContact"]');
 const showContact = document.querySelectorAll('[data-name^="imgAddContact"]');
@@ -57,6 +60,9 @@ buttonsContracts.forEach((button, index) => {
     });
 });
 
+/**
+ *  Fonction ouverture boite de dialogue pour confirmation suppression client / contrat
+ */
 
 var btnsSupprimer = document.querySelectorAll(".buttonRemove");
 
@@ -69,10 +75,13 @@ for (var i = 0; i < btnsSupprimer.length; i++) {
   });
 }
 
+/**
+ *  Fonction pour cacher / montrer les inputs SIRET et PARTNER des form customer 
+ */
+
 const isStatusCheckboxes = document.querySelectorAll('input[name="customer[isPartner]"], input[name="customer[isProfessional]"], input[name="edit_customer[isPartner]"], input[name="edit_customer[isProfessional]"]');
 const inputStatuses = document.querySelectorAll('#createCustomerPartner, #createCustomerSiret, #editCustomerPartner, #editCustomerSiret');
-console.log(isStatusCheckboxes);
-console.log(inputStatuses);
+
 
 // On cache les champs input au chargement de la page
 for (let i = 0; i < inputStatuses.length; i++) {
