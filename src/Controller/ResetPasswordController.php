@@ -164,7 +164,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // TODO : mettre les bonnes adresses mail
+        
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@alice-le-blog.fr', 'Alice_CRM'))
             ->to($user->getEmail())
