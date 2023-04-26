@@ -126,7 +126,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            // redirect pour login 
+            // redirect for login 
             return $this->redirectToRoute('app_login');
         }
 
@@ -140,7 +140,6 @@ class ResetPasswordController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
-        //dd($emailFormData);
         
         // Do not reveal whether a user account was found or not.
         if (!$user) {
