@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Customer;
 use App\Entity\TariffZone;
 use App\Form\TariffZoneType;
-use App\Repository\CustomerRepository;
 use App\Repository\TariffZoneRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/tariff_zone')]
 class TariffZoneController extends AbstractController
 {
-
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
     
-    #[Route('/', name: 'app_tariff_zone_index', methods: ['GET'])]
-    public function index(TariffZoneRepository $tariffZoneRepository): Response
+    #[Route('/', name: 'app_tariff_zone_list', methods: ['GET'])]
+    public function list(TariffZoneRepository $tariffZoneRepository): Response
     {
         return $this->render('tariff_zone/list.html.twig', [
             'tariff_zones' => $tariffZoneRepository->findAll(),
@@ -43,9 +33,9 @@ class TariffZoneController extends AbstractController
             $tariffZoneRepository->save($tariffZone, true);
             $this->addFlash(
                 'success',
-                'La Création de la nouvelle zone tarifaire est bien enregistrée.'
+                'La création de la nouvelle zone tarifaire est bien enregistrée.'
             );
-            return $this->redirectToRoute('app_tariff_zone_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tariff_zone_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tariff_zone/new.html.twig', [
@@ -56,12 +46,9 @@ class TariffZoneController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_tariff_zone_show', methods: ['GET'])]
-    public function show(TariffZone $tariffZone, EntityManagerInterface $entityManager): Response
+    public function show(TariffZone $tariffZone): Response
     {
-        $tariffZoneId = $tariffZone->getId();
         $customers = $tariffZone->getCustomers();
-        $customers = $entityManager->getRepository(Customer::class)->findBy(['tariffZone' => $tariffZoneId]);
-        
 
         return $this->render('tariff_zone/show.html.twig', [
             'customers' => $customers,
@@ -82,7 +69,7 @@ class TariffZoneController extends AbstractController
                 'La modification de la zone tarifaire à été enregistrée.'
             );
 
-            return $this->redirectToRoute('app_tariff_zone_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tariff_zone_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tariff_zone/edit.html.twig', [
@@ -97,13 +84,20 @@ class TariffZoneController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete_tariffZone'.$tariffZone->getId(), $request->request->get('_token'))) {
             $tariffZoneRepository->remove($tariffZone, true);
+            
+            $this->addFlash(
+                'success',
+                'La zone tarifaire à bien été supprimée.'
+            );
+        } else {
+            $this->addFlash(
+                'alert',
+                'Une erreur est survenue.',
+            );
+            return $this->redirectToRoute('app_tariff_zone_list', [], Response::HTTP_SEE_OTHER);
         }
 
-        $this->addFlash(
-            'success',
-            'La zone tarifaire à bien été supprimée.'
-        );
 
-        return $this->redirectToRoute('app_tariff_zone_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_tariff_zone_list', [], Response::HTTP_SEE_OTHER);
     }
 }

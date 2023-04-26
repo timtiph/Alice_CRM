@@ -6,10 +6,10 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use Cocur\Slugify\Slugify;
 use App\Form\EditContactType;
+use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use App\Repository\ContactRepository;
 use App\Repository\DocumentRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,13 +66,14 @@ class HomeController extends AbstractController
                 'alert',
                 'Votre compte n\'a pas été vérifié. Veuillez vérifier votre boite mail, ainsi que les spams.'
             );
-            return $this->redirectToRoute('app_logout', ['delay' => 3000]);
+            return $this->redirectToRoute('app_logout');
         }
         
         return $this->render('home/index.html.twig', [
             'pagination' => $pagination,
             'contacts' => $contacts,
             'flash' => $this,
+            'user' => $user,
         ]);
     }
 

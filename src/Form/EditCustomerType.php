@@ -5,8 +5,6 @@ namespace App\Form;
 use App\Entity\Partner;
 use App\Entity\Customer;
 use App\Entity\TariffZone;
-use App\Repository\PartnerRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -42,10 +39,10 @@ class EditCustomerType extends AbstractType
             'constraints' => [
                 new Callback([
                     'callback' => function ($numSirenSiret, ExecutionContextInterface $context) {
-                        if (!empty($numSirenSiret)) { // On vérifie si le champ est non vide
-                            // Suppression des espaces entre les groupes de chiffres
+                        if (!empty($numSirenSiret)) { // Check if field is not empty 
+                            // Removal of spaces between groups of digits
                             $numSirenSiret = str_replace(' ', '', $numSirenSiret);
-                            // Validation du numéro SIREN/SIRET
+                            // Validation of SIREN/SIRET number
                             $regex = '/^(?:\d{9}|\d{14})$/';
                             if (!preg_match($regex, $numSirenSiret)) {
                                 $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
@@ -68,8 +65,8 @@ class EditCustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,
@@ -96,8 +93,8 @@ class EditCustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,

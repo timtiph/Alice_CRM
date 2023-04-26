@@ -108,7 +108,7 @@ class ContactController extends AbstractController
                 
                 $this->addFlash(
                     'success',
-                    'La Création du contact et bien enregistrée.'
+                    'La création du contact est bien enregistrée.'
                 );
                 
                 if ($user->getCustomer()) {

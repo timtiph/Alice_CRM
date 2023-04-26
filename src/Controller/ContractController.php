@@ -96,7 +96,7 @@ class ContractController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'La Création du contrat et bien enregistrée.'
+                    'La création du contrat est bien enregistrée.'
                 );
 
                 return $this->redirectToRoute('app_customer', ['id' => $id, 'slug' => $slug]);
@@ -190,7 +190,6 @@ class ContractController extends AbstractController
             );
 
         } else {
-            dump('OK');
 
             $entityManager = $doctrine->getManager();
             $entityManager->remove($serpInfo);

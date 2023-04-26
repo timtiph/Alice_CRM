@@ -66,8 +66,8 @@ class CustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,
@@ -94,8 +94,8 @@ class CustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres et des chiffres.'
+                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,

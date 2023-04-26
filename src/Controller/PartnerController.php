@@ -47,7 +47,7 @@ class PartnerController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'La Création du nouveau partenariat est bien enregistrée.'
+                'La création du nouveau partenariat est bien enregistrée.'
             );
 
             return $this->redirectToRoute('app_partner_index', [], Response::HTTP_SEE_OTHER);
@@ -85,7 +85,7 @@ class PartnerController extends AbstractController
             return $this->redirectToRoute('app_partner_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('partner/edit.html.twig', [
+        return $this->render('partner/edit.html.twig', [
             'partner' => $partner,
             'form' => $form,
         ]);

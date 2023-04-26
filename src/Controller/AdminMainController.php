@@ -35,15 +35,6 @@ class AdminMainController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('', name: 'app_admin_main')]
-    public function index(): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        return $this->render('admin_main/index.html.twig', [
-            'controller_name' => 'AdminMainController',
-        ]);
-    }
-
     #[Route('/utilisateur', name: 'app_users_list')]
     public function showUsers(): Response
     {
@@ -57,9 +48,21 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/utilisateur/{id}/{slug}', name: 'app_user_show')]
-    public function showUser(User $id): Response
+    #[ParamConverter('user', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
+    public function showUser(User $id, string $slug): Response
     {
         $user = $this->entityManager->getRepository(User::class)->findOneById($id);
+
+            // Vérifier que le slug dans l'URL correspond à celui stocké en base de données
+        if ($user->getSlug() !== $slug) {
+            // Si les slugs ne correspondent pas, rediriger l'utilisateur vers la liste des users + Message 
+            $this->addFlash(
+                'alert',
+                'Vous ne pouvez pas faire ça !'
+            );
+            return $this->redirectToRoute('app_users_list');
+        }
+
         $contacts = $user->getContacts();
         $customer = $user->getCustomer();
 
@@ -68,7 +71,8 @@ class AdminMainController extends AbstractController
         return $this->render('admin_main/user_show.html.twig', [
             'user' => $user,
             'contacts' => $contacts,
-            'customer' => $customer
+            'customer' => $customer,
+            'flash' => $this,
         ]);
     }
 
@@ -84,7 +88,7 @@ class AdminMainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();  // injecte dans obj $user toutes les données récup dans $form
 
-            // vérifier la présence du mail saisie pour éviter les doublons
+            // vérifier si présence du mail saisi dans la bdd pour éviter les doublons
             $search_email = $this->entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
 
             if(!$search_email) {
@@ -128,10 +132,9 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/utilisateur/modifier/{id}/{slug}', name: 'app_user_edit')]
-    public function editUser(Request $request, $id, $slug, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[ParamConverter('user', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
+    public function editUser(Request $request, $id, $slug, PersistenceManagerRegistry $doctrine, User $user): Response
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneById($id);
-
         if (!$user) {
             $this->addFlash(
                'alert',
@@ -139,6 +142,7 @@ class AdminMainController extends AbstractController
             );
             return $this->redirectToRoute('app_users_list');
         }
+        
 
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
@@ -149,9 +153,9 @@ class AdminMainController extends AbstractController
 
                 $user = $form->getData();
 
-                $entityManager = $doctrine->getManager();
+                $this->entityManager = $doctrine->getManager();
 
-                $entityManager->flush(); // push les données
+                $this->entityManager->flush(); // push les données
 
                 $this->addFlash(
                     'success',
@@ -188,11 +192,23 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/client/{id}/{slug}', name: 'app_customer')]
-    public function showCustomer($id, Request $request): Response
+    #[ParamConverter('customer', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
+    public function showCustomer(Customer $customer, Request $request): Response
     {
-
         // récup données client
-        $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
+        $slug = $customer->getSlug();
+        
+        // Vérifier que le slug dans l'URL correspond à celui stocké en base de données
+        if ($customer->getSlug() !== $slug) {
+            // Si les slugs ne correspondent pas, rediriger l'utilisateur vers la page avec le bon slug
+            $this->addFlash(
+                'alert',
+                'Vous ne pouvez pas faire ça !'
+            );
+            return $this->redirectToRoute('app_customer_list', [], 301); // utilisez une redirection permanente (code 301) pour que les moteurs de recherche mettent à jour leurs index
+        }
+
+
 
         // récup user associé
         $user = $customer->getUser();
@@ -232,9 +248,8 @@ class AdminMainController extends AbstractController
     }
 
     #[Route('/client/creer-un-client/{id}/{slug}', name: 'app_customer_add')]
-    public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
+    public function createCustomer(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, User $user): Response
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneById($id);
         $tariffZone = $this->entityManager->getRepository(TariffZone::class)->findAll();
         
         if (!$tariffZone) {
@@ -281,7 +296,7 @@ class AdminMainController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'La Création du client est bien enregistrée.'
+                    'La création du client est bien enregistrée.'
                 );
                 $customerId = $customer->getId();
                 return $this->redirectToRoute('app_customer', [ 'id' => $customerId, 'slug' => $slugify ]);
@@ -296,7 +311,11 @@ class AdminMainController extends AbstractController
         ]);
     }
 
+    // TODO : Revoir code couleur pour les boutrons + picto pour + simple à lire
+
     #[Route('/client/modifier-un-client/{id}/{slug}', name: 'app_customer_edit')]
+    #[ParamConverter('customer', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('customer', options: ['mapping' => ['slug' => 'slug']])]
     public function editCustomer(Request $request, $id, $slug): Response
     {
 
@@ -342,7 +361,6 @@ class AdminMainController extends AbstractController
     #[ParamConverter('customer', options: ['mapping' => ['id' => 'id']])]
     public function dynamicContentEdit($name, PersistenceManagerRegistry $doctrine, Request $request, Customer $customer): Response
     {
-
         //On va chercher par nom (qui sert de clé) le dynamic content correspondant
         $dynamicContentRepo = $doctrine->getRepository(DynamicContent::class);
 

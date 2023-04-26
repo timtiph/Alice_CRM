@@ -130,6 +130,8 @@ class DocumentController extends AbstractController
     #[Route('/{id}', name: 'app_document_show', methods: ['GET'])]
     public function show(Document $document, AuthorizationCheckerInterface $authChecker): Response
     {
+        // Creation of an isAuthorized status to filter users who are authorized to view the document
+        
         $isAuthorized = $authChecker->isGranted('ROLE_ADMIN');
         $authorizedUsers = $document->getUser()->toArray();
         $user = $this->getUser();
