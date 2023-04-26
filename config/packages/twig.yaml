@@ -4,8 +4,9 @@ twig:
 when@test:
     twig:
         strict_variables: true
-        # Mise en page de bootstrap pour les form
+        # Inport bootstrap theme form
         form_themes: ['bootstrap_5_layout.html.twig']
 
         # pour un custom des input du formualire personnalisé
         # form_themes: ['form/register_theme.html.twig']
+

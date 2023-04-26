@@ -3,7 +3,7 @@
 {% block title %}Documents | Alice CRM{% endblock %}
 
 {% block body %}
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Documents</h1>
                 <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
@@ -17,8 +17,8 @@
 
             <tr>
                 {# sorting of properties based on query components #}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <th class="d-none d-sm-table-cell">User</th>
+                {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                    <th class="d-none d-sm-table-cell">Utilisateur</th>
                 {% else %}
                 {% endif %}
 
@@ -43,7 +43,7 @@
         <tbody>
         {% for document in pagination %}
             <tr>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if app.user.roles[0] == "ROLE_ADMIN" %}
                     <td class="d-none d-sm-table-cell">
                         <div>
                             {% for userElement in document.user.toArray() %}

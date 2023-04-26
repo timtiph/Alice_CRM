@@ -3,9 +3,9 @@
 {% block title %}Documents | Alice CRM{% endblock %}
 
 {% block body %}
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Documents</h1>
-                <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
 
 
@@ -15,7 +15,6 @@
         {% endif %}
         
         <a href="{{ asset('uploads/documents/' ~ document.fileName) }}" download class="btn btn-alice mx-2">Télécharger</a>
-        <a href="{{ path('app_document_list') }}" class="btn btn-alice mx-2">Retour à la liste</a>
         {% if isAuthorized %}
             {{ include('document/_delete_form.html.twig') }}
         {% endif %}

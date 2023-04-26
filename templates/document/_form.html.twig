@@ -5,7 +5,7 @@
         {{ form_row(form.name) }}
         {{ form_row(form.description) }}
         {{ form_row(form.family) }}
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if app.user.roles[0] == "ROLE_ADMIN" %}
             {{ form_row(form.user) }}  
         {% endif %}
         {{ form_row(form.fileName) }}

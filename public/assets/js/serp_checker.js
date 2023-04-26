@@ -2,25 +2,30 @@
 function checkRank(element) {
   let url = document.getElementById("url").innerHTML;
 
-  // On saisit le mot clé et l'url du site à vérifier (sans le https://)
+  // Enter the keyword and the url of the site to check (without the https://)
   let keyword = element.children[1].innerHTML;
 
-  // ON saisit l'api google custom search avec la clé après key et le moteur de recherche (créé sur l'api google) à utiliser après cx. On passe le mot clé en paramètre de la query string après q et on précise que l'on veut du json en sortie après alt
+  // Access the Google API.
+  // Select the "Custom Search" option to create a custom search instance.
+  // Obtain an API key for query authentication.
+  // Specify the CX (custom search engine identifier) you want to use for the search.
+  // Perform a search query by including the desired search term (specified after the "q" parameter in the query string).
+  // Specify the output format of the search results by including "alt=json" in the query string.
   let api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBSBSc6PUZG8waNxQ9wOsRSfmTBqaXlrUI&cx=973460c980706448d&q=" + keyword + "&alt=json";
 
     let request = new XMLHttpRequest();
     request.open('GET', api, true);
     request.onload = function() {
-      //Si la requête aboutit, on récupère les données et on les parse en json
+      // If the request succeeds, we retrieve the data and parse them into json
       if (request.status >= 200 && request.status < 400) {
         let data = JSON.parse(request.responseText);
 
-        // On récupère les résultats de la requête et on les stocke dans un tableau
+        // We collect the results of the query and store them in an array
 
         let items = data.items;
         let rank = 0;
-        // On parcourt le tableau et on récupère le rang de l'url saisie
-        //  On ajoute 1 au rang car le tableau commence à 0
+        // We go through the table and we get the rank of the entered url
+        // We add 1 to the rank because the table starts at 0
         for (let i = 0; i < items.length; i++) {
           if (items[i].link.indexOf(url) > -1) {
             rank = i + 1;
@@ -67,7 +72,7 @@ searchButton.addEventListener("click", function() {
 
 });
 
-// Affichage dynamique du form
+// Dynamic display of the form
 
 $serpInfoForm = document.querySelector(".serp-info-form");
 $addSerpButton = document.querySelector(".add-serp-button");

@@ -5,13 +5,13 @@
 {% block body %}
 
 
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Zone Tarifaire</h1>
                 <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
     
-
     {% if tariff_zones is not empty %}
+
         
         <div class="d-flex justify-content-center justify-content-lg-end">
             <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice">Nouvelle Zone</a>
@@ -38,26 +38,16 @@
                         </div>
                     </td>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">Vous n'avez pas encore renseigné de Zone Tarifaire.</td>
-                </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <h4 class="mb-5">Aucun Zone Tarifaire définies</h4>
+        <h4 class="mb-5">Aucune Zone Tarifaire définie</h4>
             <div class="d-flex flex-column flex-md-row col-12 justify-content-around">
                 <div class="card col-md-5 bgg-alice-light m-2">
                     <div class="d-flex flex-column align-items-center card-body justify-content-between">
                         <h6 class="card-title mb-2">Souhaitez-vous ajouter une zone tarifaire ?</h6>
                         <a href="{{ path('app_tariff_zone_new') }}" class="btn btn-alice">Nouvelle Zone</a>
-                    </div>
-                </div>
-                <div class="card col-md-5 bgg-alice-light m-2">
-                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
-                        <h6 class="card-title mb-2">Ou retourner à l'accueil ?</h6>
-                        <a href=" {{ path('app_home') }} " class="btn btn-alice">Accueil</a>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Liste des Utilisateurs</h1>
         <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
@@ -17,7 +17,7 @@
         <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-sm-3">Nouvel Utilisateur</a>
     </div>
 
-  
+  {# TODO : virer definir un role à l'admin #}
 
     {% for user in users %}
 
@@ -26,27 +26,27 @@
                 <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
                     <h5 class="card-title">{{ user.firstname|capitalize }} {{ user.lastname|upper }}</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
-                    {% if user.role == "ADMIN" %}
-                        <p>{{ user.role }}</p>
-                    {% else %}
                         <p class="card-text"> 
-                            {% if user.role is null %}
-                                <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
-                            {% else %}
-                                Role : {{ user.role }}
+                            {% if user.roles[0] == "ROLE_USER" %}
+                                {% if user.role is null %}
+                                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
+                                {% else %}
+                                    Role : {{ user.role }}
+                                {% endif %}
                             {% endif %}
                         </p>
-                    {% endif %}
                 </div>
                 <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
                     <a href="{{ path('app_user_show', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Consulter</a><br>
-                    {% if user.role == "ADMIN" %}
-                    {% else %}
+                    
+                    {% if user.roles[0] == "ROLE_USER" %}
+
                         {% if user.customer is null %}
-                        <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Créer une fiche client</a> 
+                            <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Créer une fiche client</a> 
                         {% else %}
-                        <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-alice-lg">Consulter la fiche client</a> 
+                            <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-alice-lg">Consulter la fiche client</a> 
                         {% endif %}
+                        
                     {% endif %}
                 </div>
             </div>

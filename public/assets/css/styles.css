@@ -445,10 +445,11 @@ iframe.container-calendar {
 
 a {
     color: #19374D;
+    text-decoration: underline;
 }
 
 a:hover {
-    color: blue;
+    color: #4488be;
 }
 
 

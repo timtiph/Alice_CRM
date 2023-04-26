@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Utilisateur : {{ user.firstname|capitalize }} {{ user.lastname|upper }}</h1>
         <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
@@ -17,21 +17,23 @@
                 <h5 class="card-title">{{ user.firstname|capitalize }} {{ user.lastname|upper }}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.email }}</h6>
                 <p class="card-text">
-                    {% if user.role is null %}
-                        <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
-                    {% else %}
-                        Role : {{ user.role }}</p>
+                    {% if user.roles[0] == "ROLE_USER" %}
+                        {% if user.role is null %}
+                            <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
+                        {% else %}
+                            Role : {{ user.role }}
+                        {% endif %}
                     {% endif %}
+                </p>
             </div>
-        {% if user.role == "ADMIN" %}
-        {% else %}
+
             <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
                 <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Modifier</a><br>
-                {% if user.customer is null %}
-                <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Créer une fiche client</a> 
+                {% if user.roles[0] == "ROLE_USER" and user.customer is null %}
+                    <a href="{{ path('app_customer_add', { 'id': user.id, 'slug': user.slug}) }}" class="btn btn-alice-lg">Créer une fiche client</a> 
                 {% endif %}
             </div>
-        {% endif %}
+        
 
         </div>
     </div>
@@ -39,21 +41,21 @@
     {# identification client  #}
     {% if user.customer %}
 
-    <div class="card m-2 mt-3">
-        <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
-            <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
-                <h5 class="card-title">Fiche client</h5>
-            </div>
-            <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
-                <h5 class="card-title text-center">{{ user.customer.name }}</h5>
-                <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-alice-lg">Consulter la fiche client</a> 
+        <div class="card m-2 mt-3">
+            <div class="card-body bgg-alice-light d-flex justify-content-between flex-column flex-sm-row align-items-center">
+                <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
+                    <h5 class="card-title">Fiche client</h5>
+                </div>
+                <div class="d-flex flex-column justify-content-around col-sm-6 align-items-center">
+                    <h5 class="card-title text-center">{{ user.customer.name }}</h5>
+                    <a href="{{ path('app_customer', { 'id': user.customer.id, 'slug': user.customer.slug}) }}" class="btn btn-alice-lg">Consulter la fiche client</a> 
+                </div>
             </div>
         </div>
-    </div>
 
     {% endif %}
-    {% if user.role == "ADMIN" %}
-    {% else %}
+
+    {% if user.roles[0] == "ROLE_USER" %}
     
     <div class="card m-2 mt-3 bgg-alice-light">
 
@@ -71,7 +73,7 @@
         </div>
 
         <div class="card m-2 bgg-alice-light">
-        <h6 class="text-center my-2 col-12">Contact Pricipal</h6>
+        <h6 class="text-center my-2 col-12">Contact Principal</h6>
             <div class="card-body d-flex justify-content-between flex-column flex-sm-row align-items-center">
                 <div class="d-flex flex-column flex-md-row justify-content-around align-items-center col-12">
                     <div class="col-12 col-md-6 d-flex flex-column align-items-center">

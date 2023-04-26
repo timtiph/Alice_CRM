@@ -3,7 +3,7 @@
 {% block title %}Contrat Détail | Alice CRM{% endblock %}
 
 {% block body %}
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>{{ contract.name }}</h1>
         <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="col">Lien Site Client</th>
+                <th scope="col">Site Client</th>
                 <td><a href="{{ contract.websiteLink }}" target="_blank" id="url">{{ contract.websiteLink }}</a></td>
             </tr>
             <tr>
@@ -72,17 +72,18 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="col">Élément Facturés</th>
+                <th scope="col">Éléments Facturés</th>
                 <td>{{ contract.timeCharged }}</td>
                 <td>{{ contract.amountCharged }}</td>
             </tr>
             <tr>
-                <th scope="col">Élément Réels</th>
+                <th scope="col">Éléments Réels</th>
                 <td>{{ contract.timeReal }}</td>
                 <td>{{ contract.amountReal }}</td>
             </tr>
             <tr>
                 <th class="d-flex">
+                {# TODO : à faire en ternaire  #}
                     <p class="m-0 {% if contract.timeCharged > contract.timeReal %} text-success {% else %} text-danger {% endif %}">Delta
                     {% if contract.timeCharged > contract.timeReal %}positif{% else %}négatif{% endif %}
                     </p>

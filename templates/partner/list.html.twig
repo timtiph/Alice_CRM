@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Partenariat | Alice_CRM{% endblock %}
+{% block title %}Partenariats | Alice_CRM{% endblock %}
 
 {% block body %}
         
-    <div class="d-flex align-items-center justify-content-between mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Les Partenariats</h1>
-                <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
     </div>
     {% if partners is not empty %}
 
@@ -49,12 +49,6 @@
                     <div class="d-flex flex-column align-items-center card-body justify-content-between">
                         <h6 class="card-title mb-2">Souhaitez-vous ajouter un partenariat ?</h6>
                         <a href="{{ path('app_partner_new') }}" class="btn btn-alice">Nouveau Partenariat</a>
-                    </div>
-                </div>
-                <div class="card col-md-5 bgg-alice-light m-2">
-                    <div class="d-flex flex-column align-items-center card-body justify-content-between">
-                        <h6 class="card-title mb-2">Ou retourner à l'accueil ?</h6>
-                        <a href=" {{ path('app_home') }} " class="btn btn-alice">Accueil</a>
                     </div>
                 </div>
             </div>

@@ -10,11 +10,11 @@
 const sidebarMenu = document.getElementById('sidebarMenu');
 const sidebarToggleButton = document.getElementsByClassName('navbar-toggler');
 
-// Ajoute un événement de clic sur le document entier
+// Add event listener on the document
 document.addEventListener('click', function(event) {
-  // Vérifie si le clic est en dehors de la barre latérale
+  // Checks if the click is outside the sidebar
   if (!sidebarMenu.contains(event.target)) {
-    // Supprime la classe "active" de la barre latérale
+    // Remove the 'active' class from the sidebar
     sidebarMenu.classList.remove('show');
   }
 });
