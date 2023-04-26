@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/tariff_zone')]
+#[Route('/admin/tariff_zone')]
 class TariffZoneController extends AbstractController
 {
     
