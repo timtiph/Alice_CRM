@@ -39,20 +39,18 @@ class PartnerRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Partner[] Returns an array of Partner objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Partner[] Returns an array of Partner objects
+    */
+    public function findCustomersByPartners(array $partners): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.customers', 'c')
+            ->andWhere('c.partner IN (:partners)')
+            ->setParameter('partners', $partners);
+    
+        return $qb->getQuery()->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Partner
 //    {

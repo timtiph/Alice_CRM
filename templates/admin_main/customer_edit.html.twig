@@ -27,7 +27,7 @@
                 {% if form.partner.vars.choices is empty %}
                     {{ form_row(form.partner, { 'attr': {'class': 'd-none'} }) }}
                     <p>Aucun partenariat n'est défini. Veuillez ajouter un partenariat en cliquant sur le bouton ci-dessous :</p>
-                    <a href="{{ path('app_partner_new') }}" class="btn btn-alice-form" >Ajouter un partenariat</a>
+                    <a href="{{ path('app_partner_add') }}" class="btn btn-alice-form" >Ajouter un partenariat</a>
                     {% else %}
                     {{ form_row(form.partner) }}
                 {% endif %}
