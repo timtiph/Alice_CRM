@@ -23,11 +23,11 @@ security:
                 check_path: app_login
                 enable_csrf: true
             logout:
+                # where to redirect after logout
                 path: app_logout
                 target: app_login
                 invalidate_session:   true
             custom_authenticator: App\Security\LoginFormAuthenticator
-                # where to redirect after logout
             login_throttling:
                 max_attempts: 5 
                 interval: '10 minutes'
