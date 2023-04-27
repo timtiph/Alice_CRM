@@ -4,7 +4,7 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
+# /public/bundles/
 /var/
 /vendor/
 /migrations/
@@ -24,3 +24,9 @@
 .env
 uploads
 analyses/use_cases.puml
+!/public/bundles/fosckeditor/contents.css
+/public/bundles/fosckeditor/**/*.js
+/public/bundles/fosckeditor/**/*.json
+/public/bundles/fosckeditor/**/*.md
+/public/bundles/fosckeditor/**/*.npmignore
+/public/bundles/fosckeditor/**/
