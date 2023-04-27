@@ -80,8 +80,8 @@ class NewUserType extends AbstractType
                         'message' => 'Veuillez renseigner un Prénom !'
                     ]),
                     new Regex([
-                        'pattern' => '/^[a-zA-Z\-\s]+$/',
-                        'message' => 'Le champ ne doit contenir que des lettres et des tirets.'
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\-\s]+$/u',
+                        'message' => 'Ce champs ne peut contenir que des lettres et tirets.'
                     ]),
                 ],
                 'attr' => [
@@ -94,16 +94,16 @@ class NewUserType extends AbstractType
                 'constraints' => [
                     new Length([
                         'min' => 2, 
-                        'minMessage' => 'Le Nom contient seulement 1 caractère ?',
+                        'minMessage' => 'Le Prénom contient moins de {{ limit }} caractères ?',
                         'max' => 30,
-                        'maxMessage' => 'Le Nom contient plus de 30 caractères ?'
+                        'maxMessage' => 'Le Prénom contient plus de {{ limit }} caractères ?'
                     ]),
                     new NotBlank([
-                        'message' => 'Veuillez renseigner un Nom !'
+                        'message' => 'Veuillez renseigner un Prénom !'
                     ]),
                     new Regex([
-                        'pattern' => '/^[a-zA-Z0-9_\-\s]+$/',
-                        'message' => 'Le champ ne doit contenir que des lettres, des chiffres, des tirets et des underscores.'
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\-\s]+$/u',
+                        'message' => 'Ce champs ne peut contenir que des lettres et tirets.'
                     ]),
                 ],
                 'attr' => [

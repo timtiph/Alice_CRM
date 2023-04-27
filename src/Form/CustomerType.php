@@ -32,6 +32,10 @@ class CustomerType extends AbstractType
                 new NotBlank([
                     'message' => 'Ce champs ne peut pas être vide.'
                 ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres et des tirets.'
+                ]),
             ]
         ])
         ->add('siret', TextType::class, [
@@ -40,10 +44,10 @@ class CustomerType extends AbstractType
             'constraints' => [
                 new Callback([
                     'callback' => function ($numSirenSiret, ExecutionContextInterface $context) {
-                        if (!empty($numSirenSiret)) { // On vérifie si le champ est non vide
-                            // Suppression des espaces entre les groupes de chiffres
+                        if (!empty($numSirenSiret)) { // check if fiels not empty
+                            // Removal of spaces between groups of digits
                             $numSirenSiret = str_replace(' ', '', $numSirenSiret);
-                            // Validation du numéro SIREN/SIRET
+                            // valid number SIREN/SIRET
                             $regex = '/^(?:\d{9}|\d{14})$/';
                             if (!preg_match($regex, $numSirenSiret)) {
                                 $context->addViolation('Le numéro SIREN/SIRET n\'est pas valide');
@@ -54,6 +58,7 @@ class CustomerType extends AbstractType
                 ]),
             ],
             'attr' => [
+                // display of the number according to the french convention 
                 'oninput' => "this.value=this.value.replace(/[^0-9 ]+/g,'').replace(/^(\d{3}) ?(\d{3}) ?(\d{3}) ?(\d{0,5}).*/, '$1 $2 $3 $4').trim()",
                 'maxlength' => '18',
                 'inputmode' => 'numeric'
@@ -66,8 +71,8 @@ class CustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,
@@ -94,7 +99,7 @@ class CustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
                     'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([

@@ -27,12 +27,16 @@ class RegisterType extends AbstractType
                 'constraints' => [
                     new Length([
                         'min' => 2, 
+                        'minMessage' => 'Votre Prénom contient moins de {{ limit }} caractères ?',
                         'max' => 30,
-                        'minMessage' => 'Votre Prénom contient moins de 2 lettres ?',
-                        'maxMessage' => 'Votre Prénom est trop long !' 
+                        'maxMessage' => 'Votre Prénom contient plus de {{ limit }} caractères ?'
                     ]),
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre Prénom !'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\-\s]+$/u',
+                        'message' => 'Ce champs ne peut contenir que des lettres et tirets.'
                     ]),
                 ],
                 'attr' => [
@@ -45,12 +49,16 @@ class RegisterType extends AbstractType
                 'constraints' => [
                     new Length([
                         'min' => 2, 
+                        'minMessage' => 'Votre Nom contient moins de {{ limit }} caractères ?',
                         'max' => 30,
-                        'minMessage' => 'Votre Nom contient moins de 2 lettres ?',
-                        'maxMessage' => 'Votre Nom est trop long !' 
+                        'maxMessage' => 'Votre Nom contient plus de {{ limit }} caractères ?'
                     ]),
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre Nom !'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\-\s]+$/u',
+                        'message' => 'Ce champs ne peut contenir que des lettres et tirets.'
                     ]),
                 ],
                 'attr' => [

@@ -51,8 +51,8 @@ class ContactType extends AbstractType
                     'message' => 'Veuillez renseigner un Prénom !'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9_\-\s]+$/',
-                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres, des tirets et des underscores.'
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres et des tirets.'
                 ]),
             ],
             'attr' => [
@@ -73,8 +73,8 @@ class ContactType extends AbstractType
                     'message' => 'Veuillez renseigner un Nom !'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9_\-\s]+$/',
-                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres, des tirets et des underscores.'
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres et des tirets.'
                 ]),
             ],
             'attr' => [

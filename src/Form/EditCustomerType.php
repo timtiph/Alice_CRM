@@ -53,6 +53,7 @@ class EditCustomerType extends AbstractType
                 ]),
             ],
             'attr' => [
+                // display of the number according to the french convention 
                 'oninput' => "this.value=this.value.replace(/[^0-9 ]+/g,'').replace(/^(\d{3}) ?(\d{3}) ?(\d{3}) ?(\d{0,5}).*/, '$1 $2 $3 $4').trim()",
                 'maxlength' => '18',
                 'inputmode' => 'numeric'
@@ -65,8 +66,8 @@ class EditCustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des tirets et des apostrophes.'
                 ]),
                 new Length([
                     'max' => 255,
@@ -93,7 +94,7 @@ class EditCustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9\s\'\-]*$/',
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
                     'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
                 ]),
                 new Length([
