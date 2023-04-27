@@ -112,7 +112,6 @@ class ContactType extends AbstractType
                 'placeholder' => 'Numéro de téléphone',
                 'maxlength' => '17',
             ],
-            'help' => 'Veuillez saisir un numéro de téléphone valide.',
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez renseigner un numéro de téléphone.'

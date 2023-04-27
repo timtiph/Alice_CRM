@@ -6,8 +6,6 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use Cocur\Slugify\Slugify;
 use App\Form\EditContactType;
-use Doctrine\ORM\EntityManager;
-use App\Repository\UserRepository;
 use App\Repository\ContactRepository;
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,9 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/compte')]
+
 class HomeController extends AbstractController
 {
 
+    // Entity Manager needed to edit and create contacts
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -27,18 +28,19 @@ class HomeController extends AbstractController
         $this->entityManager = $entityManager;
     }
    
-    #[Route('/compte', name: 'app_home')]
+    #[Route('', name: 'app_home')]
     public function index(DocumentRepository $documentRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
 
+        // verify if connected user isVerify
         if($user->getIsVerified()){
 
             if ($this->isGranted('ROLE_ADMIN')) {
-                // Si l'utilisateur est un administrateur, afficher tous les documents
+                // If User is ADMIN = show all documents
                 $query = $documentRepository->createQueryBuilder('d')->orderBy('d.date', 'DESC');
             } else {
-                // Sinon, afficher seulement les documents de l'utilisateur connecté
+                // else, show documents wherre user.id = documents.user.id
                 $query = 
                     $documentRepository
                         ->createQueryBuilder('d')
@@ -47,7 +49,7 @@ class HomeController extends AbstractController
                         ->setParameter('userId', $user->getId())
                         ->orderBy('d.date', 'DESC');
             }
-
+            // pagination on documents
             $pagination = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
@@ -55,13 +57,15 @@ class HomeController extends AbstractController
             );
 
             if ($this->isGranted('ROLE_USER')) {
-                // Récupérer les contacts de l'utilisateur connecté
+                // return the contacts of the connected user if not ADMIN
                 $contacts = $user->getContacts();
             }
     
             
 
         } else {
+
+            // else in anticipation of a connection although the conditions in the controllerFormLogin 
             $this->addFlash(
                 'alert',
                 'Votre compte n\'a pas été vérifié. Veuillez vérifier votre boite mail, ainsi que les spams.'
@@ -77,28 +81,22 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/compte/contacts', name: 'app_contacts_user')]
+    #[Route('/contacts', name: 'app_contacts_user')]
     public function showUsercontacts()
     {
         $user = $this->getUser();
 
-        // Vérifier si l'utilisateur est un administrateur
-        if ($this->isGranted('ROLE_ADMIN')) {
-            // Si l'utilisateur est un administrateur, renvoyer une réponse vide
-            return $this->render('home/index.html.twig');
-        }
-
-        // Récupérer les contacts de l'utilisateur connecté
+        // recover contacts of connected user
         $contacts = $user->getContacts();
 
-        // Afficher les contacts
+        // return contacts on template
         return $this->render('home/contact_user_list.html.twig', [
             'contacts' => $contacts,
             'user' => $user,
         ]);
     }
 
-    #[Route('/contact/creer-un-contact/{id}/{slug}', name: 'app_contact_user_add')]
+    #[Route('/creer-un-contact', name: 'app_contact_user_add')]
     public function addUserContact(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
@@ -141,8 +139,8 @@ class HomeController extends AbstractController
         ));
     }
 
-    #[Route('/contacts/modifier-un-contact/{id}/{slug}', name: 'app_contacts_user_edit')]
-    public function editUserContact(Request $request, $id, $slug, ContactRepository $contactRepository, EntityManagerInterface $em): Response
+    #[Route('/contacts/{id}/{slug}/modifier-un-contact', name: 'app_contacts_user_edit')]
+    public function editUserContact(Request $request, $id, ContactRepository $contactRepository, EntityManagerInterface $em): Response
     {
         $contact = $contactRepository->findOneById($id);
 
