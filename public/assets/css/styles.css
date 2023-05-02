@@ -23,8 +23,12 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     background-color: #FAFAFF;
 }
 
-.color-alice-dark {
-    color: #19374D !important;
+.bg-alice-dark {
+    background-color: #19374D;
+}
+
+.bg-alice-light {
+    background-color: rgba(76, 158, 189, 0.2);
 }
 
 
@@ -93,19 +97,14 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     height: auto;
     margin: 0;
     outline: none;
+    transition: all 0.4s ease-in-out;
 }
 
-/*
-* Couleur du site
-*/
-
-.bg-alice-dark {
-    background-color: #19374D;
+#logo-alice:hover {
+    background-color: rgb(255, 255, 255, 0.1);
 }
 
-.bg-alice-light {
-    background-color: rgba(76, 158, 189, 0.2);
-}
+
 
 /*
 * personalisation de la NAVBAR 
@@ -194,7 +193,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 }
 
 .nav-link-alice {
-    display: flex !important;
+    display: flex;
     align-items: center;
     color: #4C9EBD !important;
     text-transform: uppercase;
@@ -441,16 +440,7 @@ iframe.container-calendar {
 }
 
 
-/************** Personnalisation des liens */
 
-a {
-    color: #19374D;
-    text-decoration: underline;
-}
-
-a:hover {
-    color: #4488be;
-}
 
 
 /*
@@ -495,16 +485,6 @@ input::-o-outer-spin-button {
     --bs-form-select-bg-img: red;
 }
 
-/*
-*  Personnalisation Affichage de la fiche client
-*/
-
-.picto-check-professional,
-.picto-check-partner {
-    width: 20px;
-    height: 20px;
-}
-
 
 /************ Affichage des tables détail client et contrats  ************/
 
@@ -518,89 +498,79 @@ table[data-name='tableContact'] > tr > td {
     background-color: red;
 }
 
-img[data-name='imgAddContract'],
-img[data-name='imgSuppContract'],
-img[data-name='imgAddContact'],
-img[data-name='imgSuppContact'] {
+img[data-name='img-show-contract-detail'],
+img[data-name='img-hide-contract-detail'],
+img[data-name='img-show-detail-contact'],
+img[data-name='img-hide-contact-detail'] {
     width: 25px;
     height: 25px;
     margin: auto;
 }
 
-img[data-name='imgAddContract']:hover,
-img[data-name='imgSuppContract']:hover,
-img[data-name='imgAddContact']:hover,
-img[data-name='imgSuppContact']:hover {
+img[data-name='img-show-contract-detail']:hover,
+img[data-name='img-hide-contract-detail']:hover,
+img[data-name='img-show-detail-contact']:hover,
+img[data-name='img-hide-contact-detail']:hover {
     cursor: pointer;
 }
 
-.buttonEditContract,
-.buttonEditContact,
-.buttonShowTariffZone,
-.buttonEditTariffZone,
-.buttonShowPartner,
-.buttonShowDocument,
-.buttonDownloadDocument,
-.buttonEditDocument {
-    width: 25px;
-    height: 25px;
+/************** Personnalisation des liens Images */
+
+.button-eye,
+.button-download {
+    color: #19374D;
     margin: auto;
     padding: 0;
-    border: none;
-    outline: none;
+    transition: .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.buttonEditContract:hover,
-.buttonEditContact:hover,
-.buttonShowTariffZone:hover,
-.buttonEditTariffZone:hover,
-.buttonShowPartner:hover,
-.buttonShowDocument:hover,
-.buttonDownloadDocument:hover,
-.buttonEditDocument:hover {
+.button-eye:hover,
+.button-download:hover {
     cursor: pointer;
 }
 
 /*********** Bouton Retour */
 
-.goBack {
-    width: 25px;
-    height: 25px;
-}
-
-.goBack:hover {
+.button-go-back:hover {
     cursor: pointer;
 }
 
+/************** Personnalisation des liens */
 
-/* Personnalisation des inputs des form */
 
-.form-control {
-    background-color: rgba(76, 158, 189, 0.2) !important;
+
+.hover-link {
+    text-decoration: none;
+    padding-bottom: 3px;
+    color:  #19374D;
+    cursor: pointer;
+    position: relative;
+    background: linear-gradient(to top, #19374D 10%, transparent 10%, transparent 50%) no-repeat left bottom / 0 100%;
+    transition: background-size .5s;
 }
 
-
+.hover-link:hover {
+    background-size: 100% 100%;
+}
 
 
 /* Affichage du document */
 
-
-
 /************** Container view doc */
 
-.imgEmbedDocument {
+.img-embed-document {
     max-width: 100%;
     height: auto;
 }
 
-.embedContainer {
+.embed-container {
     position: relative;
     padding-bottom: 100%;
     height: 0;
 
 }
 
-.embedContainer embed {
+.embed-container embed {
     position: absolute;
     top: 0;
     left: 0;
@@ -611,12 +581,12 @@ img[data-name='imgSuppContact']:hover {
 
 /*************** CKEditor */
 
-#dynamicContent {
+#dynamic-content {
     width: 100%;    
     font-size: 14px;
 }
 
-#dynamicContent>a {
+#dynamic-content>a {
     display: inline-block;
     margin: 10px 0;
     width: 250px !important;
@@ -632,7 +602,7 @@ img[data-name='imgSuppContact']:hover {
     transition: .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-#dynamicContent>a:hover {
+#dynamic-content>a:hover {
     background-color: rgba(76, 158, 189, 0.5) !important;
     color: #19374D !important;
     border-color: transparent;
