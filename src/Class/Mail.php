@@ -10,7 +10,7 @@ use Mailjet\Resources;
 class Mail
 {
 
-    public function sendConfirmEmail($api_key_public, $api_key_secret, 
+    public function ConfirmEmailSend($api_key_public, $api_key_secret, 
     //$to_email, $to_name, 
     $title, $subject, $content, $sign_key)
     {
