@@ -38,7 +38,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         
         if (!$user->getIsVerified()) {
             // Email not verified, redirect user to verification page with an error message
-            throw new CustomUserMessageAuthenticationException('Votre compte n\'est pas vérifié. Veuillez lire le mail qui vous a été envoyé lors de votre inscription et suivre les indications. (Pensez à vérifier vos spams.)<br> Vous pouvez aussi <a href="mailto:alice.webdeveloppement@gmail.com?subject=' . rawurlencode('Problème avec la vérification de l\'email de ' . $user->getFirstname() ." ". $user->getLastname()) . '">écrire à Antoine.</a>');
+            throw new CustomUserMessageAuthenticationException('Votre compte n\'est pas vérifié. Veuillez lire le mail qui vous a été envoyé lors de votre inscription et suivre les indications. (Pensez à vérifier vos spams.)<br> Vous pouvez aussi <a href="mailto:alice.webdeveloppement@gmail.com?subject=' . rawurlencode('Problème avec la vérification de l\'email de ' . $user->getFirstname() ." ". $user->getLastname()) . '" class="hover-link">écrire à Antoine.</a>');
         }
 
         //$request->getSession()->set(Security::LAST_USERNAME, $email); // => généré automatiquement mais déprécié par Intelephense
