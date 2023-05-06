@@ -6,8 +6,8 @@
 
 // define the constants
 const buttonsContacts = document.querySelectorAll('[data-name^="controlButtonDivContact"]');
-const showContact = document.querySelectorAll('[data-name^="imgAddContact"]');
-const hideContact = document.querySelectorAll('[data-name^="imgSuppContact"]');
+const showContact = document.querySelectorAll('[data-name^="img-show-detail-contact"]');
+const hideContact = document.querySelectorAll('[data-name^="img-hide-contact-detail"]');
 const tablesContacts = document.querySelectorAll('[data-name^="tableContact"]');
 const isShownContacts = [];
 
@@ -40,8 +40,8 @@ buttonsContacts.forEach((button, index) => {
 
 // define the constants
 const buttonsContracts = document.querySelectorAll('[data-name^="controlButtonDivContract"]');
-const showContract = document.querySelectorAll('[data-name^="imgAddContract"]');
-const hideContract = document.querySelectorAll('[data-name^="imgSuppContract"]');
+const showContract = document.querySelectorAll('[data-name^="img-show-contract-detail"]');
+const hideContract = document.querySelectorAll('[data-name^="img-hide-contract-detail"]');
 const tablesContracts = document.querySelectorAll('[data-name^="tableContract"]');
 const isShownContracts = [];
 
@@ -72,7 +72,7 @@ buttonsContracts.forEach((button, index) => {
  *  Function opening dialog box for confirmation of customer / contract deletion
  */
 
-var btnsSupprimer = document.querySelectorAll(".buttonRemove");
+var btnsSupprimer = document.querySelectorAll(".btn-delete");
 
 for (var i = 0; i < btnsSupprimer.length; i++) {
   btnsSupprimer[i].addEventListener("click", function(e) {
@@ -105,19 +105,54 @@ for (let i = 0; i < isStatusCheckboxes.length; i++) {
 
   if (isStatusCheckbox.checked) {
     inputStatus.style.display = 'block';
+
   } else {
     inputStatus.style.display = 'none';
+
   }
   
 
   isStatusCheckbox.addEventListener('change', function() {
     if (isStatusCheckbox.checked) {
       inputStatus.style.display = 'block';
+  
     } else {
       inputStatus.style.display = 'none';
+  
     }
   });
 }
+
+/**
+ * Display document description when length > 100
+ */
+const buttonEye = document.querySelector('.button-eye-document-description');
+const descriptionSlice = document.querySelector('.document-description-slice');
+const descriptionComplete = document.querySelector('.document-description-complete');
+const spanDocInfoDescrib = document.querySelector('.span-info-document-description');
+
+
+// Hide full description on page load
+descriptionComplete.style.display = 'none';
+
+buttonEye.addEventListener('click', () => {
+  if (descriptionSlice.style.display === 'none') {
+    // If the full description is hidden, show the partial description and hide the full description
+    descriptionSlice.style.display = 'block';
+    descriptionComplete.style.display = 'none';
+  } else {
+    // Otherwise, hide the partial description and show the full description
+    descriptionSlice.style.display = 'none';
+    descriptionComplete.style.display = 'block';
+  }
+
+  
+
+});
+
+
+
+
 
 /**
  * Deletion information not possible when hovering over deleted button that disabled
@@ -129,3 +164,5 @@ deleteBtn.addEventListener('mouseover', function() {
     const modalInstance = new bootstrap.Modal(modal);
     modalInstance.show();
 });
+
+
