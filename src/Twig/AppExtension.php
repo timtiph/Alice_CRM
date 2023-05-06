@@ -4,12 +4,9 @@ namespace App\Twig;
 
 use App\Entity\DynamicContent;
 use Doctrine\Persistence\ManagerRegistry;
-use Exercise\HTMLPurifierBundle\HTMLPurifiersRegistry;
-use League\Glide\Urls\UrlBuilderFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 use \HTMLPurifier;
 
