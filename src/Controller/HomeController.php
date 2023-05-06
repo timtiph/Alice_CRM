@@ -8,7 +8,6 @@ use Cocur\Slugify\Slugify;
 use App\Form\EditContactType;
 use App\Repository\ContactRepository;
 use App\Repository\DocumentRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,15 +20,17 @@ class HomeController extends AbstractController
 {
 
     // Entity Manager needed to edit and create contacts
-    private $entityManager;
+    private $documentRepository;
+    private $contactRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(DocumentRepository $documentRepository, ContactRepository $contactRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->documentRepository = $documentRepository;
+        $this->contactRepository = $contactRepository;
     }
    
     #[Route('', name: 'app_home')]
-    public function index(DocumentRepository $documentRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
 
@@ -38,11 +39,11 @@ class HomeController extends AbstractController
 
             if ($this->isGranted('ROLE_ADMIN')) {
                 // If User is ADMIN = show all documents
-                $query = $documentRepository->createQueryBuilder('d')->orderBy('d.date', 'DESC');
+                $query = $this->documentRepository->createQueryBuilder('d')->orderBy('d.date', 'DESC');
             } else {
-                // else, show documents wherre user.id = documents.user.id
+                // else, show documents where user.id = documents.user.id
                 $query = 
-                    $documentRepository
+                    $this->documentRepository
                         ->createQueryBuilder('d')
                         ->join('d.user', 'u')
                         ->where('u.id = :userId')
@@ -97,7 +98,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/creer-un-contact', name: 'app_contact_user_add')]
-    public function addUserContact(Request $request, EntityManagerInterface $em): Response
+    public function addUserContact(Request $request): Response
     {
         $user = $this->getUser();
         
@@ -120,8 +121,7 @@ class HomeController extends AbstractController
                 $slugify = $slugify->slugify($fullname);
                 $contact->setSlug($slugify);
                 
-                $em->persist($contact);
-                $em->flush();
+                $this->contactRepository->save($contact, true);
                 
                 $this->addFlash(
                     'success',
@@ -140,7 +140,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/contacts/{id}/{slug}/modifier-un-contact', name: 'app_contacts_user_edit')]
-    public function editUserContact(Request $request, $id, ContactRepository $contactRepository, EntityManagerInterface $em): Response
+    public function editUserContact(Request $request, $id, ContactRepository $contactRepository): Response
     {
         $contact = $contactRepository->findOneById($id);
 
@@ -159,7 +159,7 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
-            $em->flush();
+            $this->contactRepository->save($contact, true);
             $this->addFlash(
                 'success',
                 'La modification du contact est bien enregistrée.'

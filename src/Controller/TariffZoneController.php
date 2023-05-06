@@ -13,24 +13,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/tariff_zone')]
 class TariffZoneController extends AbstractController
 {
+    private $tariffZoneRepository;
+
+    public function __construct(TariffZoneRepository $tariffZoneRepository)
+    {
+        $this->tariffZoneRepository = $tariffZoneRepository;
+    }
     
     #[Route('/', name: 'app_tariff_zone_list', methods: ['GET'])]
-    public function list(TariffZoneRepository $tariffZoneRepository): Response
+    public function list(): Response
     {
         return $this->render('tariff_zone/list.html.twig', [
-            'tariff_zones' => $tariffZoneRepository->findAll(),
+            'tariff_zones' => $this->tariffZoneRepository->findAll(),
         ]);
     }
 
     #[Route('/ajouter', name: 'app_tariff_zone_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TariffZoneRepository $tariffZoneRepository): Response
+    public function new(Request $request): Response
     {
         $tariffZone = new TariffZone();
         $form = $this->createForm(TariffZoneType::class, $tariffZone);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tariffZoneRepository->save($tariffZone, true);
+            $this->tariffZoneRepository->save($tariffZone, true);
             $this->addFlash(
                 'success',
                 'La création de la nouvelle zone tarifaire est bien enregistrée.'
@@ -57,13 +63,13 @@ class TariffZoneController extends AbstractController
     }
 
     #[Route('/{id}/modifier', name: 'app_tariff_zone_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, TariffZone $tariffZone, TariffZoneRepository $tariffZoneRepository): Response
+    public function edit(Request $request, TariffZone $tariffZone): Response
     {
         $form = $this->createForm(TariffZoneType::class, $tariffZone);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tariffZoneRepository->save($tariffZone, true);
+            $this->tariffZoneRepository->save($tariffZone, true);
             $this->addFlash(
                 'success',
                 'La modification de la zone tarifaire à été enregistrée.'
@@ -80,10 +86,10 @@ class TariffZoneController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_tariff_zone_delete', methods: ['POST'])]
-    public function delete(Request $request, TariffZone $tariffZone, TariffZoneRepository $tariffZoneRepository): Response
+    public function delete(Request $request, TariffZone $tariffZone): Response
     {
         if ($this->isCsrfTokenValid('delete_tariffZone'.$tariffZone->getId(), $request->request->get('_token'))) {
-            $tariffZoneRepository->remove($tariffZone, true);
+            $this->tariffZoneRepository->remove($tariffZone, true);
             
             $this->addFlash(
                 'success',

@@ -21,10 +21,12 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class DocumentController extends AbstractController
 {
     private $entityManager;
+    private $documentRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, DocumentRepository $documentRepository)
     {
         $this->entityManager = $entityManager;
+        $this->documentRepository = $documentRepository;
     }
     
     #[Route('/', name: 'app_document_list', methods: ['GET'])]
@@ -33,13 +35,13 @@ class DocumentController extends AbstractController
         $user = $this->getUser();
         
         if ($this->isGranted('ROLE_ADMIN')) {
-            // Si l'utilisateur est un administrateur, afficher tous les documents
+            // If the user is an admin, display all documents
             $query = $this->entityManager->getRepository(Document::class)
                 ->createQueryBuilder('d')
                 ->leftJoin('d.user', 'u');
 
         } else {
-            // Sinon, afficher seulement les documents de l'utilisateur connecté
+            // Otherwise, display only the documents of the logged-in user
             $query = $this->entityManager
                 ->getRepository(Document::class)
                 ->createQueryBuilder('d')
@@ -49,10 +51,11 @@ class DocumentController extends AbstractController
                 ->orderBy('d.date', 'DESC');
         }
     
+        // 
         $pagination = $paginator->paginate(
-            $query, /* query builder contenant les données à paginer */
-            $request->query->getInt('page', 1), /* numéro de la page par défaut */
-            10, /* nombre d'éléments par page */
+            $query, /* query builder containing the data to paginate */
+            $request->query->getInt('page', 1), /* default page number */
+            10, /* number of elements per page */
             ['defaultSortFieldName' => 'd.date', 'defaultSortDirection' => 'desc']
         );
         
@@ -62,14 +65,14 @@ class DocumentController extends AbstractController
     }
 
     #[Route('/nouveau', name: 'app_document_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DocumentRepository $documentRepository, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
     {
         $document = new Document();
-        
         
         if ($this->isGranted('ROLE_ADMIN')) {
             $adminUser = [$this->getUser()];
         } else {
+            // entityManager is used to create an instance of QueryBuilder
             $adminUser = $entityManager->createQueryBuilder()
                 ->select('u')
                 ->from(User::class, 'u')
@@ -98,11 +101,11 @@ class DocumentController extends AbstractController
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $safeFilename = substr($safeFilename, 0, 20); // extrait les 20 premiers caractères
-                $currentDate = date('Ymd');
-                $newFilename = $currentDate.'-'.$safeFilename.'-'.uniqid().'.'.$file->guessExtension(); // devine l'xtention et l'ajoute
-                // Move the file to the directory where brochures are stored
+                $safeFilename = substr($safeFilename, 0, 20); // extracts the first 20 characters
+                $currentDate = date('Ymd'); // add date
+                $newFilename = $currentDate.'-'.$safeFilename.'-'.uniqid().'.'.$file->guessExtension(); // gess extention and add to the URL
                 try {
+                    // Move the file to the directory where brochures are stored
                     $file->move(
                         $this->getParameter('documents_directory'),
                         $newFilename
@@ -111,12 +114,12 @@ class DocumentController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
                 
-                // updates the 'file' property to store the PDF file name
+                // updates the 'file' property to store the file name
                 $document->setFileName($newFilename);
                 
             }
 
-            $documentRepository->save($document, true);
+            $this->documentRepository->save($document, true);
 
             return $this->redirectToRoute('app_document_list', [], Response::HTTP_SEE_OTHER);
         }
@@ -130,7 +133,7 @@ class DocumentController extends AbstractController
     #[Route('/{id}', name: 'app_document_show', methods: ['GET'])]
     public function show(Document $document, AuthorizationCheckerInterface $authChecker): Response
     {
-        // Creation of an isAuthorized status to filter users who are authorized to view the document
+        // Create a status isAuthorized status to filter users who are authorized to view the document
         
         $isAuthorized = $authChecker->isGranted('ROLE_ADMIN');
         $authorizedUsers = $document->getUser()->toArray();
@@ -148,9 +151,9 @@ class DocumentController extends AbstractController
     }
 
     #[Route('/{id}/modifier', name: 'app_document_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Document $document, DocumentRepository $documentRepository, AuthorizationCheckerInterface $authChecker): Response
+    public function edit(Request $request, Document $document, AuthorizationCheckerInterface $authChecker): Response
     {
-        // Seul ADMIN is authorized to edit document
+        // only ADMIN is authorized to edit document
         
         $isAuthorized = $authChecker->isGranted('ROLE_ADMIN');
 
@@ -161,7 +164,7 @@ class DocumentController extends AbstractController
             
             if ($form->isSubmitted() && $form->isValid()) {
                         
-                $documentRepository->save($document, true);
+                $this->documentRepository->save($document, true);
                 return $this->redirectToRoute('app_document_show', ['id' => $document->getId()], Response::HTTP_SEE_OTHER);
             }
 
@@ -170,17 +173,17 @@ class DocumentController extends AbstractController
 
         return $this->render('document/edit.html.twig', [
             'document' => $document,
-            // si $isAuthorized == true, on renvoie $form->createView() avec valeur 'form'. Else $isAuthorized == false, en renvoie null et pas de form créé
+            // if $isAuthorized == true, we return $form->createView() with value 'form'. Else $isAuthorized == false, it returns null and no form created
             'form' => $isAuthorized ? $form->createView() : null,
             'isAuthorized' => $isAuthorized,
         ]);
     }
 
     #[Route('/{id}', name: 'app_document_delete', methods: ['POST'])]
-    public function delete(Request $request, Document $document, DocumentRepository $documentRepository): Response
+    public function delete(Request $request, Document $document): Response
     {
         if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
-            $documentRepository->remove($document, true);
+            $this->documentRepository->remove($document, true);
         }
 
         return $this->redirectToRoute('app_document_list', [], Response::HTTP_SEE_OTHER);

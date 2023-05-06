@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Contract;
-use App\Entity\Customer;
 use App\Entity\SerpInfo;
 use App\Form\ContractType;
 use App\Form\SerpInfoType;
 use App\Form\EditContractType;
+use App\Repository\ContractRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,30 +18,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
+
+#[Route('/admin/contrat')]
 class ContractController extends AbstractController
 {
 
     private $entityManager;
+    private $contractRepository;
+    private $customerRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ContractRepository $contractRepository, CustomerRepository $customerRepository)
     {
         $this->entityManager = $entityManager;
+        $this->contractRepository = $contractRepository;
+        $this->customerRepository = $customerRepository;
     }
 
-    #[Route('/admin/contrat', name: 'app_contract_list')]
+    #[Route('/', name: 'app_contract_list')]
     public function showContracts(): Response
     {
-        $contracts = $this->entityManager->getRepository(Contract::class)->findAll();
+        $contracts = $this->contractRepository->findAll();
 
         return $this->render('admin_main/contract_list.html.twig', [
             'contracts' => $contracts
         ]);
     }
 
-    #[Route('/admin/contrat/{id}', name: 'app_contract_show')]
-    public function showContract($id, Request $request, \Doctrine\Persistence\ManagerRegistry $doctrine): Response
+    #[Route('/{id}', name: 'app_contract_show')]
+    public function showContract($id, Request $request, ManagerRegistry $doctrine): Response
     {
-        $contract = $this->entityManager->getRepository(Contract::class)->findOneById($id);
+        $contract = $this->contractRepository->findOneById($id);
         $serpInfos = $contract->getSerpInfos();
 
         $serpInfoForm=$this->createForm(SerpInfoType::class);
@@ -69,10 +77,10 @@ class ContractController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/contrat/creer-un-contrat/{id}/{slug}', name: 'app_contract_add')]
-    public function createContract(Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine, $id): Response
+    #[Route('/{id}/{slug}/creer-un-contrat', name: 'app_contract_add')]
+    public function createContract(Request $request, $id): Response
     {
-        $customer = $this->entityManager->getRepository(Customer::class)->findOneById($id);
+        $customer = $this->customerRepository->findOneById($id);
         $slug = $customer->getSlug();
 
         $contract = new Contract;
@@ -88,11 +96,8 @@ class ContractController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $contract = $form->getData();
-                //dd($contract);
 
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($contract); //figer les données
-                $entityManager->flush(); // push les données
+                $this->contractRepository->save($contract, true);
 
                 $this->addFlash(
                     'success',
@@ -112,10 +117,10 @@ class ContractController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/contrat/modifier-un-contrat/{id}', name: 'app_contract_edit')]
+    #[Route('/{id}/modifier-un-contrat', name: 'app_contract_edit')]
     public function editContract(Request $request, $id): Response
     {
-        $contract = $this->entityManager->getRepository(Contract::class)->findOneById($id);
+        $contract = $this->contractRepository->findOneById($id);
         $customer = $contract->getCustomer();
         $user = $customer->getUser();
         $userId = $user->getId();
@@ -130,7 +135,7 @@ class ContractController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
+            $this->contractRepository->save($contract, true);
             return $this->redirectToRoute('app_contract_show', array('id' => $id));
         }
 
@@ -143,8 +148,8 @@ class ContractController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/contrat/{id}/supprimer', name: 'app_contract_remove')]
-    public function removeContract(Contract $contract, Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
+    #[Route('/{id}/supprimer', name: 'app_contract_remove')]
+    public function removeContract(Contract $contract, Request $request): Response
     {
 
         $customer = $contract->getCustomer();
@@ -160,9 +165,8 @@ class ContractController extends AbstractController
             );
 
         } else {
-                $entityManager = $doctrine->getManager();
-                $entityManager->remove($contract);
-                $entityManager->flush(); // push les données
+
+                $this->contractRepository->remove($contract, true);
                 $this->addFlash(
                     'success',
                     'Le contrat à bien été supprimé.'
@@ -173,7 +177,7 @@ class ContractController extends AbstractController
 
     }
 
-    #[Route('/admin/contrat/{id}/supprimer-serp-info/{serpInfoId}', name: 'app_serp_info_remove')]
+    #[Route('/{id}/supprimer-serp-info/{serpInfoId}', name: 'app_serp_info_remove')]
     #[ParamConverter('serpInfo', options: ['id' => 'serpInfoId'])]
     public function removeSerpInfo(SerpInfo $serpInfo, Request $request, EntityManagerInterface $entityManager, PersistenceManagerRegistry $doctrine): Response
     {

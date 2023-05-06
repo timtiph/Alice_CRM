@@ -175,24 +175,6 @@ class ResetPasswordController extends AbstractController
         ;
         $mailer->send($email);
         
-
-        //https://127.0.0.1/reset-password?token=<Token here>
-        
-        
-        // $mail = new Mail();
-        // $api_key_public = $this->getParameter('app.mailjet.public_key');
-        // $api_key_secret = $this->getParameter('app.mailjet.private_key');
-        // $title = 'Votre demande de réinitialisation de mot de passe';
-        // $subject = "Réinitialisation de votre mot de passe.";
-        // $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."Pour réinitialiser votre mot de passe, merci de cliquer sur le lien suivant :";
-        // $token = $resetToken;
-        // $sign_key = "reinitialisation-mot-de-passe/reinitialisation/";
-        // $sign_key .= $token;
-        
-        // complete le mail de la class Mail
-        //$mail->sendResetPassword($api_key_public, $api_key_secret, $subject, $title, $content, $sign_key, $token);
-        
-
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
