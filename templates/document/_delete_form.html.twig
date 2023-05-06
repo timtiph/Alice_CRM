@@ -1,4 +1,4 @@
 <form class="d-flex" method="post" action="{{ path('app_document_delete', {'id': document.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer ce document ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
-    <button class="btn btn-alice-supp mx-1">Supprimer</button>
+    <button class="btn btn-fa-action-list-supp mx-1"><i class="fa-solid fa-trash fa-xl"></i></button>
 </form>

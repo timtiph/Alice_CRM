@@ -6,7 +6,9 @@
         
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Les Partenariats</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
     {% if partners is not empty %}
 
@@ -31,7 +33,7 @@
                     <td>{{ partner.discountRate }} %</td>
                     <td>
                         <div class="d-flex justify-content-start">
-                            <a href="{{ path('app_partner_show', {'id': partner.id}) }}" class="buttonShowPartner m-0"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Voir"></a>
+                            <a href="{{ path('app_partner_show', {'id': partner.id}) }}" class="btn-fa-action-eye m-0"><i class="fa-solid fa-eye fa-xl"></i></a>
                         </div>
                     </td>
                 </tr>

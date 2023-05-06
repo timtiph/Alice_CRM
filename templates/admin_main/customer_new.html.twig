@@ -7,7 +7,9 @@
 
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Création d'un client</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
 
 
@@ -34,7 +36,7 @@
         {% if form.partner.vars.choices is empty %}
             {{ form_row(form.partner, { 'attr': {'class': 'd-none'} }) }}
             <p>Aucun partenariat n'est défini. Veuillez ajouter un partenariat en cliquant sur le bouton ci-dessous :</p>
-            <a href="{{ path('app_partner_add') }}" class="btn btn-alice-form" >Ajouter un partenariat</a>
+            <a href="{{ path('app_partner_add') }}" class="btn btn-alice-form">Ajouter un partenariat</a>
             {% else %}
             {{ form_row(form.partner) }}
         {% endif %}

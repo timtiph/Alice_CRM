@@ -7,7 +7,7 @@
 
     {% if app.user %}
         <div class="mb-5">
-            Vous êtes connectez en tant que <strong>{{ app.user }}</strong> : <a href="{{ path('app_logout') }}"> déconnexion.</a>
+            Vous êtes connectez en tant que <strong>{{ app.user }}</strong> : <a href="{{ path('app_logout') }}" class="hover-link"> déconnexion.</a>
         </div>
     {% else %}
 
@@ -46,8 +46,8 @@
                 Connexion
             </button>
 
-            <p class="text-center mt-5"><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></p>
-            <p class="text-center mt-5">Ou souhaitez-vous <a href="{{ path('app_register') }}">créer un compte</a> ?</p>
+            <p class="text-center mt-5"><a href="{{ path('app_forgot_password_request') }}" class="hover-link">Mot de passe oublié</a></p>
+            <p class="text-center mt-5">Ou souhaitez-vous <a href="{{ path('app_register') }}" class="hover-link">créer un compte</a> ?</p>
         </form>
 
     {% endif %}

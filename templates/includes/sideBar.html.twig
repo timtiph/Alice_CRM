@@ -7,9 +7,9 @@
             <ul class="nav flex-column">
 
                 <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" aria-current="page" href=" {{ path('app_home') }} ">
-                        <img src="{{ asset('assets/img/VectorHome.png') }}" alt="Pictogramme maison" class="d-inline align-text-center">
-                        <span class="align-text-bottom">Accueil</span>
+                    <a class="nav-link nav-link-alice col-12" aria-current="page" href=" {{ path('app_home') }} ">
+                        <i class="fa-solid fa-house fa-xl col-2" alt="Pictogramme maison"></i>
+                        <span class="col-10">Accueil</span>
                     </a>
                 </li>
 
@@ -17,72 +17,75 @@
                 {% if app.user.roles[0] == "ROLE_ADMIN" %}
 
                     <li class="nav-item nav-item-alice">
-                            <a class="nav-link nav-link-alice" href=" {{ path('app_user_list') }} ">
-                            <img src="{{ asset('assets/img/VectorUser-circle.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Utilisateurs</span>
+                        <a class="nav-link nav-link-alice col-12" href=" {{ path('app_user_list') }} ">
+                            <i class="fa-solid fa-circle-user fa-xl col-2" alt="Pictogramme client"></i>
+                            <span class="col-10">Utilisateurs</span>
                         </a>
                     </li>
 
                     <li class="nav-item nav-item-alice">
-                        <a class="nav-link nav-link-alice" href=" {{ path('app_customer_list') }} ">
-                            <img src="{{ asset('assets/img/VectorCustomer.png') }}" alt="Pictogramme client" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Clients</span>
+                        <a class="nav-link nav-link-alice col-12" href=" {{ path('app_customer_list') }} ">
+                            <i class="fa-solid fa-arrows-down-to-people fa-xl col-2"></i>
+                            <span class="col-10">Clients</span>
                         </a>
                     </li>
 
                     <li class="nav-item nav-item-alice">
-                        <a class="nav-link nav-link-alice" href="{{ path('app_contract_list') }}">
-                            <img src="{{ asset('assets/img/VectorContract.png')}}" alt="Pictogramme contrat" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Contrats</span>
+                        <a class="nav-link nav-link-alice col-12" href="{{ path('app_contract_list') }}">
+                            <i class="fa-solid fa-file-contract fa-xl col-2"></i>
+                            <span class="col-10">Contrats</span>
                         </a>
                     </li>
                     
                     <li class="nav-item nav-item-alice">
-                        <a class="nav-link nav-link-alice" href="{{ path('app_partner_list') }}">
-                            <img src="{{ asset('assets/img/VectorPartner.png')}}" alt="Pictogramme partenariat" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Partenariats</span>
+                        <a class="nav-link nav-link-alice col-12" href="{{ path('app_partner_list') }}">
+                            <i class="fa-solid fa-handshake-angle fa-xl col-2"></i>
+                            <span class="col-10">Partenariats</span>
                         </a>
                     </li>
 
 
                     <li class="nav-item nav-item-alice">
-                        <a class="nav-link nav-link-alice" href="{{ path('app_tariff_zone_list') }}">
-                            <img src="{{ asset('assets/img/VectorMap$.png')}}" alt="Pictogramme Map Monde" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Zones Tarifaires</span>
+                        <a class="nav-link nav-link-alice col-12" href="{{ path('app_tariff_zone_list') }}">
+                            <div class="d-flex col-2">
+                                <i class="fa-solid fa-globe fa-xl"></i>
+                                <i class="fa-solid fa-euro-sign fa-sm pt-3"></i>
+                            </div>
+                            <span class="col-10">Zones Tarifaires</span>
                         </a>
                     </li>
 
                 {% endif %}
 
                 <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" href="{{ path('app_document_list') }}">
-                        <img src="{{ asset('assets/img/VectorDocuments.png') }}" alt="Pictogramme document" class="d-inline align-text-center">
-                        <span class="align-text-bottom">Documents</span>
+                    <a class="nav-link nav-link-alice col-12" href="{{ path('app_document_list') }}">
+                        <i class="fa-solid fa-file fa-xl col-2"></i>
+                        <span class="col-10">Documents</span>
                     </a>
                 </li>
                     
                 <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" href="{{ path('app_forgot_password_request') }}">
-                        <img src="{{ asset('assets/img/VectorPassword.png') }}" alt="Pictogramme user" class="d-inline align-text-center">
-                        <span class="align-text-bottom">Gestion du mot de passe</span>
+                    <a class="nav-link nav-link-alice col-12" href="{{ path('app_forgot_password_request') }}">
+                        <i class="fa-solid fa-lock fa-xl col-2"></i>
+                        <span class="col-10">Gestion du mot de passe</span>
                     </a>
                 </li>
 
                 {% if app.user.roles[0] == "ROLE_ADMIN" %}
 
                     <li class="nav-item nav-item-alice">
-                        <a class="nav-link nav-link-alice" target="_blank" href="https://calendar.google.com/calendar/u/0/r">
-                            <img src="{{ asset('assets/img/VectorAgenda.png') }}" alt="Pictogramme Agenda" class="d-inline align-text-center">
-                            <span class="align-text-bottom">Agenda</span>
+                        <a class="nav-link nav-link-alice col-12" target="_blank" href="https://calendar.google.com/calendar/u/0/r">
+                            <i class="fa-solid fa-calendar-days fa-xl col-2"></i>
+                            <span class="col-10">Agenda</span>
                         </a>
                     </li>
 
                 {% endif %}
 
                 <li class="nav-item nav-item-alice">
-                    <a class="nav-link nav-link-alice" href=" {{ path('app_logout') }} ">
-                        <img src="{{ asset('assets/img/VectorLogOut.png') }}" alt="Pictogramme Deconnexion" class="d-inline align-text-center">
-                        <span class="align-text-bottom">Déconnexion</span>
+                    <a class="nav-link nav-link-alice col-12" href=" {{ path('app_logout') }} ">
+                        <i class="fa-solid fa-right-from-bracket fa-xl col-2"></i>
+                        <span class="col-10">Déconnexion</span>
                     </a>
                 </li>
 

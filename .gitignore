@@ -23,7 +23,8 @@
 ### Custom Settings ###
 .env
 uploads
-analyses/use_cases.puml
+/analyses
+/out
 !/public/bundles/fosckeditor/contents.css
 /public/bundles/fosckeditor/**/*.js
 /public/bundles/fosckeditor/**/*.json

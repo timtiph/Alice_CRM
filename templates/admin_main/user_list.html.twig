@@ -6,7 +6,9 @@
 
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Liste des Utilisateurs</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
 
 
@@ -14,7 +16,7 @@
 
     <div class="d-flex flex-column align-items-center flex-sm-row justify-content-sm-end align-items-sm-baseline me-sm-2">
         <p>Créer un utilisateur :   </p>
-        <a href=" {{ path('app_user_add') }} " class="btn btn-alice ms-sm-3">Nouvel Utilisateur</a>
+        <a href=" {{ path('app_user_add') }} " class="btn-fa-action-head-page ms-sm-3"><i class="fa-solid fa-user-plus fa-lg"></i></a>
     </div>
 
   {# TODO : virer definir un role à l'admin #}
@@ -29,7 +31,7 @@
                         <p class="card-text"> 
                             {% if user.roles[0] == "ROLE_USER" %}
                                 {% if user.role is null %}
-                                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
+                                    <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="hover-link">Définir un rôle</a>
                                 {% else %}
                                     Role : {{ user.role }}
                                 {% endif %}

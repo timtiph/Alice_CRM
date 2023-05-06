@@ -6,7 +6,9 @@
 
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Utilisateur : {{ user.firstname|capitalize }} {{ user.lastname|upper }}</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
 
 {# identification USER #}
@@ -19,7 +21,7 @@
                 <p class="card-text">
                     {% if user.roles[0] == "ROLE_USER" %}
                         {% if user.role is null %}
-                            <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}">Définir un rôle</a>
+                            <a href="{{ path('app_user_edit', { 'id': user.id, 'slug': user.slug}) }}" class="hover-link">Définir un rôle</a>
                         {% else %}
                             Role : {{ user.role }}
                         {% endif %}
@@ -87,7 +89,7 @@
                                         <p class="card-subtitle mb-2">{{ contact.email }}</p>
                                         <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
                                         <div class="d-flex justify-content-center">
-                                            <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
+                                            <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1 btn-fa-action-eye"><i class="fa-solid fa-eye fa-xl"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +118,7 @@
                                             <p class="card-subtitle mb-2">{{ contact.email }}</p>
                                             <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
                                             <div class="d-flex justify-content-center">
-                                                <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
+                                                <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1 btn-fa-action-eye"><i class="fa-solid fa-eye fa-xl"></i></a>
                                             </div>
                                         </div>
                                     </div>

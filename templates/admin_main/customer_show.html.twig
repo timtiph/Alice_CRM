@@ -11,10 +11,26 @@
 
 
     <div class="d-flex mb-3 me-md-1 justify-content-end d-none d-lg-flex">
-        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice mx-3">Modifier le client</a>
-        <a href="{{ path('app_contract_add', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn btn-alice mx-3">Ajouter un Contrat</a>
-        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn btn-alice mx-3">Ajouter un contact</a>
-        {# TODO : Ajouter un bouton RDV #}
+
+        
+        <a href="{{ path('app_customer_edit', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn-fa-action-head-page mx-1" data-bs-toggle="tooltip" data-bs-title="Modifier le client" >
+        
+            <i class="fa-solid fa-arrows-down-to-people fa-2xl ms-1"></i> 
+            <i class="fa-solid fa-pen-to-square mx-1"></i>
+        
+        </a>
+        
+
+        <a href="{{ path('app_contract_add', { 'id': customer.id, 'slug': customer.slug }) }}" class="btn-fa-action-head-page mx-1" data-bs-toggle="tooltip" data-bs-title="Nouveau contrat">
+            <i class="fa-solid fa-file-contract fa-2xl ms-1"></i>
+            <i class="fa-solid fa-plus mx-1"></i>
+        </a>
+
+        <a href="{{ path('app_contact_add', { 'id': customer.user.id, 'slug': customer.user.slug }) }}" class="btn-fa-action-head-page mx-1" data-bs-toggle="tooltip" data-bs-title="Ajouter un contact">
+            <i class="fa-solid fa-address-book fa-2xl ms-1"></i>
+            <i class="fa-solid fa-plus mx-1"></i>
+        </a>
+        
     </div>
 
 {#### Container principal ####}
@@ -43,10 +59,10 @@
                     </div>
                     <div class="d-flex flex-column justify-content-between">
                         {% if customer.isProfessional == true %}
-                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-professional">Professionnel</p>
+                            <p class="text-start m-0"><i class="fa-sharp fa-solid fa-circle-check fa-lg me-1" style="color: #19374d;"></i>Professionnel</p>
                         {% endif %}
                         {% if customer.isPartner == true %}
-                            <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner">Partenaire</p>
+                            <p class="text-start m-0"><i class="fa-sharp fa-solid fa-circle-check fa-lg me-1" style="color: #19374d;"></i>Partenaire</p>
                         {% endif %}
                     </div>
                 </div>
@@ -76,7 +92,9 @@
                                                             </strong>
                                                         </p>
                                                         <div class="d-flex justify-content-around px-5">
-                                                            <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
+                                                            <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="btn-fa-action-eye">
+                                                            <i class="fa-solid fa-eye fa-xl"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,25 +129,51 @@
                         <tbody>
                             <tr>
                                 <td>Nom</td>
-                                <th>{{ customer.name|upper }}</th>
+                                <td><strong>{{ customer.name|upper }}</strong></td>
                             </tr>
                             {% if customer.siret is not empty %}
-                            <tr>
-                                <td>Siret</td>
-                                <th>
-                                    {% set siret = customer.siret %}
-                                    {{ siret[:3] }} {{ siret[3:3] }} {{ siret[6:3] }} {{ siret[9:5] }}
-                                </th>
-                            </tr>
+                                <tr>
+                                    <td>Siret</td>
+                                    <td>
+                                        <strong>
+                                            {% set siret = customer.siret %}
+                                            {{ siret[:3] }} {{ siret[3:3] }} {{ siret[6:3] }} {{ siret[9:5] }}
+                                        </strong>
+                                    </td>
+                                </tr>
                             {% endif %}
                             <tr>
                                 <td>Adresse</td>
-                                <th>{{ customer.address|title }}</th>
+                                <td><strong>{{ customer.address|title }}</strong></td>
                             </tr>
                             <tr>
                                 <td>CP Ville Pays</td>
-                                <th>{{ customer.zipCode }} {{ customer.city|title }} {{ customer.country }}</th>
+                                <td><strong>{{ customer.zipCode }} {{ customer.city|title }} {{ customer.country }}</strong></td>
                             </tr>
+                            <tr>
+                                <td class="align-middle py-0">Zone Tarifaire</td>
+                                <td  class="py-0">
+                                    <table class="table m-0 table-borderless table-sm">
+                                        <tr>
+                                            <td class="col-6"><strong>{{ customer.tariffZone.name }}</strong></td>
+                                            <td class="col-6"><strong>{{ customer.tariffZone.amount }} €</strong></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            {% if customer.partner is not null %}
+                                <tr>
+                                    <td class="align-middle py-0">Partenariat</td>
+                                    <td class="py-0">
+                                        <table class="table m-0 table-borderless table-sm">
+                                            <tr>
+                                                <td class="col-6"><strong>{{ customer.partner.name }}</strong></td>
+                                                <td class="col-6"><strong>{{ customer.partner.discountRate }} %</strong></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
 
@@ -163,11 +207,15 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="d-flex">
-                                        <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Consulter" class="buttonEditContact"></a>
+                                        <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1 btn-fa-action-eye"><i class="fa-solid fa-eye fa-xl"></i></a>
                                     </div>
                                     <div data-name="controlButtonDivContact" class="d-flex">
-                                        <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
-                                        <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                                        <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-show-detail-contact">
+                                            <i class="fa-solid fa-circle-plus fa-xl"></i>
+                                        </div>
+                                        <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-hide-contact-detail" style="display:none;">
+                                            <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -229,14 +277,20 @@
                                             <h6 class="text-center m-0 py-1">Contrat {{ contract.name }}</h6>
                                         </div>
                                         <div class="d-flex">
-                                            <div>
-                                                {# href="{{ path('app_contract_edit', { 'id': contract.id }) }}"  #}
-                                                    <a href="{{ path('app_contract_show', { 'id': contract.id }) }}" class="mx-1 my-auto"><img src="{{ asset('assets/img/eye-solid.svg') }}" alt="Bouton Voir" class="buttonEditContract"></a>
+                                            <div class="d-flex">
+                                                    <a href="{{ path('app_contract_show', { 'id': contract.id }) }}" class="my-auto mx-1 btn-fa-action-eye"><i class="fa-solid fa-eye fa-xl"></i></a>
                                             </div>
-                                            <div data-name="controlButtonDivContract">
-                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContract">
-                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContract" style="display:none;">
+
+                                            <div data-name="controlButtonDivContract" class="d-flex">
+                                                <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-show-contract-detail">
+                                                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                                                </div>
+
+                                                <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-hide-contract-detail" style="display:none;">
+                                                    <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -263,7 +317,7 @@
                                         </tr>
                                         <tr>
                                             <td>Site géré par le contrat</td>
-                                            <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
+                                            <td><a href="{{ contract.websiteLink }}" target="_blank" class="hover-link">{{ contract.websiteLink }}</a></td>
                                         </tr>
                                         <tr>
                                             <td>Fractionnement</td>
@@ -292,7 +346,7 @@
     </div>
 
     <h3 class="mt-5">Notes</h3>
-    <div id="dynamicContent" class="border p-3 mt-1 mb-5">
+    <div id="dynamic-content" class="border p-3 mt-1 mb-5">
             {{ display_dynamic_content("notes" ~ customer.slug ~ customer.id, customer.slug, customer.id) }}
     </div>
 

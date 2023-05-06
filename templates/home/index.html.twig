@@ -46,7 +46,9 @@
             <table class="table">
                 <thead class="bg-alice-light border-alice-doc">
                     <tr>
-                        <th scope="col" colspan="2" class="text-center"><a href="{{ path('app_document_list') }}" class="fs-4 fw-normal lienDocument">Documents</a></th>
+                        <th scope="col" colspan="2" class="text-center">
+                            <a href="{{ path('app_document_list') }}" class="fs-4 fw-normal hover-link" data-bs-toggle="tooltip" data-bs-title="Tous les documents">Documents</a>
+                        </th>
                     </tr>
                 </thead>
 
@@ -64,7 +66,7 @@
                         <tr class="border-alice-doc">
                                 
                             <td scope="col-1">{{ document.date ? document.date|date('d/m/Y') : '' }}</td>
-                            <td scope="col-1"><a href="{{ path('app_document_show', {'id': document.id}) }}">{{ document.name }}</a></td>
+                            <td scope="col-1"><a href="{{ path('app_document_show', {'id': document.id}) }}" class="hover-link">{{ document.name }}</a></td>
 
                         </tr>
                     {% endfor %}
@@ -83,7 +85,7 @@
     <div class="col-12 col-lg-6">
         <div class="d-flex flex-wrap flex-column my-5">
             <div class="head-table-contact d-flex align-items-center justify-content-center p-2 h-25">
-                <a href="{{ path('app_contacts_user') }}" class="fs-4 fw-normal">Mes contacts</a>
+                <a href="{{ path('app_contacts_user') }}" class="fs-4 hover-link">Mes contacts</a>
             </div>
             
                 {% if contacts.count() > 0 %}
@@ -106,8 +108,8 @@
                                         </div>
                                         <div class="d-flex col-1">
                                             <div data-name="controlButtonDivContact" class="d-flex">
-                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir" data-name="imgAddContact">
-                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton Fermer" data-name="imgSuppContact" style="display:none;">
+                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir détail" data-name="img-show-detail-contact">
+                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton fermer détail" data-name="img-hide-contact-detail" style="display:none;">
                                             </div>
                                         </div>
                                     </div>

@@ -5,7 +5,9 @@
 {% block body %}
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Mes contacts</h1>
-                <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+                <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
     
 
@@ -40,9 +42,9 @@
                             <td>{{ contact.position }}</td>
             
                             <td>{% if contact.isMain == true %}
-                                <p class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></p>
+                                <p class="text-start m-0"><i class="fa-sharp fa-solid fa-circle-check fa-xl" style="color: #19374d;"></i></p>
                             {% endif %}</td>
-                            <td><a href="{{ path('app_contacts_user_edit', { id: contact.id, slug: contact.slug }) }}">Modifier</a></td>
+                            <td><a href="{{ path('app_contacts_user_edit', { id: contact.id, slug: contact.slug }) }}" class="hover-link">Modifier</a></td>
                         </tr>
                     </tbody>
 

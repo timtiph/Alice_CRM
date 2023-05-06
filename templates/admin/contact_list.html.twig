@@ -5,7 +5,9 @@
 {% block body %}
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Liste des contacts</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
 
 <div class="table-responsive">
@@ -28,13 +30,13 @@
         <tbody>
             <tr>
                 <td>{% if contact.user.customer %}  {{ contact.user.customer.name }} {% endif %}</td>
-                <td><a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}">{{ contact.lastname }} {{ contact.firstname }}</a></td>
+                <td><a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="hover-link">{{ contact.lastname }} {{ contact.firstname }}</a></td>
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</td>                
                 <td>{{ contact.position }}</td>
 
                 {% if contact.isMain == 1 %}
-                <td class="text-start m-0"><img src=" {{ asset('assets/img/Check.png') }} " alt="Check" class="me-2 picto-check-partner"></td>
+                <td class="text-start m-0"><i class="fa-sharp fa-solid fa-circle-check fa-xl" style="color: #19374d;"></i></td>
                 {% else %}
                 {% endif %}
 

@@ -8,7 +8,9 @@
     
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Liste des contrats</h1>
-        <img src="{{ asset('assets/img/VectorBack.png') }}" class="goBack" id="goBackBtn" alt="Retour" onclick="window.history.back();"></img>
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
     </div>
 
     {% if contracts|length == 0 %}
@@ -36,10 +38,10 @@
                 <tbody>
                     {% for contract in contracts %}
                         <tr>
-                            <td><a href=" {{ path('app_contract_show', { 'id': contract.id}) }} ">{{ contract.name|upper }}</a></td>
-                            <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} ">{{ contract.customer.name }}</a></td>
+                            <td><a href=" {{ path('app_contract_show', { 'id': contract.id}) }} " class="hover-link">{{ contract.name|upper }}</a></td>
+                            <td><a href=" {{ path('app_customer', { 'id': contract.customer.id, 'slug': contract.customer.slug}) }} " class="hover-link">{{ contract.customer.name }}</a></td>
                             <td>{{ contract.date|date("d/m/Y") }}</td>
-                            <td><a href="{{ contract.websiteLink }}" target="_blank">{{ contract.websiteLink }}</a></td>
+                            <td><a href="{{ contract.websiteLink }}" target="_blank" class="hover-link">{{ contract.websiteLink }}</a></td>
                             <td class="d-none d-lg-block">
                                 {% if contract.openArea|length > 17 %}
                                     {{ contract.openArea|slice(0, 17) ~ ' ...' }}
