@@ -85,7 +85,11 @@
                                                 <div class="bgg-alice-light" style="max-width: 20rem; min-width: 15rem">
                                                     <div class="card-body mb-1">
                                                         <p class="card-title fs-5 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
-                                                        <p class="card-text mb-1">Email : <strong>{{ contact.email }}</strong></p>
+                                                        <p class="card-text mb-1">Email : 
+                                                            <strong>
+                                                                <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email }}</a>
+                                                            </strong>
+                                                        </p>
                                                         <p class="card-text mb-1">Tel : 
                                                             <strong>
                                                                 {{ contact.phone|phone_number_format('INTERNATIONAL') }}
@@ -224,7 +228,11 @@
                             <tbody>
                                     <tr>
                                         <td>Email</td>
-                                        <th class="overflow-x-hidden">{{ contact.email }}</th>
+                                        <th class="overflow-x-hidden"> 
+                                            <strong>
+                                                <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email }}</a>
+                                            </strong>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <td>Tel</td>
