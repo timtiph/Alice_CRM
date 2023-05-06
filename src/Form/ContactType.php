@@ -5,32 +5,27 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Contact;
 use App\Repository\UserRepository;
-use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
-use libphonenumber\NumberParseException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ContactType extends AbstractType
 {
     private $userRepository;
+
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        //dd($userRepository);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

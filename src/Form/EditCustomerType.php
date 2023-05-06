@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Partner;
 use App\Entity\Customer;
 use App\Entity\TariffZone;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,6 +32,10 @@ class EditCustomerType extends AbstractType
             'constraints' => [
                 new NotBlank([
                     'message' => 'Ce champs ne peut pas être vide.'
+                ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
+                    'message' => 'Le champ ne doit contenir que des lettres, des chiffres et des tirets.'
                 ]),
             ]
         ])
@@ -80,7 +86,7 @@ class EditCustomerType extends AbstractType
             'constraints' => [
                 new Regex([
                     'pattern' => '/^[A-Z0-9]{4,6}$/',
-                    'message' => 'Le code postal doit comporter entre 4 et 6 caractères, composés de lettres majuscules et/ou de chiffres.'
+                    'message' => 'Le code postal doit comporter entre 4 et 6 caractères, composés de chiffres et de lettres majuscules dans le cas d\'un code postal étranger.'
                 ]),
                 new NotBlank([
                     'message' => 'Ce champ ne peut pas être vide.'
@@ -94,8 +100,8 @@ class EditCustomerType extends AbstractType
                     'message' => 'Ce champ ne peut pas être vide.'
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9À-ÿ\s\'\-]*$/',
-                    'message' => 'Ce champ ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des apostrophes.'
+                    'pattern' => '/^(?=.*[a-zA-Z])[a-zA-Z0-9À-ÿ\s\'\-]*$/',    
+                    'message' => 'Votre saisie semble incorrecte.'
                 ]),
                 new Length([
                     'max' => 255,
@@ -113,20 +119,34 @@ class EditCustomerType extends AbstractType
             'data' => 'FR'
         ])
         ->add('isProfessional', CheckboxType::class, [
-            'label' => 'Client Pro ?',
+            'label' => 'Client Professionnel',
             'required' => false
         ])
         ->add('isPartner', CheckboxType::class, [
-            'label' => 'Client Partenaire ?',
+            'label' => 'Client Partenaire',
             'required' => false
         ])
         ->add('partner', EntityType::class, [
             'label' => 'Patenariat : ',
             'class' => Partner::class,
-            'required' => true,
+            'required' => false,
             'multiple' => false,
             'expanded' => false,
+            'empty_data' => null,
+            'constraints' => [
+                new Callback(function ($partner, ExecutionContextInterface $context) use ($builder) {
+                    $form = $context->getRoot();
+                    $isPartner = $form->get('isPartner')->getData();
+                                
+                    if ($isPartner && empty($partner)) {
+                        $context->buildViolation('Vous devez sélectionner un partenaire.')
+                            ->atPath('partner')
+                            ->addViolation();
+                    }
+                }),
+            ],
         ])
+
         ->add('tariffZone', EntityType::class, [
             'label' => 'Zone Tarifaire : ',
             'class' => TariffZone::class,
@@ -140,7 +160,24 @@ class EditCustomerType extends AbstractType
                 'class' => 'btn-alice-form'
             ]
         ])
+
+        // delete SIRET + partner data if the box is not checked
+        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+            $isPartner = $data['isPartner'] ?? false;
+            $isProfessional = $data['isProfessional'] ?? false;
+    
+            if (!$isPartner) {
+                $data['partner'] = null;
+            }
+            if (!$isProfessional) {
+                $data['siret'] = null;
+            }
+            $event->setData($data);
+        })
         ;
+        
        
     }
     public function configureOptions(OptionsResolver $resolver): void

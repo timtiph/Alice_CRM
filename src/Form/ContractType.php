@@ -24,12 +24,10 @@ class ContractType extends AbstractType
     public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
-        // dd($customerRepository);
         
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        //dd($options);
         $customer = $options['customer'];
         $builder
             ->add('name', TextType::class, [
