@@ -19,7 +19,7 @@ class SerpInfo
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $googleRank = null;
 
-    #[ORM\ManyToOne(inversedBy: 'serpInfos')]
+    #[ORM\ManyToOne(inversedBy: 'serpInfos', cascade: ['persist', 'remove'])]
     private ?Contract $contract = null;
 
     public function getId(): ?int
