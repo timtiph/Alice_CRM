@@ -31,3 +31,5 @@ uploads
 /public/bundles/fosckeditor/**/*.md
 /public/bundles/fosckeditor/**/*.npmignore
 /public/bundles/fosckeditor/**/
+/MAQUETTAGE
+todo.txt

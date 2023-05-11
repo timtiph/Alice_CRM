@@ -7,6 +7,9 @@ parameters:
     app.mailjet.public_key: '%env(MJ_APIKEY_PUBLIC)%'
     app.mailjet.private_key: '%env(MJ_APIKEY_PRIVATE)%'
     documents_directory: '%kernel.project_dir%/public/uploads/documents'
+    app.googlesearch.api_key: '%env(APP_GOOGLESEARCH_API_KEY)%'
+    app.googlecustomsearch.api_key: '%env(GOOGLE_CUSTOM_SEARCH_API_KEY)%'
+
 
 services:
     # default configuration for services in *this* file

@@ -13,7 +13,7 @@
     <div class="d-flex my-2 me-md-1 justify-content-end d-lg-flex">
 
         <a href="{{ path('app_contract_edit', { 'id': contract.id }) }}" class="btn-fa-action-head-page mx-2"><i class="fa-solid fa-pen-to-square fa-xl"></i></a>
-        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn-fa-action-list-supp mx-2 btn-delete" data-name="Contrat {{ contract.name }}"><i class="fa-solid fa-trash fa-xl"></i></a>
+        <a href="{{ path('app_contract_remove', { 'id': contract.id, 'csrf_token': csrf_token('delete_contract' ~ contract.id) }) }}" class="btn-fa-action-head-supp mx-2 btn-delete" data-name="Contrat {{ contract.name }}"><i class="fa-solid fa-trash fa-xl"></i></a>
 
     </div>
 
@@ -104,12 +104,15 @@
     </table>
 
 {# classement web #}
+
     <div class="my-5">
         <h3>Référencement par mots-clés</h3>
     </div>
-
         {% for serpInfo in serpInfos %}
-            <div class="row keyword-container d-flex flex-row mb-2 align-items-center" data-keyword="{{ serpInfo.id }}" >
+            <div class="row keyword-container d-flex flex-row mb-2 align-items-center" 
+                    data-keyword="{{ serpInfo.id }}" 
+                    data-google-api-key="{{ googleApiKey }}" 
+                    data-google-custom-api-key="{{ googleCustomApiKey }}">
                 <a href="{{ path('app_serp_info_remove', { 'id': contract.id, 'serpInfoId': serpInfo.id, 'csrf_token': csrf_token('delete_serp_info' ~ serpInfo.id) }) }}" class="btn btn-block btn-sm btn-outline-danger col-3 offset-1 col-md-1 offset-md-1" id="btn-sup-keyword">X</a>
                 <div type="text" class="keyword fw-semibold col-6 col-md-5 offset-md-1">
                     {{ serpInfo.keyword|capitalize }}
@@ -118,7 +121,7 @@
             </div>
         {% endfor %}
     <div class="row d-flex flex-row my-5 align-items-center justify-content-center">
-        <span class="add-serp-button btn col-10 col-md-6 col-lg-4">Ajouter un mot clé</span>
+        <span class="btn btn-alice col-10 col-md-6 col-lg-4">Ajouter un mot clé</span>
         <div class="serp-info-form flex-column flex-md-row justify-content-center align-items-center">
             <span class="fs-5 mb-3 mb-md-0">Mot clé : </span>
             <div class="d-flex flex-column align-items-center flex-md-row">
@@ -133,8 +136,11 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center mb-5 px-0 mt-2">
-            <div id="serp" class="btn btn-alice-serp col-10 col-md-6 col-lg-4">Chercher</div>
+        <div class="d-flex flex-column justify-content-center align-items-center mb-5 px-0 mt-2">
+            <div id="serp" class="btn btn-alice-serp col-10 col-md-6 col-lg-4">Afficher les résultats</div>
+            <div class="col-10 col-md-6 col-lg-4 mt-2">
+                {{ form(serpResultForm) }}
+            </div>
         </div>
     </div>
 

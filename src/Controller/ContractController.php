@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Contract;
 use App\Entity\SerpInfo;
+use App\Entity\SerpResult;
 use App\Form\ContractType;
 use App\Form\SerpInfoType;
+use App\Form\SerpResultType;
 use App\Form\EditContractType;
 use App\Repository\ContractRepository;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,6 +52,8 @@ class ContractController extends AbstractController
     {
         $contract = $this->contractRepository->findOneById($id);
         $serpInfos = $contract->getSerpInfos();
+        $googleApiKey = $this->getParameter('app.googlesearch.api_key');
+        $googleCustomApiKey = $this->getParameter('app.googlecustomsearch.api_key');
 
         $serpInfoForm=$this->createForm(SerpInfoType::class);
         $serpInfoForm->handleRequest($request);
@@ -69,11 +74,62 @@ class ContractController extends AbstractController
             return $this->redirectToRoute('app_contract_show', ['id' => $id]);
         }
 
-
+        $serpResultForm = $this->createForm(SerpResultType::class);
+        $serpResultForm->handleRequest($request);
+    
+        if ($serpResultForm->isSubmitted() && $serpResultForm->isValid()) {
+            $newSerpResults = [];
+    
+            foreach ($serpInfos as $serpInfo) {
+                $newSerpResult = new SerpResult();
+                $keyword = $serpInfo->getKeyword();
+                $url = 'https://www.googleapis.com/customsearch/v1?key=' . $googleApiKey . '&cx=' . $googleCustomApiKey . '&q=' . urlencode($keyword);
+                $response = HttpClient::create()->request('GET', $url);
+                $content = json_decode($response->getContent());
+                $newRank = null;
+    
+                if (isset($content->items)) {
+                    foreach ($content->items as $index => $item) {
+                        if (stripos($item->link, $contract->getWebsiteLink()) !== false) {
+                            $newRank = $index + 1;
+                            break;
+                        }
+                    }
+                }
+    
+                if ($newRank) {
+                    $newSerpResult->setGoogleRank($newRank);
+                    $newSerpResult->setSerpInfo($serpInfo);
+                    $newSerpResult->setDate(new \DateTime());
+    
+                    $newSerpResults[] = $newSerpResult;
+                }
+            }
+    
+            if (!empty($newSerpResults)) {
+                $em = $doctrine->getManager();
+    
+                foreach ($newSerpResults as $newSerpResult) {
+                    $em->persist($newSerpResult);
+                }
+    
+                $em->flush();
+    
+                $this->addFlash('success', 'Rangs enregistrés avec succès');
+            } else {
+                $this->addFlash('error', 'Le site n\'a pas été trouvé dans les résultats de recherche Google pour aucun des mots-clés.');
+            }
+    
+            return $this->redirectToRoute('app_contract_show', ['id' => $id]);
+        }
+        
         return $this->render('admin_main/contract_show.html.twig', [
             'serpInfoForm' => $serpInfoForm->createView(),
             'contract' => $contract,
             'serpInfos' => $serpInfos,
+            'googleApiKey' => $googleApiKey,
+            'googleCustomApiKey' => $googleCustomApiKey,
+            'serpResultForm' => $serpResultForm->createView()
         ]);
     }
 
