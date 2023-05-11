@@ -99,26 +99,34 @@
 
 
                                     <div class="d-flex justify-content-between">
-                                        <div class="d-flex align-items-baseline col-11">
+                                        <div class="d-flex align-items-baseline col-10">
                                             <p class="m-0 py-1 ps-1 fs-6 fw-medium col-5 text-start">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
                                             <p class="p-0 m-0 fs-6 fst-italic col-4 text-start">{{ contact.position }}</p>
                                                 {% if contact.isMain == true %}
                                                 <p class="p-0 m-0 fs-6 fst-italic col-3 text-start">Principal</p>
                                                 {% endif %}
                                         </div>
-                                        <div class="d-flex col-1">
-                                            <div data-name="controlButtonDivContact" class="d-flex">
-                                                <img src="{{ asset('assets/img/VectorAdd.png') }} " alt="Bouton ouvrir détail" data-name="img-show-detail-contact">
-                                                <img src="{{ asset('assets/img/VectorCloseDark.png') }} " alt="Bouton fermer détail" data-name="img-hide-contact-detail" style="display:none;">
-                                            </div>
+                                        <div data-name="button-control-view-div-contact" class="d-flex">
+                                                <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-show-detail-contact">
+                                                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                                                </div>
+
+                                                <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-hide-contact-detail" style="display:none;">
+                                                    <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                                </div>
                                         </div>
+
                                     </div>
 
 
                                     <tbody>
                                             <tr>
                                                 <td>Email</td>
-                                                <td class="overflow-x-hidden fw-medium">{{ contact.email }}</td>
+                                                <td class="overflow-x-hidden"> 
+                                                    <b>
+                                                        <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email }}</a>
+                                                    </b>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Tel</td>
