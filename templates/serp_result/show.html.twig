@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SerpResult{% endblock %}
+
+{% block body %}
+    <h1>SerpResult</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ serp_result.id }}</td>
+            </tr>
+            <tr>
+                <th>GoogleRank</th>
+                <td>{{ serp_result.googleRank }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ serp_result.date ? serp_result.date|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_serp_result_index') }}">back to list</a>
+
+    <a href="{{ path('app_serp_result_edit', {'id': serp_result.id}) }}">edit</a>
+
+    {{ include('serp_result/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SerpResult index{% endblock %}
+
+{% block body %}
+    <h1>SerpResult index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>GoogleRank</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for serp_result in serp_results %}
+            <tr>
+                <td>{{ serp_result.id }}</td>
+                <td>{{ serp_result.googleRank }}</td>
+                <td>{{ serp_result.date ? serp_result.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_serp_result_show', {'id': serp_result.id}) }}">show</a>
+                    <a href="{{ path('app_serp_result_edit', {'id': serp_result.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_serp_result_new') }}">Create new</a>
+{% endblock %}

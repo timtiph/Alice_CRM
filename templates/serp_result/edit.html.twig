@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SerpResult{% endblock %}
+
+{% block body %}
+    <h1>Edit SerpResult</h1>
+
+    {{ include('serp_result/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_serp_result_index') }}">back to list</a>
+
+    {{ include('serp_result/_delete_form.html.twig') }}
+{% endblock %}

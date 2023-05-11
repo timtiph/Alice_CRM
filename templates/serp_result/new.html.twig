@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SerpResult{% endblock %}
+
+{% block body %}
+    <h1>Create new SerpResult</h1>
+
+    {{ include('serp_result/_form.html.twig') }}
+
+    <a href="{{ path('app_serp_result_index') }}">back to list</a>
+{% endblock %}
