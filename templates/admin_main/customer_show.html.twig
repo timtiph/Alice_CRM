@@ -213,7 +213,7 @@
                                     <div class="d-flex">
                                         <a href="{{ path('app_contact', { 'id': contact.id, 'slug': contact.slug}) }}" class="my-auto mx-1 btn-fa-action-eye"><i class="fa-solid fa-eye fa-xl"></i></a>
                                     </div>
-                                    <div data-name="controlButtonDivContact" class="d-flex">
+                                    <div data-name="button-control-view-div-contact" class="d-flex">
                                         <div class="my-auto mx-1 btn-fa-plus-minus" data-name="img-show-detail-contact">
                                             <i class="fa-solid fa-circle-plus fa-xl"></i>
                                         </div>
@@ -228,17 +228,17 @@
                             <tbody>
                                     <tr>
                                         <td>Email</td>
-                                        <th class="overflow-x-hidden"> 
-                                            <strong>
+                                        <td class="overflow-x-hidden"> 
+                                            <b>
                                                 <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email }}</a>
-                                            </strong>
-                                        </th>
+                                            </b>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Tel</td>
-                                        <th>
-                                            <p>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</p>
-                                        </th>
+                                        <td>
+                                            <p><b>{{ contact.phone|phone_number_format('INTERNATIONAL') }}</b></p>
+                                        </td>
                                     </tr>
                             </tbody>
 
