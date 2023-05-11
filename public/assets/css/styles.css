@@ -140,7 +140,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
     height: 50px;
     width: 60px;
     margin: auto 10px;
-    transition: opacity 0.3s ease-out !important;
+    transition: opacity 0.3s ease-in-out !important;
 }
 
 .navbar-toggler-alice:focus {
@@ -184,7 +184,7 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 .nav-item-alice {
     display: flex;
     border-radius: 5px;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .nav-item-alice:hover {
@@ -333,21 +333,6 @@ iframe.container-calendar {
     max-width: 500px;
 }
 
-/* Bouton validation connexion */
-
-#login_submit {
-    background-color: #19374D;
-    color: #FAFAFF;
-    font-size: large;
-    margin: 10px 0;
-    width: 100% !important;
-}
-
-#login_submit:hover {
-    background-color: rgba(76, 158, 189, 0.3) !important;
-    color: #19374D !important;
-}
-
 
 /*
 * button personnalisé ALICE
@@ -359,7 +344,7 @@ iframe.container-calendar {
     border: #19374D 1px solid;
     font-size: medium;
     margin: 10px 0;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .btn-alice-lg {
@@ -369,7 +354,7 @@ iframe.container-calendar {
     font-size: medium;
     margin: 10px 0;
     width: 250px !important;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .btn-alice-sm {
@@ -378,7 +363,7 @@ iframe.container-calendar {
     border: #19374D 1px solid;
     font-size: small;
     margin: 10px 0;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .btn-alice-form {
@@ -387,6 +372,15 @@ iframe.container-calendar {
     border: #19374D 1px solid;
     margin: 10px 0;
     width: 100%;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.btn-alice-serp {
+    background-color: #19374D;
+    color: #FAFAFF;
+    border: #19374D 1px solid;
+    margin: 10px 0;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .btn-alice:hover,
@@ -398,13 +392,19 @@ iframe.container-calendar {
     color: #FAFAFF;
 }
 
+.btn-alice-serp:hover {
+    background-color: #FAFAFF;
+    color: #19374D;
+    border: #19374D 1px solid;
+}
+
 .btn-alice-supp {
     color: #9e2a2b;
     background-color: #FAFAFF;
     border: #9e2a2b 1px solid;
     font-size: medium;
     margin: 10px 0;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .btn-alice-supp:hover {
@@ -412,24 +412,7 @@ iframe.container-calendar {
     background-color: #9e2a2b;
 }
 
-.btn-alice-serp {
-    background-color: #19374D;
-    color: #FAFAFF;
-    border: #4C9EBD solid 1px;
-    font-size: large;
-    transition: background-color 0.5s ease-out;
-}
 
-.add-serp-button {
-    font-weight: bold;
-    border: #19374d 1px solid;
-    transition: background-color 0.5s ease-out;
-}
-
-.add-serp-button:hover {
-    background-color: rgb(76, 158, 189, 0.2);
-    border: #19374d 1px solid;
-}
 
 
 /*
@@ -495,7 +478,7 @@ img[data-name='img-hide-contact-detail'] {
     cursor: pointer;
     padding: 10px;
     border-radius: 0.375rem;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 img[data-name='img-show-contract-detail']:hover,
@@ -513,23 +496,39 @@ img[data-name='img-hide-contact-detail']:hover {
 /************** Personnalisation des liens Images */
 
 .btn-fa-action-list,
-.btn-fa-action-head-page,
 .btn-fa-plus-minus,
 .btn-fa-action-eye,
-.button-download,
+.button-download {
+    display: block;
+    align-self: baseline;
+    cursor: pointer;
+    padding: 5px;
+    border: #19374D 1px solid;
+    border-radius: 0.375rem;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.btn-fa-action-list:hover,
+.btn-fa-plus-minus:hover,
+.btn-fa-action-eye:hover,
+.button-download:hover {
+    background-color: #19374D;
+    color: #FAFAFF;
+    border: #FAFAFF 1px solid;
+    border-radius: 0.375rem;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.btn-fa-action-head-page,
 .button-go-back {
     cursor: pointer;
     padding: 10px;
     border: #19374D 1px solid;
     border-radius: 0.375rem;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
-.btn-fa-action-list:hover,
 .btn-fa-action-head-page:hover,
-.btn-fa-plus-minus:hover,
-.btn-fa-action-eye:hover,
-.button-download:hover,
 .button-go-back:hover {
     background-color: #19374D;
     color: #FAFAFF;
@@ -539,7 +538,9 @@ img[data-name='img-hide-contact-detail']:hover {
 }
 
 .btn-fa-action-list-supp {
-    padding: 10px;
+    display: block;
+    align-self: baseline;
+    padding: 5px;
     cursor: pointer;
     color: #a51d2d;
     border: #9e2a2b 1px solid;
@@ -547,6 +548,23 @@ img[data-name='img-hide-contact-detail']:hover {
     transition: background-color 0.5s ease-in-out;
 }
 .btn-fa-action-list-supp:hover {
+    background-color: #a51d2d;
+    border: #FAFAFF 1px solid;
+    color: #FAFAFF;
+    border-radius: 0.375rem;
+}
+
+.btn-fa-action-head-supp {
+    display: block;
+    align-self: baseline;
+    padding: 10px;
+    cursor: pointer;
+    color: #a51d2d;
+    border: #9e2a2b 1px solid;
+    border-radius: 0.375rem;
+    transition: background-color 0.5s ease-in-out;
+}
+.btn-fa-action-head-supp:hover {
     background-color: #a51d2d;
     border: #FAFAFF 1px solid;
     color: #FAFAFF;
@@ -612,20 +630,20 @@ a {
     margin: 10px 0;
     width: 250px !important;
     padding: 0.375rem 0.75rem ;
-    background-color: #19374D;
-    color: #FAFAFF;
-    border: #4C9EBD solid 1px;
+    color: #19374D;
+    background-color: #FAFAFF;
+    border: #19374D 1px solid;
     border-radius: 0.375rem;
-    font-size: large;
+    font-size: medium;
     line-height: 1.5;
     text-align: center;
     text-decoration: none;
-    transition: .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: background-color 0.5s ease-in-out;
 }
 
 #dynamic-content>a:hover {
-    background-color: rgba(76, 158, 189, 0.5) !important;
-    color: #19374D !important;
+    background-color: #19374D;
+    color: #FAFAFF;
     border-color: transparent;
 }
 

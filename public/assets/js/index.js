@@ -5,7 +5,7 @@
  */
 
 // define the constants
-const buttonsContacts = document.querySelectorAll('[data-name^="controlButtonDivContact"]');
+const buttonsContacts = document.querySelectorAll('[data-name^="button-control-view-div-contact"]');
 const showContact = document.querySelectorAll('[data-name^="img-show-detail-contact"]');
 const hideContact = document.querySelectorAll('[data-name^="img-hide-contact-detail"]');
 const tablesContacts = document.querySelectorAll('[data-name^="tableContact"]');
