@@ -42,7 +42,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         //$request->getSession()->set(Security::LAST_USERNAME, $email); // => généré automatiquement mais déprécié par Intelephense
-        $request->getSession()->set(SecurityBundleSecurity::LAST_USERNAME, $email); // => correction ?
+        $request->getSession()->set(SecurityBundleSecurity::LAST_USERNAME, $email);
 
         return new Passport(
             new UserBadge($email),
