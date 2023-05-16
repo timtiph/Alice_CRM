@@ -6,7 +6,7 @@ framework:
     handle_all_throwables: true
     # Custom error page
     # TODO : decommenter lors pour la mise en prod
-    # error_controller: App\Controller\ErrorController::show
+    error_controller: App\Controller\ErrorController::show
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
