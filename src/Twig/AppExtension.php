@@ -29,7 +29,7 @@ class AppExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        // Création de la fonction twig pour créer les dynamic_contents
+        // Creation of the twig function to create the dynamic_contents
         return [
             new TwigFunction('display_dynamic_content', [$this, 'displayDynamicContent'], ['is_safe' => ['html']
             ]),
@@ -39,17 +39,17 @@ class AppExtension extends AbstractExtension
     public function displayDynamicContent(string $name, string $slug, int $id): string
     {
 
-// On va chercher par nom le dynamic content que l'on souhaite
+        // We will search by name the dynamic content we want
         $dynamicContentRepo = $this->doctrine->getRepository(DynamicContent::class);
 
         $currentDynamicContent = $dynamicContentRepo->findOneByName($name);
 
         if($this->authenticateUser->isGranted('ROLE_ADMIN')){
-// Si l'utilisateur est admin, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
+        // If the user is admin, we create a modify button with a specific url in the name of the dynamic content.
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('dynamic_content_edit', ['name' => $name, 'slug' => $slug, 'id' =>$id]) . '">Modifier</a>');
 
         } else {
-            //Sinon, on affiche le contenu dynamique
+            //Otherwise, we display the dynamic content
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent()));
         }
     }

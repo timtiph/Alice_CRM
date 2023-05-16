@@ -14,8 +14,10 @@ class SerpResultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('googleRank', HiddenType::class)
+            // hidden class => the data are already present on the webpage
+            ->add('googleRank', HiddenType::class) 
             ->add('SerpInfo', HiddenType::class)
+            // submit class => save the JSON data in the DB
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer les résultats dans la base',
                 'attr' => [

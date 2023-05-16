@@ -55,7 +55,6 @@ class CustomerType extends AbstractType
                             }
                         }
                     },
-                    'payload' => null,
                 ]),
             ],
             'attr' => [

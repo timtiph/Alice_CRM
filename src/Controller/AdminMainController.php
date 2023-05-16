@@ -211,7 +211,7 @@ class AdminMainController extends AbstractController
         // recover customer object
         $customer = $this->customerRepository->findOneById($id);
 
-        if(!$customer) { // si tu ne trouve pas de ID, redirect to app_customer_list (liste des clients)
+        if(!$customer) { // redirect to app_customer_list (customer list) if dont find customer Id
             return $this->redirectToRoute('app_customer_list', [], 301);
         }
         
@@ -222,7 +222,8 @@ class AdminMainController extends AbstractController
                 'alert',
                 'Vous ne pouvez pas faire ça !'
             );
-            return $this->redirectToRoute('app_customer_list', [], 301); // use a permanent redirection (code 301) so that search engines update their indexes
+            return $this->redirectToRoute('app_customer_list', [], 301); 
+            // use a permanent redirection (code 301) so that search engines update their indexes
         }
 
         // recover user from customer
@@ -323,7 +324,7 @@ class AdminMainController extends AbstractController
         ]);
     }
 
-    // TODO : Revoir code couleur pour les boutrons + picto pour + simple à lire
+    
 
     #[Route('/client/{id}/{slug}/modifier-un-client', name: 'app_customer_edit')]
     #[ParamConverter('customer', options: ['mapping' => ['id' => 'id']])]

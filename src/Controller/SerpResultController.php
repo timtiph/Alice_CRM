@@ -31,7 +31,7 @@ class SerpResultController extends AbstractController
     
         // Add code to handle the JSON data sent by the JavaScript function
         $data = json_decode($request->getContent(), true);
-        dd($data);
+        
         if (isset($data['keyword']) && isset($data['rank'])) {
             $serpResult->setSerpInfo($data['keyword']);
             $serpResult->setGoogleRank($data['rank']);
