@@ -100,9 +100,9 @@ class RegisterController extends AbstractController
 
                 $this->addFlash(
                     'alert',
-                    'L\'email que vous avez renseigné existe déjà !! Veuillez recommencer ou vous connecter.'
+                    'L\'email que vous avez renseigné existe déjà !! Connectez-vous.'
                 );
-                return $this->redirectToRoute('app_register');
+                return $this->redirectToRoute('app_login');
                 
             }
                         
