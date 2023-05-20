@@ -1,5 +1,6 @@
 "use strict";
 function checkRank(element) {
+  // Get the URL of the client's site
   let url = document.getElementById("url").innerHTML;
 
   // Enter the keyword and the url of the site to check (without the https://)
