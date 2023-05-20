@@ -33,3 +33,4 @@ uploads
 /public/bundles/fosckeditor/**/
 /MAQUETTAGE
 todo.txt
+.env.test
