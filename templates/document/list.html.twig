@@ -53,7 +53,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" disabled type="checkbox" id="user_{{ userElement.id }}" name="document[user][]" value="{{ userElement.id }}" {% if document.user.contains(userElement) %}checked{% endif %}>
                                     <label class="form-check-label" for="user_{{ userElement.id }}">
-                                    {{ userElement.lastname|capitalize }} {{ userElement.firstname|upper }} {% if userElement.role %} | {{ userElement.role|upper }} {% endif %}
+                                    {{ userElement.firstname|capitalize }} {{ userElement.lastname|upper }} {% if userElement.role %} | {{ userElement.role|upper }} {% endif %}
                                     </label>
                                 </div>
                             {% endfor %}
