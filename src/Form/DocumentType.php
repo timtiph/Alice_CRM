@@ -35,29 +35,7 @@ class DocumentType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
             ])
-            ->add('fileName', FileType::class, [
-                'label' => 'Envoyer un document',
-                'attr' => [
-                    'class' => 'mb-3',
-                ],
-                // unmapped means that this field is not associated to any entity property
-                'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the file
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '20M',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF ou image valide',
-                    ])
-                ],
-            ])
+            
             ->add('family', ChoiceType::class, [
                 'label' => 'Famille de document',
                 'required' => true,
@@ -71,8 +49,33 @@ class DocumentType extends AbstractType
                     'Autre'         => 'Autre',
                 ]
             ]);
+            if (!$options['disable_file_upload']) {
+                $builder
+                ->add('fileName', FileType::class, [
+                    'label' => 'Envoyer un document',
+                    'attr' => [
+                        'class' => 'mb-3',
+                    ],
+                    // unmapped means that this field is not associated to any entity property
+                    'mapped' => false,
+    
+                    // make it optional so you don't have to re-upload the PDF file every time you edit the file
+                    'required' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '20M',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'image/jpeg',
+                                'image/png',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF ou image valide',
+                        ])
+                    ],
+                ]);
+            }
 
-            // conditionner l'affichage du champ 'user' en fonction du rôle de l'utilisateur
+            // condition the display of the 'user' field according to the user's role
             if ($this->authChecker->isGranted('ROLE_ADMIN')) {
                 $builder->add('user', EntityType::class, [
                     'label' => 'Pour qui ce document est-il destiné ?',
@@ -94,6 +97,7 @@ class DocumentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Document::class,
+            'disable_file_upload' => false, // option with a default value
         ]);
     }
 }
