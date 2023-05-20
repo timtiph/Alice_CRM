@@ -11,7 +11,7 @@ class TariffZoneControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private TariffZoneRepository $repository;
-    private string $path = '/tariff/zone/';
+    private string $path = '/admin/tariff_zone/';
 
     protected function setUp(): void
     {
@@ -48,7 +48,7 @@ class TariffZoneControllerTest extends WebTestCase
             'tariff_zone[amount]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/tariff/zone/');
+        self::assertResponseRedirects('/admin/tariff_zone/');
 
         self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
     }
@@ -86,7 +86,7 @@ class TariffZoneControllerTest extends WebTestCase
             'tariff_zone[amount]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/tariff/zone/');
+        self::assertResponseRedirects('/admin/tariff_zone/');
 
         $fixture = $this->repository->findAll();
 
@@ -112,6 +112,6 @@ class TariffZoneControllerTest extends WebTestCase
         $this->client->submitForm('Delete');
 
         self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
-        self::assertResponseRedirects('/tariff/zone/');
+        self::assertResponseRedirects('/admin/tariff_zone/');
     }
 }
