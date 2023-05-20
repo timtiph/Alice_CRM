@@ -122,8 +122,7 @@ class NewUserType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn-alice g-recaptcha',
-                    'data-sitekey' => 'reCAPTCHA_site_key',
+                    'class' => 'btn-alice',
                     'data-callback' => 'onSubmit',
                     'data-action' => 'submit',
                     'class' => 'btn-alice-form'
