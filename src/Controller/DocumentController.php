@@ -98,6 +98,7 @@ class DocumentController extends AbstractController
             $file = $form->get('fileName')->getData();
             
             if ($file) {
+                //needed to get the original file name of the downloaded file without the extension
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
@@ -111,16 +112,12 @@ class DocumentController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    throw $e; // Propagate the exception to the higher level
                 }
-                
                 // updates the 'file' property to store the file name
                 $document->setFileName($newFilename);
-                
             }
-
             $this->documentRepository->save($document, true);
-
             return $this->redirectToRoute('app_document_list', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -159,7 +156,9 @@ class DocumentController extends AbstractController
 
         if ($this->isGranted('ROLE_ADMIN')) {
 
-            $form = $this->createForm(DocumentType::class, $document);
+            $form = $this->createForm(DocumentType::class, $document, [
+                'disable_file_upload' => true, //option to disable the file field
+            ]);
             $form->handleRequest($request);
             
             if ($form->isSubmitted() && $form->isValid()) {
