@@ -64,7 +64,7 @@ class ContactController extends AbstractController
 
     }
    
-    // Creer un contact à partir du USER avec user.id + user.slug
+    // Create a contact from USER avec user.id + user.slug
 
     #[Route('/creer-un-contact/{id}/{slug}', name: 'app_contact_add')]
     public function createContact(Request $request, $id): Response
@@ -126,7 +126,7 @@ class ContactController extends AbstractController
     }
     
     
-    // Modifier 
+    // Edit 
 
     #[Route('/modifier-un-contact/{id}/{slug}', name: 'app_contact_edit')]
     public function editContact(Request $request, $id, $slug): Response
