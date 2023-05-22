@@ -84,7 +84,7 @@ class ResetPasswordController extends AbstractController
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
-            // Si Token ok, on redirige sur la meme vue et on génère un form reset password
+            // if Token ok, redirect ob sama view and show resetPasswordType
             return $this->redirectToRoute('app_reset_password');
         }
 
