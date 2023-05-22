@@ -72,11 +72,10 @@ class ChangePasswordType extends AbstractType
                     'constraints' => [
                         new Length(['min' => 2, 'max' => 30]),
                         new NotBlank([
-                            'message' => 'Merci de confirmer votre nouveau mot de passe !'
+                            'message' => 'Veuillez renseigner un mot de passe identique !'
                         ]),
                     ],
-                    
-                ]
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',
