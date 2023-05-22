@@ -6,10 +6,12 @@
     padding: 0;
 }
 
-body#body {
+#body {
     font-family: 'Ubuntu', sans-serif !important;
     color: #19374D !important;
     background-color: #FAFAFF;
+    margin: 0;
+    font-size: medium;
 }
 
 html, body {scrollbar-color: #19374D #FAFAFF;
@@ -227,14 +229,15 @@ html, body {scrollbar-color: #19374D #FAFAFF;
 * Nom de la personne connectée 
 */
 
-.user-auth hr {
+#user-auth hr {
     margin: 10px auto;
     color: #4C9EBD;
     width: 90%;
     opacity: 1;
+    border-top: 1px solid #4C9EBD;
 }
 
-.user-auth p {
+#user-auth p {
     color: #4C9EBD;
     width: 90%;
     margin: 0 auto 10px;
