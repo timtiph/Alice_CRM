@@ -25,12 +25,7 @@
 uploads
 /analyses
 /out
-!/public/bundles/fosckeditor/contents.css
-/public/bundles/fosckeditor/**/*.js
-/public/bundles/fosckeditor/**/*.json
-/public/bundles/fosckeditor/**/*.md
-/public/bundles/fosckeditor/**/*.npmignore
-/public/bundles/fosckeditor/**/
+/public/bundles/fosckeditor/
 /MAQUETTAGE
 todo.txt
-.env.test
+/.env.test
