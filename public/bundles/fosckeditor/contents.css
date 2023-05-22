@@ -7,16 +7,16 @@ body
 {
 	/* Font */
 	/* Emoji fonts are added to visualise them nicely in Internet Explorer. */
-	font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	/* font-size: 12px; */
+	font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 12px;
 
 	/* Text color */
-	/* color: #333; */
+	color: #333;
 
 	/* Remove the background color to make it transparent. */
 	background-color: #fff;
 
-	/* margin: 20px; */
+	margin: 20px;
 }
 
 .cke_editable
@@ -69,6 +69,12 @@ h1,h2,h3,h4,h5,h6
 {
 	font-weight: normal;
 	line-height: 1.2;
+}
+
+hr
+{
+	border: 0px;
+	border-top: 1px solid #ccc;
 }
 
 img.right

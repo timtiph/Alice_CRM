@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-body {
+body#body {
     font-family: 'Ubuntu', sans-serif !important;
     color: #19374D !important;
     background-color: #FAFAFF;
