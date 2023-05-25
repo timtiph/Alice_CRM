@@ -62,17 +62,11 @@ class ResetPasswordController extends AbstractController
     #[Route('/verification-email', name: 'app_check_email')]
     public function checkEmail(): Response
     {
-        dump($this->getTokenObjectFromSession());
-        dump($this->getTokenFromSession());
-        
-        
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
-        dump($this->resetPasswordHelper->generateFakeResetToken());
-        dump([$resetToken]);
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
