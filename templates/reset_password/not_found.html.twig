@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable | Alice CRM{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        
+        <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
+            <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
+        </div>
+    </div>
+    <div class="ms-md-5">
+        
+        <p>Nous n'avons pas réussit à vous identifier.</p>
+        
+    </div>
+{% endblock %}
+
+{# Pour personnaliser chaque type d'erreur, nommé des fichier dans le dossier :  templates/bundles/TwigBundle/Exception 
+
+error404.html.twig
+error403.html.twig
+error500.html.twig 
+...........................
+
+ces view-erreurs sont visible uniquement quand le fichier .env est : APP_ENV=prod
+si on remet : APP_ENV=dev, les erreurs symfony sont visibles 
+
+#}

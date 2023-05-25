@@ -3,7 +3,7 @@
 {% block title %}Réinitialisez votre mot de passe | Alice CRM{% endblock %}
 
 {% block body %}
-
+{% form_theme resetForm 'bootstrap_5_layout.html.twig' %}
     
 
     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -13,10 +13,11 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-center mt-3"></div>
+    <div class="form mt-3 mt-lg-0">
         {{ form_start(resetForm) }}
             {{ form_row(resetForm.plainPassword) }}
-            <button class="btn btn-alice-form">Réinitialisez votre mot de passe</button>
+            
         {{ form_end(resetForm) }}
+    </div>
 
 {% endblock %}

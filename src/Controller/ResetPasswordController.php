@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordType;
+use App\Form\ChangePasswordFormType;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ResetPasswordRequestFormType;
@@ -50,7 +50,7 @@ class ResetPasswordController extends AbstractController
         }
 
 
-        
+
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
@@ -62,12 +62,17 @@ class ResetPasswordController extends AbstractController
     #[Route('/verification-email', name: 'app_check_email')]
     public function checkEmail(): Response
     {
+        dump($this->getTokenObjectFromSession());
+        dump($this->getTokenFromSession());
+        
+        
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
-        
+        dump($this->resetPasswordHelper->generateFakeResetToken());
+        dump([$resetToken]);
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
@@ -83,14 +88,14 @@ class ResetPasswordController extends AbstractController
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
-
-            // if Token ok, redirect ob sama view and show resetPasswordType
-            return $this->redirectToRoute('app_reset_password');
+            // if Token ok, redirect to same view and show resetPasswordType
+            // return $this->redirectToRoute('app_reset_password');
         }
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('Nous n\'avons pas réussit à vous identifier.');
+            // throw $this->createNotFoundException('Nous n\'avons pas réussit à vous identifier.');
+            return $this->render('reset_password/not_found.html.twig');
             // throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
         }
 
@@ -107,7 +112,7 @@ class ResetPasswordController extends AbstractController
         }
 
         // The token is valid; allow the user to change their password.
-        $form = $this->createForm(ChangePasswordType::class);
+        $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
