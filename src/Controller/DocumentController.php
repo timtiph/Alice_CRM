@@ -118,7 +118,11 @@ class DocumentController extends AbstractController
                 $document->setFileName($newFilename);
             }
             $this->documentRepository->save($document, true);
-            return $this->redirectToRoute('app_document_list', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash(
+               'success',
+               'Le document est bien enregistré.'
+            );
+            return $this->redirectToRoute('app_document_show', ['id' => $document->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('document/new.html.twig', [
