@@ -49,7 +49,7 @@ class DocumentType extends AbstractType
                     'Autre'         => 'Autre',
                 ]
             ]);
-            if (!$options['disable_file_upload']) {
+            if (!$options['disable_file_upload']) { // went edit, for change file
                 $builder
                 ->add('fileName', FileType::class, [
                     'label' => 'Envoyer un document',

@@ -45,7 +45,7 @@ class AppExtension extends AbstractExtension
         $currentDynamicContent = $dynamicContentRepo->findOneByName($name);
 
         if($this->authenticateUser->isGranted('ROLE_ADMIN')){
-        // If the user is admin, we create a modify button with a specific url in the name of the dynamic content.
+        // If the user is admin, we create an edit button with a specific url in the name of the dynamic content.
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('dynamic_content_edit', ['name' => $name, 'slug' => $slug, 'id' =>$id]) . '">Modifier</a>');
 
         } else {
