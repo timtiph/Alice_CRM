@@ -55,7 +55,7 @@
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between">
                     <div class="d-flex flex-column">
                         <h3 class="m-0">{{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</h3>
-                        <h6 class="m-0"> {{ customer.name }} </h6>
+                        <h6 class="m-0"> {{ customer.name|upper }} </h6>
                     </div>
                     <div class="d-flex flex-column justify-content-between">
                         {% if customer.isProfessional == true %}
@@ -87,7 +87,7 @@
                                                         <p class="card-title fs-5 fw-medium">{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</p>
                                                         <p class="card-text mb-1">Email : 
                                                             <strong>
-                                                                <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email }}</a>
+                                                                <a href="mailto:{{ contact.email }}" class="hover-link">{{ contact.email|lower }}</a>
                                                             </strong>
                                                         </p>
                                                         <p class="card-text mb-1">Tel : 
@@ -159,7 +159,7 @@
                                 <td  class="py-0">
                                     <table class="table m-0 table-borderless table-sm">
                                         <tr>
-                                            <td class="col-6"><strong>{{ customer.tariffZone.name }}</strong></td>
+                                            <td class="col-6"><strong>{{ customer.tariffZone.name|capitalize }}</strong></td>
                                             <td class="col-6"><strong>{{ customer.tariffZone.amount }} €</strong></td>
                                         </tr>
                                     </table>
@@ -171,7 +171,7 @@
                                     <td class="py-0">
                                         <table class="table m-0 table-borderless table-sm">
                                             <tr>
-                                                <td class="col-6"><strong>{{ customer.partner.name }}</strong></td>
+                                                <td class="col-6"><strong>{{ customer.partner.name|capitalize }}</strong></td>
                                                 <td class="col-6"><strong>{{ customer.partner.discountRate }} %</strong></td>
                                             </tr>
                                         </table>

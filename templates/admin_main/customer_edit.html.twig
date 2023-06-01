@@ -7,14 +7,14 @@
 
 
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <h1>Modification du client {{ customer.name }}</h1>
+        <h1>Modification du client {{ customer.name|upper }}</h1>
         <div class="button-go-back" alt="Retour page précédente" onclick="window.history.back();">
             <i class="fa-sharp fa-solid fa-circle-chevron-left fa-2xl"></i>
         </div>
     </div>
 
 
-<p>Client lié à l'utilisateur : {{ customer.user.firstname }} {{ customer.user.lastname }}</p>
+<p>Client lié à l'utilisateur : {{ customer.user.firstname|capitalize }} {{ customer.user.lastname|upper }}</p>
 
     <div class="form mt-3 mt-lg-0">
         
