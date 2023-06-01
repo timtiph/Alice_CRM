@@ -84,8 +84,8 @@ class CustomerType extends AbstractType
             'label' => 'Code Postal',
             'constraints' => [
                 new Regex([
-                    'pattern' => '/^[A-Z0-9]{4,6}$/',
-                    'message' => 'Le code postal doit comporter entre 4 et 6 caractères, composés de chiffres et de lettres majuscules dans le cas d\'un code postal étranger.'
+                    'pattern' => '/^[0-9]{4,5}$/',
+                    'message' => 'Le code postal doit comporter entre 4 et 5 chiffres.'
                 ]),
                 new NotBlank([
                     'message' => 'Ce champ ne peut pas être vide.'
