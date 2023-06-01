@@ -26,7 +26,7 @@ security:
                 # where to redirect after logout
                 path: app_logout
                 target: app_login
-                invalidate_session:   true
+                invalidate_session: true
             custom_authenticator: App\Security\LoginFormAuthenticator
             login_throttling:
                 max_attempts: 5 
